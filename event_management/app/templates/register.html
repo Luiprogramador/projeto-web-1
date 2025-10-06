@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Registro de Usuário{% endblock %}
+{% block content %}
+<div class="register-container">
+    <h2>Registro de Usuário</h2>
+    <form method="POST" action="{% url '' %}">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="Usuário" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password1" placeholder="Senha" required>
+        <input type="password" name="password2" placeholder="Confirme a Senha" required>
+        <button type="submit">Registrar</button>
+    </form>
+</div>
+{% endblock %}

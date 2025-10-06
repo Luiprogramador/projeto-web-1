@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Login - Event Management
+{% endblock %}
+{% block content %}
+<div class="login-container">
+        <h2>Login</h2>
+        <form action="{% url '' %}" method="POST">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Usuário" required>
+            <input type="password" name="password" placeholder="Senha" required>
+            <button type="submit">Entrar</button>
+        </form>
+    </div>
+{% endblock %}
+
