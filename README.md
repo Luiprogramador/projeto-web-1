@@ -1,5 +1,5 @@
 ### Esse é o README
-´´´ bash
+´´bash
 pip install django
-´´´
+´´
 
