@@ -1,1 +1,5 @@
-### Esse é o README ###
+### Esse é o README
+´´´ bash
+pip install django
+´´´
+
