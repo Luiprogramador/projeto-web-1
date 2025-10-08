@@ -120,6 +120,13 @@ nav ul li a:hover {
     background: #0056b3; 
 }
 
+.field-error {
+    color: red;
+    font-size: 0.9em;
+    display: block;
+    margin-top: 3px;
+}
+
 .footer { 
     background: #333; 
     color: #fff; 
@@ -130,3 +137,4 @@ nav ul li a:hover {
     bottom: 0;
     border-radius: 8px 8px 0 0;
 }
+

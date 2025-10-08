@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block title %}Event add - Event Management{% endblock %}
+
+{% block content %}
+<div>
+    <h2>Adicionar Novo Evento</h2>
+    <hr>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        {{ form.as_p }}
+        
+        <button type="submit">Salvar Evento</button>
+        <a href="{% url 'event_list' %}">Cancelar</a>
+    </form>
+</div>
+ 
+
+{% endblock %}

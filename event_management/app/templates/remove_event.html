@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block title %}Event remove - Event Management{% endblock %}
+
+{% block content %}
+<div>
+    <div role="alert">
+        <h4>Tem certeza que deseja remover este evento?</h4>
+        <p>Você está prestes a deletar permanentemente o evento:</p>
+        
+        <strong>Título:</strong> {{ evento.titulo }}<br>
+        <strong>Data:</strong> {{ evento.data }}
+        
+        <hr>
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            <button type="submit">Sim, Deletar Evento</button>
+            <a href="{% url 'event_list' %}">Não, Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

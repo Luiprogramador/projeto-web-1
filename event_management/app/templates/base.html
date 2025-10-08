@@ -14,15 +14,38 @@
             <h1>Event Management</h1>
             <nav>
                 <ul>
-                    <li><a href="{% url 'index' %}">Home</a></li>
-                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li>
+                        {% if user.is_authenticated %}
+                            <p>Olá, {{ user.username }}!</p>
+                            <a href="{% url 'logout' %}">Sair</a>
+                        {% else %}
+                            <a href="{% url 'login' %}">Entrar</a>
+                        {% endif %}
+                    </li>
                     <li><a href="{% url 'register' %}">Registro</a></li>
+                    <li><a href="{% url 'event_list' %}">Eventos</a></li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                        <a class="nav-link" href="{% url 'event_subscribed' %}">Meus Eventos</a>
+                        </li>
+                    {% else %}
+                    {% endif %}
                 </ul>
-{% endblock %}
+        {% endblock %}
     </header>
     <main>
         {% block content %}{% endblock %}
     </main>
+            <div>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
     <footer class="footer">
         {% block footer %}
             <p>&copy; 2024 Event Management. Todos os direitos reservados.</p>

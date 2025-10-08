@@ -1,16 +1,48 @@
 {% extends 'base.html' %}
+
 {% load static %}
 {% block title %}Registro de Usuário{% endblock %}
+
 {% block content %}
 <div class="register-container">
-    <h2>Registro de Usuário</h2>
-    <form method="POST" action="{% url '' %}">
-        {% csrf_token %}
-        <input type="text" name="username" placeholder="Usuário" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="password" name="password1" placeholder="Senha" required>
-        <input type="password" name="password2" placeholder="Confirme a Senha" required>
-        <button type="submit">Registrar</button>
-    </form>
+<form method="POST" action="{% url 'register' %}">
+
+    <h2>Registro</h2>
+    {% csrf_token %}
+
+    <p>
+        {{ form.username.label_tag }}
+        {{ form.username }}
+        {% for error in form.username.errors %}
+            <span class="field-error">{{ error }}</span>
+        {% endfor %}
+    </p>
+    
+    <p>
+        {{ form.email.label_tag }}
+        {{ form.email }}
+        {% for error in form.email.errors %}
+            <span class="field-error">{{ error }}</span>
+        {% endfor %}
+    </p>
+    
+    <p>
+        {{ form.password1.label_tag }}
+        {{ form.password1 }}
+        {% for error in form.password1.errors %}
+            <span class="field-error">{{ error }}</span>
+        {% endfor %}
+    </p>
+    
+    <p>
+        {{ form.password2.label_tag }}
+        {{ form.password2 }}
+        {% for error in form.password2.errors %}
+            <span class="field-error">{{ error }}</span>
+        {% endfor %}
+    </p>
+
+    <button type="submit">Registrar</button>
+</form>
 </div>
 {% endblock %}

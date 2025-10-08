@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <h2>{{ event.title }}</h2>
+    <p>{{ event.description }}</p>
+    <p>Capacidade: {{ event.current_participants_count }} / {{ event.max_capacity }}</p>
+    
+    <hr>
+    
+    <form method="post" action="{% url 'toggle_registration' pk=event.pk %}">
+        {% csrf_token %}
+        
+        {% if user.is_authenticated %}
+            {% if user in event.participants.all %}
+                <button type="submit">Cancelar Inscrição</button>
+            
+            {% elif event.is_full %}
+                <button type="button" disabled>LOTADO</button>
+            
+            {% else %}
+                <button type="submit">Inscrever-se Agora</button>
+            {% endif %}
+            
+        {% else %}
+            <p>Faça <a href="{% url 'login' %}">login</a> para se inscrever.</p>
+        {% endif %}
+        
+    </form>
+    
+    <a href="{% url 'event_list' %}">Voltar à Lista</a>
+
+</div>
+{% endblock %}

@@ -1,36 +1,17 @@
 from django import forms
-from .models import login, Event, Registration, register
+from .models import Event, Registration
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.models import User
 
-class LoginForm(forms.ModelForm):
-    class Meta:
-        model = login
-        fields = ['username', 'password']
-        widgets = {
-            'password': forms.PasswordInput(),
-        }
-        labels = {
-            'username': 'Username',
-            'password': 'Password',
-        }
-        help_texts = {
-            'username': 'Enter your username.',
-            'password': 'Enter your password.',
-        }
-        error_messages = {
-            'username': {
-                'max_length': 'Username is too long.',
-                'required': 'Username is required.',
-            },
-            'password': {
-                'max_length': 'Password is too long.',
-                'required': 'Password is required.',
-            },
-        }
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(label='Usuário')
+    password = forms.CharField(label='Senha', widget=forms.PasswordInput)
+
 
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ['title', 'description', 'date', 'location']
+        fields = ['title', 'description', 'date', 'location', 'max_capacity']
         labels = {
             'title': 'Event Title',
             'description': 'Event Description',
@@ -61,6 +42,7 @@ class EventForm(forms.ModelForm):
             },
         }
 
+
 class RegistrationForm(forms.ModelForm):
     class Meta:
         model = Registration
@@ -89,15 +71,14 @@ class RegistrationForm(forms.ModelForm):
             },
         }
 
-class RegisterForm(forms.ModelForm):
+
+class RegisterForm(UserCreationForm):
+    email = forms.EmailField(
+        label='E-mail',
+        required=True,
+        help_text='Obrigatório. Usado para comunicação e recuperação de conta.'
+    )
+
     class Meta:
-        model = register
-        fields = ['username', 'email', 'password']
-        widgets = {
-            'password': forms.PasswordInput(),
-        }
-        labels = {
-            'username': 'Username',
-            'email': 'Email',
-            'password': 'Password',
-        }
+        model = User
+        fields = ('username', 'email')

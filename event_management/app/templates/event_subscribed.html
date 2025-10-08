@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <h2>Meus Eventos Inscritos</h2>
+    <hr>
+    
+    {% if eventos %}
+        <p>Você está inscrito em {{ eventos|length }} evento(s).</p>
+        <ul>
+            {% for evento in eventos %}
+                <li>
+                    <div>
+                        <a href="{% url 'event_detail' pk=evento.pk %}">
+                            <strong>{{ evento.title }}</strong>
+                        </a>
+                        <small>({{ evento.date|date:"d/m/Y H:i" }})</small>
+                    </div>
+                    
+                    <form method="post" action="{% url 'toggle_registration' pk=evento.pk %}">
+                        {% csrf_token %}
+                        <button type="submit">Cancelar Inscrição</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div>
+            Você ainda não está inscrito em nenhum evento. 
+            <a href="{% url 'event_list' %}">Veja todos os eventos disponíveis.</a>
+        </div>
+    {% endif %}
+    
+</div>
+{% endblock %}

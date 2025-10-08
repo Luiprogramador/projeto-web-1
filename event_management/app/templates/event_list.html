@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block content %}
+<div>
+    <h2>Lista de Eventos</h2>
+    <hr>
+
+    <a href="{% url 'add_event' %}">
+        + Adicionar Novo Evento
+    </a>
+    
+    {% if eventos %}
+        <ul>
+            {% for evento in eventos %}
+                <li>
+                    {{ evento.title }}
+                    <p>Dia do evento: {{ evento.date|date:"d/m/Y" }}</p>
+                    
+                    <div>
+                        {% if evento.creator == user %}
+                            <a href="{% url 'remove_event' pk=evento.pk %}">Remover</a>
+                        {% endif %}
+                        <a href="{% url 'event_detail' pk=evento.pk %}">Detalhes</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nenhum evento cadastrado ainda.</p>
+    {% endif %}
+</div>
+{% endblock %}
