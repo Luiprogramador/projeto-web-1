@@ -1,0 +1,987 @@
+/* ========================================
+   RESET E CONFIGURAÇÕES GLOBAIS
+   ======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ========================================
+   HEADER E NAVEGAÇÃO
+   ======================================== */
+.header {
+    margin: 8px;
+    background: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.header h1 {
+    margin-bottom: 20px;
+}
+
+nav ul{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+nav ul li {
+    margin: 5px 15px;
+    font-size: 16px;
+}
+
+nav ul li {
+    margin: 5px 15px;
+}
+
+nav ul li p {
+    color: #fff;
+    margin: 0;
+}
+
+nav ul li a {
+    display: inline-block;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    padding: 8px 16px;
+    background-color: grey; 
+    border-radius: 4px;
+}
+
+nav ul li a:hover {
+    background-color: #555;
+    transform: scale(1.05);
+}
+
+.user-actions {
+    position: absolute;
+    top: 35px;
+    right: 25px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-actions p {
+    color: #fff;
+    margin-right: 14px;
+    margin: 0;
+    font-size: 16px;
+}
+
+.user-actions a {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 16px;
+    background-color: grey;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+.user-actions a:hover {
+    background-color: #555;
+    transform: scale(1.05);
+}
+
+/* ========================================
+   MAIN E FOOTER
+   ======================================== */
+main {
+    flex: 1;
+    min-height: calc(100vh - 200px);
+    padding-bottom: 150px;
+    width: 100%;
+}
+
+.footer {
+    background: #333;
+    color: #fff;
+    text-align: center;
+    padding: 15px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+    z-index: 1000;
+    border-radius: 10px 10px 0 0;
+}
+
+.footer p {
+    margin: -10px;
+}
+
+/* ========================================
+   CONTAINERS COMPARTILHADOS
+   ======================================== */
+.welcome-container,
+.events-container,
+.subscribed-events-container,
+.event-form-container,
+.delete-confirmation-container,
+.event-detail-container {
+    background: #fff;
+    margin: 30px auto;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.welcome-container {
+
+    text-align: center;
+    padding: 30px;
+    margin: 30px auto;
+    max-width: 900px;
+}
+
+.welcome-container p {
+    font-size: 18px;
+    color: #555;
+    margin-top: 25px;
+}
+
+.welcome-container p:hover {
+    color: #333;
+}
+
+.events-container,
+.subscribed-events-container {
+    max-width: 900px;
+    padding: 30px;
+}
+
+.event-form-container {
+    max-width: 700px;
+}
+
+.event-detail-container {
+    max-width: 800px;
+}
+
+.delete-confirmation-container {
+    max-width: 600px;
+    margin: 50px auto;
+}
+
+/* Títulos e separadores compartilhados */
+.events-container h2,
+.subscribed-events-container h2,
+.event-form-container h2 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 28px;
+}
+
+.event-form-container h2 {
+    text-align: center;
+}
+
+.events-container hr,
+.subscribed-events-container hr,
+.event-form-container hr {
+    border: none;
+    border-top: 2px solid #e0e0e0;
+    margin-bottom: 25px;
+}
+
+.event-form-container hr {
+    margin-bottom: 30px;
+}
+
+/* ========================================
+   FORMULÁRIOS DE LOGIN E REGISTRO
+   ======================================== */
+.register-container,
+.login-container {
+    width: 100%;
+    max-width: 420px;
+    margin: 30px auto;
+    padding: 30px 30px 50px 30px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.register-container h2,
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+}
+
+.register-container form,
+.login-container form {
+    margin-bottom: 0;
+}
+
+.register-container p,
+.login-container p,
+.event-form-container form p {
+    margin-bottom: 18px;
+}
+
+.event-form-container form p {
+    margin-bottom: 20px;
+}
+
+/* Labels compartilhados */
+.register-container label,
+.login-container label,
+.event-form-container label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.event-form-container label {
+    margin-bottom: 8px;
+}
+
+/* Inputs compartilhados */
+.register-container input[type="text"],
+.register-container input[type="password"],
+.register-container input[type="email"],
+.register-container input[type="tel"],
+.register-container select,
+.login-container input[type="text"],
+.login-container input[type="password"],
+.event-form-container input[type="text"],
+.event-form-container input[type="date"],
+.event-form-container input[type="time"],
+.event-form-container input[type="number"],
+.event-form-container input[type="url"],
+.event-form-container textarea,
+.event-form-container select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.register-container input[type="text"],
+.register-container input[type="password"],
+.register-container input[type="email"],
+.register-container input[type="tel"],
+.register-container select,
+.login-container input[type="text"],
+.login-container input[type="password"] {
+    margin-bottom: 5px;
+}
+
+.register-container select,
+.login-container select {
+    cursor: pointer;
+    background-color: white;
+}
+
+.event-form-container textarea {
+    min-height: 120px;
+    resize: vertical;
+    font-family: Arial, sans-serif;
+}
+
+.register-container input:focus,
+.register-container select:focus,
+.login-container input:focus,
+.event-form-container input:focus,
+.event-form-container textarea:focus,
+.event-form-container select:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+/* Botões de formulário */
+.register-container button,
+.login-container button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background 0.3s ease;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+.register-container button {
+    background: #28a745;
+    color: #fff;
+}
+
+.register-container button:hover {
+    background: #218838;
+}
+
+.login-container button {
+    background: #007bff;
+    color: #fff;
+}
+
+.login-container button:hover {
+    background: #0056b3;
+}
+
+/* ========================================
+   MENSAGENS E ERROS
+   ======================================== */
+.field-error {
+    color: #dc3545;
+    font-size: 0.85em;
+    display: block;
+    margin-top: 3px;
+    margin-bottom: 8px;
+}
+
+.alert {
+    padding: 15px;
+    margin: 20px auto;
+    max-width: 600px;
+    background: #d1ecf1;
+    border: 1px solid #bee5eb;
+    border-radius: 4px;
+    color: #0c5460;
+    text-align: center;
+}
+
+.event-form-container .helptext {
+    display: block;
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+}
+
+.event-form-container .errorlist {
+    list-style: none;
+    padding: 0;
+    margin: 5px 0 0 0;
+}
+
+.event-form-container .errorlist li {
+    color: #dc3545;
+    font-size: 13px;
+}
+
+/* ========================================
+   LISTA DE EVENTOS
+   ======================================== */
+.add-event-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #28a745;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-bottom: 30px;
+    font-weight: 500;
+    transition: background 0.3s ease;
+}
+
+.add-event-btn:hover {
+    background: #218838;
+}
+
+.events-list,
+.subscribed-events-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.event-item,
+.subscribed-event-item {
+    background: #f8f9fa;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.event-item {
+    border-left: 4px solid #007bff;
+}
+
+.subscribed-event-item {
+    border-left: 4px solid #28a745;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.event-item:hover,
+.subscribed-event-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.event-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.event-date {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.event-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.event-actions a {
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.btn-remove {
+    background: #dc3545;
+    color: #fff;
+}
+
+.btn-remove:hover {
+    background: #c82333;
+}
+
+.btn-details {
+    background: #007bff;
+    color: #fff;
+}
+
+.btn-details:hover {
+    background: #0056b3;
+}
+
+.no-events {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    font-size: 16px;
+}
+
+/* ========================================
+   EVENTOS INSCRITOS
+   ======================================== */
+.events-count {
+    background: #e7f3ff;
+    padding: 12px 20px;
+    border-radius: 6px;
+    color: #004085;
+    margin-bottom: 25px;
+    border-left: 4px solid #007bff;
+}
+
+.event-info {
+    flex: 1;
+}
+
+.event-info a {
+    text-decoration: none;
+    color: #007bff;
+    font-size: 18px;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.event-info a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.event-info small {
+    display: block;
+    color: #666;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.unsubscribe-form {
+    margin-left: 20px;
+}
+
+.unsubscribe-form button {
+    padding: 10px 20px;
+    background: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.3s ease;
+}
+
+.unsubscribe-form button:hover {
+    background: #c82333;
+}
+
+.no-events-message {
+    text-align: center;
+    padding: 40px;
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 6px;
+    color: #856404;
+}
+
+.no-events-message a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.no-events-message a:hover {
+    text-decoration: underline;
+}
+
+/* ========================================
+   DETALHES DO EVENTO
+   ======================================== */
+.event-detail-container h2 {
+    color: #333;
+    font-size: 32px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.event-description {
+    color: #555;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border-left: 4px solid #007bff;
+}
+
+.event-capacity {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px;
+    background: #e7f3ff;
+    border-radius: 6px;
+    margin-bottom: 25px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #004085;
+}
+
+.event-capacity.full {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.event-detail-container hr {
+    border: none;
+    border-top: 2px solid #e0e0e0;
+    margin: 30px 0;
+}
+
+.registration-form {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.registration-form button {
+    padding: 16px 40px;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 250px;
+}
+
+.btn-subscribe {
+    background: #28a745;
+    color: #fff;
+}
+
+.btn-subscribe:hover {
+    background: #218838;
+    transform: scale(1.05);
+}
+
+.btn-unsubscribe {
+    background: #dc3545;
+    color: #fff;
+}
+
+.btn-unsubscribe:hover {
+    background: #c82333;
+    transform: scale(1.05);
+}
+
+.btn-full {
+    background: #6c757d;
+    color: #fff;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.login-message {
+    text-align: center;
+    padding: 20px;
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 6px;
+    color: #856404;
+    font-size: 16px;
+}
+
+.login-message a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-message a:hover {
+    text-decoration: underline;
+}
+
+.back-link {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #6c757d;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+.back-link:hover {
+    background: #5a6268;
+    transform: translateX(-5px);
+}
+
+/* ========================================
+   AÇÕES DE FORMULÁRIO (SALVAR/CANCELAR)
+   ======================================== */
+.form-actions,
+.delete-form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.delete-form-actions {
+    margin-top: 20px;
+}
+
+.form-actions button,
+.form-actions a,
+.delete-form-actions button,
+.delete-form-actions a {
+    flex: 1;
+    padding: 14px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.form-actions button[type="submit"] {
+    background: #28a745;
+    color: #fff;
+}
+
+.form-actions button[type="submit"]:hover {
+    background: #218838;
+}
+
+.form-actions a {
+    background: #6c757d;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-actions a:hover {
+    background: #5a6268;
+}
+
+/* ========================================
+   CONFIRMAÇÃO DE DELEÇÃO
+   ======================================== */
+.delete-alert {
+    background: #fff3cd;
+    border: 2px solid #ffc107;
+    border-radius: 6px;
+    padding: 30px;
+    text-align: center;
+}
+
+.delete-alert h4 {
+    color: #856404;
+    font-size: 24px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.delete-alert h4::before {
+    content: "⚠️";
+    font-size: 32px;
+}
+
+.delete-alert p {
+    color: #856404;
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+
+.event-details-box {
+    background: #fff;
+    padding: 20px;
+    border-radius: 6px;
+    margin: 20px 0;
+    text-align: left;
+    border: 1px solid #e0e0e0;
+}
+
+.event-details-box strong {
+    color: #333;
+    display: inline-block;
+    min-width: 80px;
+}
+
+.event-details-box br {
+    margin-bottom: 10px;
+    display: block;
+    content: "";
+}
+
+.delete-alert hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 25px 0;
+}
+
+.delete-form-actions button[type="submit"] {
+    background: #dc3545;
+    color: #fff;
+}
+
+.delete-form-actions button[type="submit"]:hover {
+    background: #c82333;
+    transform: scale(1.02);
+}
+
+.delete-form-actions a {
+    background: #28a745;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.delete-form-actions a:hover {
+    background: #218838;
+    transform: scale(1.02);
+}
+
+/* ========================================
+   RESPONSIVIDADE
+   ======================================== */
+@media (max-width: 768px) {
+    main {
+        padding-bottom: 180px;
+    }
+    
+    nav ul {
+        flex-direction: column;
+    }
+    
+    nav ul li {
+        margin: 5px 0;
+    }
+    
+    .register-container,
+    .login-container {
+        margin: 20px 15px;
+        padding: 20px 20px 40px 20px;
+        max-width: calc(100% - 30px);
+    }
+    
+    .events-container,
+    .subscribed-events-container,
+    .event-form-container,
+    .delete-confirmation-container,
+    .event-detail-container {
+        margin: 20px 15px;
+        padding: 25px 20px;
+    }
+    
+    .events-container {
+        padding: 20px;
+    }
+    
+    .event-detail-container h2 {
+        font-size: 24px;
+    }
+    
+    .event-capacity {
+        flex-direction: column;
+        gap: 5px;
+        font-size: 16px;
+    }
+    
+    .registration-form button {
+        width: 100%;
+        min-width: auto;
+    }
+    
+    .event-actions,
+    .form-actions,
+    .delete-form-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .event-actions a,
+    .form-actions button,
+    .form-actions a,
+    .delete-form-actions button,
+    .delete-form-actions a {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .subscribed-event-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .unsubscribe-form {
+        margin-left: 0;
+        margin-top: 15px;
+        width: 100%;
+    }
+    
+    .unsubscribe-form button {
+        width: 100%;
+    }
+    
+    .delete-alert {
+        padding: 20px;
+    }
+    
+    .delete-alert h4 {
+        font-size: 20px;
+    }
+    .event-info-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .event-info-card {
+        padding: 15px;
+    }
+}
+
+/* ========================================
+   INFORMAÇÕES DETALHADAS DO EVENTO
+   ======================================== */
+.event-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.event-info-card {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 6px;
+    border-left: 4px solid #007bff;
+}
+
+.event-info-card.highlight {
+    background: #e7f3ff;
+    border-left-color: #28a745;
+}
+
+.event-info-label {
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.event-info-value {
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
+}
+
+.event-type-badge {
+    display: inline-block;
+    padding: 8px 16px;
+    background: #007bff;
+    color: #fff;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.event-creator-info {
+    background: #fff3cd;
+    padding: 15px 20px;
+    border-radius: 6px;
+    margin-bottom: 25px;
+    border-left: 4px solid #ffc107;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.event-creator-info strong {
+    color: #856404;
+}

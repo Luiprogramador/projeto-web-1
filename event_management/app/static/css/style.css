@@ -25,19 +25,24 @@ body {
     color: #fff;
     padding: 10px 0;
     text-align: center;
-    border-radius: 8px;
+    border-radius: 10px;
 }
 
 .header h1 {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
-nav ul {
+nav ul{
     list-style: none;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     align-items: center;
+}
+
+nav ul li {
+    margin: 5px 15px;
+    font-size: 16px;
 }
 
 nav ul li {
@@ -50,13 +55,49 @@ nav ul li p {
 }
 
 nav ul li a {
+    display: inline-block;
     color: #fff;
     text-decoration: none;
     transition: all 0.3s ease;
+    padding: 8px 16px;
+    background-color: grey; 
+    border-radius: 4px;
 }
 
 nav ul li a:hover {
-    text-decoration: underline;
+    background-color: #555;
+    transform: scale(1.05);
+}
+
+.user-actions {
+    position: absolute;
+    top: 35px;
+    right: 25px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-actions p {
+    color: #fff;
+    margin-right: 14px;
+    margin: 0;
+    font-size: 16px;
+}
+
+.user-actions a {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 16px;
+    background-color: grey;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+.user-actions a:hover {
+    background-color: #555;
+    transform: scale(1.05);
 }
 
 /* ========================================
@@ -80,10 +121,11 @@ main {
     left: 0;
     box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
     z-index: 1000;
+    border-radius: 10px 10px 0 0;
 }
 
 .footer p {
-    margin: 0;
+    margin: -10px;
 }
 
 /* ========================================
@@ -98,15 +140,26 @@ main {
     background: #fff;
     margin: 30px auto;
     padding: 40px;
-    border-radius: 8px;
+    border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .welcome-container {
+
     text-align: center;
-    padding: 50px 20px;
-    max-width: 600px;
-    margin: 20px auto;
+    padding: 30px;
+    margin: 30px auto;
+    max-width: 900px;
+}
+
+.welcome-container p {
+    font-size: 18px;
+    color: #555;
+    margin-top: 25px;
+}
+
+.welcome-container p:hover {
+    color: #333;
 }
 
 .events-container,
@@ -859,4 +912,530 @@ main {
     .delete-alert h4 {
         font-size: 20px;
     }
+    .event-info-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .event-info-card {
+        padding: 15px;
+    }
+    .certificate-container {
+        margin: 20px 15px;
+        padding: 30px 20px;
+        border-width: 4px;
+    }
+    
+    .certificate-container::before {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+    }
+    
+    .certificate-header h1 {
+        font-size: 28px;
+    }
+    
+    .participant-name {
+        font-size: 24px;
+        padding: 10px 20px;
+    }
+    
+    .event-title {
+        font-size: 20px;
+    }
+    
+    .certificate-footer {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .certificate-decoration {
+        font-size: 40px;
+    }
+        .certificates-container {
+        margin: 20px 15px;
+        padding: 25px 20px;
+    }
+    
+    .certificates-container h1 {
+        font-size: 24px;
+    }
+    
+    .certificate-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+    
+    .certificate-info h5 {
+        font-size: 18px;
+    }
+    
+    .certificate-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .certificate-actions {
+        width: 100%;
+    }
+    
+    .btn-certificate {
+        width: 100%;
+    }
+}
+
+/* ========================================
+   INFORMAÇÕES DETALHADAS DO EVENTO
+   ======================================== */
+.event-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.event-info-card {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 6px;
+    border-left: 4px solid #007bff;
+}
+
+.event-info-card.highlight {
+    background: #e7f3ff;
+    border-left-color: #28a745;
+}
+
+.event-info-label {
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.event-info-value {
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
+}
+
+.event-type-badge {
+    display: inline-block;
+    padding: 8px 16px;
+    background: #007bff;
+    color: #fff;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.event-creator-info {
+    background: #fff3cd;
+    padding: 15px 20px;
+    border-radius: 6px;
+    margin-bottom: 25px;
+    border-left: 4px solid #ffc107;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.event-creator-info strong {
+    color: #856404;
+}
+
+/* ========================================
+   CERTIFICADO
+   ======================================== */
+.certificate-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 60px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    border: 8px solid #007bff;
+    position: relative;
+}
+
+.certificate-container::before {
+    content: "";
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    pointer-events: none;
+}
+
+.certificate-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.certificate-header h1 {
+    font-size: 42px;
+    color: #007bff;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.certificate-body {
+    text-align: center;
+    padding: 30px 0;
+    position: relative;
+}
+
+.certificate-body .lead {
+    font-size: 20px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.participant-name {
+    font-size: 36px;
+    color: #333;
+    font-weight: 700;
+    margin: 25px 0;
+    padding: 15px 30px;
+    border-bottom: 3px solid #007bff;
+    display: inline-block;
+}
+
+.certificate-body p {
+    font-size: 18px;
+    color: #666;
+    margin: 15px 0;
+}
+
+.event-title {
+    font-size: 28px;
+    color: #28a745;
+    font-weight: 600;
+    margin: 25px 0;
+    font-style: italic;
+}
+
+.event-duration {
+    font-size: 16px;
+    color: #555;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+.certificate-footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 2px solid #e0e0e0;
+}
+
+.certificate-info {
+    text-align: center;
+}
+
+.certificate-info-label {
+    font-size: 14px;
+    color: #666;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.certificate-info-value {
+    font-size: 18px;
+    color: #333;
+    font-weight: 500;
+}
+
+.certificate-actions {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.btn-print {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 30px;
+    background: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-print:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,123,255,0.3);
+}
+
+/* Decorações */
+.certificate-decoration {
+    position: absolute;
+    font-size: 80px;
+    opacity: 0.1;
+    color: #007bff;
+}
+
+.decoration-top-left {
+    top: 10px;
+    left: 10px;
+}
+
+.decoration-top-right {
+    top: 10px;
+    right: 10px;
+}
+
+.decoration-bottom-left {
+    bottom: 10px;
+    left: 10px;
+}
+
+.decoration-bottom-right {
+    bottom: 10px;
+    right: 10px;
+}
+
+/* Estilos de impressão */
+@media print {
+    body {
+        background: white;
+    }
+    
+    .header,
+    .footer,
+    .certificate-actions,
+    nav,
+    .btn-print {
+        display: none !important;
+    }
+    
+    .certificate-container {
+        max-width: 100%;
+        margin: 0;
+        padding: 40px;
+        box-shadow: none;
+        page-break-inside: avoid;
+    }
+    
+    main {
+        padding-bottom: 0;
+    }
+}
+/* Estilos de impressão */
+@media print {
+    body {
+        background: white;
+    }
+    
+    .header,
+    .footer,
+    .certificate-actions,
+    nav,
+    .btn-print {
+        display: none !important;
+    }
+    
+    .certificate-container {
+        max-width: 100%;
+        margin: 0;
+        padding: 40px;
+        box-shadow: none;
+        page-break-inside: avoid;
+    }
+    
+    main {
+        padding-bottom: 0;
+    }
+}
+/* ========================================
+   LISTAGEM DE CERTIFICADOS
+   ======================================== */
+.certificates-container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 40px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.certificates-container h1 {
+    color: #333;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.certificates-intro {
+    color: #666;
+    font-size: 16px;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.certificates-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.certificate-card {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 8px;
+    border-left: 5px solid #007bff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.certificate-card:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.certificate-card.issued {
+    border-left-color: #28a745;
+    background: #f0f9f4;
+}
+
+.certificate-info h5 {
+    color: #333;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.certificate-meta {
+    color: #666;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.certificate-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.certificate-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 180px;
+}
+
+.btn-certificate {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-issue {
+    background: #007bff;
+    color: #fff;
+}
+
+.btn-issue:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,123,255,0.3);
+}
+
+.btn-download {
+    background: #28a745;
+    color: #fff;
+}
+
+.btn-download:hover {
+    background: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(40,167,69,0.3);
+}
+
+.certificate-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background: #28a745;
+    color: #fff;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-left: 10px;
+}
+
+.no-certificates-alert {
+    text-align: center;
+    padding: 60px 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.no-certificates-alert h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.no-certificates-alert p {
+    font-size: 16px;
+    opacity: 0.9;
+    margin-bottom: 25px;
+}
+
+.btn-explore {
+    display: inline-block;
+    padding: 12px 30px;
+    background: #fff;
+    color: #667eea;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-explore:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255,255,255,0.3);
 }

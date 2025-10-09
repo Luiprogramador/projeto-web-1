@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Certificado de Conclusão - {{ certificate.event.title }}{% endblock %}
+{% block content %}
+    <div class="certificate-container">
+        <!-- Decorações -->
+        <div class="certificate-decoration decoration-top-left">🏆</div>
+        <div class="certificate-decoration decoration-top-right">🎓</div>
+        <div class="certificate-decoration decoration-bottom-left">⭐</div>
+        <div class="certificate-decoration decoration-bottom-right">✨</div>
+        
+        <!-- Cabeçalho -->
+        <div class="certificate-header">
+            <h1>Certificado de Conclusão</h1>
+        </div>
+        
+        <!-- Corpo -->
+        <div class="certificate-body">
+            <p class="lead">Certificamos que</p>
+            
+            <h2 class="participant-name">{{ certificate.full_name_participant }}</h2>
+            
+            <p>participou com êxito do evento</p>
+            
+            <h3 class="event-title">"{{ certificate.event.title }}"</h3>
+            
+            {% if certificate.event.event_duration %}
+                <div class="event-duration">
+                    ⏱️ Carga horária: {{ certificate.event.event_duration|time:'H' }}h{{ certificate.event.event_duration|time:'i' }}min
+                </div>
+            {% endif %}
+        </div>
+        
+        <!-- Rodapé -->
+        <div class="certificate-footer">
+            <div class="certificate-info">
+                <p class="certificate-info-label">Data de Emissão</p>
+                <p class="certificate-info-value">{{ certificate.issue_date|date:"d/m/Y" }}</p>
+            </div>
+            
+            <div class="certificate-info">
+                <p class="certificate-info-label">Código de Verificação</p>
+                <p class="certificate-info-value">{{ certificate.verification_code }}</p>
+            </div>
+        </div>
+        
+        <!-- Ações -->
+        <div class="certificate-actions">
+            <button onclick="window.print()" class="btn-print">
+                🖨️ Imprimir / Salvar como PDF
+            </button>
+        </div>
+    </div>
+{% endblock %}

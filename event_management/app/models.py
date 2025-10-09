@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager 
 from django.conf import settings 
+import uuid
+from datetime import date
+
 # Create your models here.
 
 class EventParticipant(models.Model):
@@ -27,34 +30,37 @@ class Event(models.Model):
         ('Fórum', 'Fórum'),
         ('Mesa Redonda', 'Mesa Redonda'),
     ]
-    title = models.CharField(max_length=200)
-    description = models.TextField()
-    initial_date = models.DateTimeField(default= '9999-12-31 00:00:00')
-    final_date = models.DateTimeField(default='9999-12-31 23:59:59')
-    location = models.CharField(max_length=200)
-    max_capacity = models.IntegerField()
+    title = models.CharField(max_length=200, verbose_name="Título") # Adicionado verbose_name
+    description = models.TextField(verbose_name="Descrição") # Adicionado verbose_name
+    initial_date = models.DateTimeField(default= '9999-12-31 00:00:00', verbose_name="Data de Início") # Adicionado verbose_name
+    final_date = models.DateTimeField(default='9999-12-31 23:59:59', verbose_name="Data Final") # Adicionado verbose_name
+    location = models.CharField(max_length=200, verbose_name="Local") # Adicionado verbose_name
+    max_capacity = models.IntegerField(verbose_name="Capacidade Máxima") # Adicionado verbose_name
     creator = models.ForeignKey(
         settings.AUTH_USER_MODEL,  
         on_delete=models.CASCADE, 
-        related_name='eventos_criados',
+        related_name='created_events', # Renomeado para Inglês
         null=True,
-        blank=True
+        blank=True,
+        verbose_name="Criador" # Adicionado verbose_name
     )
-    event_type = models.CharField(max_length=20, choices=event_type_choices, default='Palestra')
-    hours_event = models.TimeField(null=False, blank=True, default='00:00:00')
+    event_type = models.CharField(max_length=20, choices=event_type_choices, default='Palestra', verbose_name="Tipo de Evento") # Adicionado verbose_name
+    # hours_event é misturado. Mude para event_duration ou similar.
+    event_duration = models.TimeField(null=False, blank=True, default='00:00:00', verbose_name="Carga Horária") # Renomeado para Inglês e verbose_name em Português
     participants = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         through='EventParticipant',
         through_fields=('event', 'participant'), 
-        related_name='eventos_participados', 
-        blank=True 
+        related_name='attended_events', # Renomeado para Inglês
+        blank=True,
+        verbose_name="Participantes" # Adicionado verbose_name
     )
     
     class Meta:
         db_table = 'event'
         ordering = ['initial_date']
-        verbose_name = 'Event'
-        verbose_name_plural = 'Events'
+        verbose_name = 'Evento' # Português
+        verbose_name_plural = 'Eventos' # Português
     
     def __str__(self):
         return self.title
@@ -83,6 +89,54 @@ class EventRegister(models.Model):
         return f"{self.name} - {self.event.title}"
 
 
+class Certificate(models.Model):
+    """Model to track certificates issued to event participants."""
+    
+    # Links to the Event.
+    event = models.ForeignKey(
+        'Event', 
+        on_delete=models.CASCADE, 
+        related_name='certificates', 
+        verbose_name="Evento" # Português
+    )
+    
+    # Links to the User (Participant).
+    participant = models.ForeignKey(
+        settings.AUTH_USER_MODEL, 
+        on_delete=models.CASCADE, 
+        related_name='received_certificates',
+        verbose_name="Participante" # Português
+    )
+    
+    # Date the certificate was issued.
+    issue_date = models.DateField( # Nome do campo em Inglês
+        default=date.today, 
+        verbose_name="Data de Emissão" # Português
+    )
+    
+    # Unique and immutable UUID for verification.
+    verification_code = models.UUIDField( # Nome do campo em Inglês
+        default=uuid.uuid4, 
+        unique=True, 
+        editable=False, 
+        verbose_name="Código de Verificação" # Português
+    )
+
+    class Meta:
+        db_table = 'certificate'
+        verbose_name = "Certificado" # Português
+        verbose_name_plural = "Certificados" # Português
+        # Ensure a participant only gets one certificate per event.
+        unique_together = ('event', 'participant') 
+        ordering = ['-issue_date']
+
+    def __str__(self):
+        return f"Certificate: {self.participant.username} for {self.event.title}"
+
+    @property
+    def full_name_participant(self): # Nome do método em Inglês
+        return self.participant.name
+
 class UserRegisterManager(BaseUserManager):
     def create_user(self, username, email, password=None, **extra_fields):
         if not email:
@@ -103,6 +157,7 @@ class UserRegister(AbstractBaseUser):
     type_user_choices = [
         ('Estudante', 'Estudante'),
         ('Professor', 'Professor'),
+        ('Organizador', 'Organizador'),
     ]
     username = models.CharField(max_length=150, unique=True)
     email = models.EmailField(unique=True)
@@ -110,11 +165,8 @@ class UserRegister(AbstractBaseUser):
     name = models.CharField(max_length=150)
     phone = models.CharField(max_length=20, blank=True, null=True)
     institution = models.CharField(max_length=150, blank=True, null=True)
-    type_user = models.CharField(max_length=20, choices=type_user_choices, default='Estudante')
+    user_type = models.CharField(max_length=20, choices=type_user_choices, default='Estudante', verbose_name="Tipo de Usuário") 
     
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
-    date_joined = models.DateTimeField(auto_now_add=True)
     
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email', 'name']
@@ -124,8 +176,7 @@ class UserRegister(AbstractBaseUser):
     class Meta:
         db_table = 'user_register'
         ordering = ['username']
-        verbose_name = 'User Register'
-        verbose_name_plural = 'User Registers'
-
+        verbose_name = 'Registro de Usuário' # Português
+        verbose_name_plural = 'Registros de Usuário' # Português
     def __str__(self):
         return self.username

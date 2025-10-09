@@ -29,7 +29,7 @@ class EventForm(forms.ModelForm):
             'location', 
             'max_capacity', 
             'event_type',    # <-- Adicionado
-            'hours_event'    # <-- Adicionado
+            'event_duration'    # <-- Adicionado
         ]
         # 'creator' e 'participants' geralmente são gerenciados fora do formulário de criação (como no salvamento da view)
         
@@ -41,7 +41,7 @@ class EventForm(forms.ModelForm):
             'location': 'Local do Evento',
             'max_capacity': 'Capacidade Máxima',      
             'event_type': 'Tipo de Evento',          
-            'hours_event': 'Duração (Horas)',         
+            'event_duration': 'Duração (Horas)',         
         }
         
         help_texts = {
@@ -52,7 +52,7 @@ class EventForm(forms.ModelForm):
             'location': 'Insira o local onde o evento será realizado.',
             'max_capacity': 'O número máximo de participantes permitidos.', 
             'event_type': 'Selecione o tipo de evento.',                   
-            'hours_event': 'A duração total prevista para o evento (apenas horas:minutos:segundos).',
+            'event_duration': 'A duração total prevista para o evento (apenas horas:minutos:segundos).',
         }
         
         error_messages = {
@@ -82,7 +82,7 @@ class EventForm(forms.ModelForm):
             'event_type': {
                 'required': 'O tipo de evento é obrigatório.',
             },
-            'hours_event': {
+            'event_duration': {
                 'invalid': 'Insira um formato de hora válido (HH:MM:SS).',
             },
         }
@@ -149,7 +149,7 @@ class RegisterForm(forms.ModelForm):
             'password',
             'phone', 
             'institution', 
-            'type_user'
+            'user_type'
         ]
         
         labels = {
@@ -157,14 +157,14 @@ class RegisterForm(forms.ModelForm):
             'username': 'Nome de Usuário',
             'phone': 'Telefone',
             'institution': 'Instituição/Empresa',
-            'type_user': 'Tipo de Usuário (Professor/Aluno)'
+            'user_type': 'Tipo de Usuário (Professor/Aluno)'
         }
         
         help_texts = {
             'username': 'Nome único que você usará para fazer login.',
             'phone': 'Opcional. Para contato de emergência ou recuperação de conta.',
             'institution': 'Opcional. Sua afiliação institucional/profissional.',
-            'type_user': 'Marque se você for um Professor; desmarque para Aluno.'
+            'user_type': 'Marque se você for um Professor; desmarque para Aluno.'
         }
         
         error_messages = {
@@ -191,7 +191,7 @@ class RegisterForm(forms.ModelForm):
             'institution': {
                 'max_length': 'O nome da instituição não pode exceder 150 caracteres.',
             },
-            'type_user': {
+            'user_type': {
                 'required': 'O tipo de usuário (Professor/Aluno) é obrigatório.',
             }
         }
@@ -214,3 +214,47 @@ class RegisterForm(forms.ModelForm):
                 "As senhas não coincidem."
             )
         return cleaned_data
+    
+class EventForm(forms.ModelForm):
+    
+    # Você pode adicionar campos customizados ou widgets aqui para melhor UX
+    # Exemplo para a data/hora:
+    initial_date = forms.DateTimeField(
+        widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+        label="Data de Início" # Rótulo em Português
+    )
+    final_date = forms.DateTimeField(
+        widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+        label="Data Final" # Rótulo em Português
+    )
+    
+    # Exemplo para a carga horária (TimeField)
+    event_duration = forms.TimeField(
+        widget=forms.TimeInput(attrs={'type': 'time', 'step': '3600'}), # step='3600' para passos de hora
+        label="Carga Horária (HH:MM)" # Rótulo em Português
+    )
+
+    class Meta:
+        model = Event
+        # USE OS NOMES DOS CAMPOS EM INGLÊS AQUI:
+        fields = [
+            'title',
+            'description',
+            'initial_date',  # Já definido acima
+            'final_date',    # Já definido acima
+            'location',
+            'max_capacity',
+            'event_type',
+            'event_duration', # CAMPO CORRIGIDO: de 'hours_event' para 'event_duration'
+            # 'participants' (Geralmente excluído se for um ManyToMany gerenciado por views)
+        ]
+        
+        # Você pode usar a propriedade 'labels' para configurar os rótulos em Português
+        # se não o fez diretamente nos campos como acima.
+        labels = {
+            'title': 'Título',
+            'description': 'Descrição',
+            'location': 'Local',
+            'max_capacity': 'Capacidade Máxima',
+            'event_type': 'Tipo de Evento',
+        }

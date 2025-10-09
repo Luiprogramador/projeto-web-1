@@ -6,7 +6,7 @@
     <title>{% block title %}Event Management{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block head %}{% endblock %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <header class="header">
@@ -14,24 +14,26 @@
             <h1>Event Management</h1>
             <nav>
                 <ul>
-                    <li><a href="{% url 'home' %}">Home</a></li>
-                    <li>
-                        {% if user.is_authenticated %}
-                            <p>Olá, {{ user.username }}!</p>
-                            <a href="{% url 'logout' %}">Sair</a>
-                        {% else %}
-                            <a href="{% url 'login' %}">Entrar</a>
-                        {% endif %}
-                    </li>
-                    <li><a href="{% url 'register' %}">Registro</a></li>
-                    <li><a href="{% url 'event_list' %}">Eventos</a></li>
+                    <li><a id="event_button" href="{% url 'event_list' %}">Eventos</a></li>
                     {% if user.is_authenticated %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'event_subscribed' %}">Meus Eventos</a>
                         </li>
-                    {% else %}
                     {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'certificate_list' %}">Meus Certificado</a>
+                        </li>
+                    <div class="user-actions">
+                {% if user.is_authenticated %}
+                    <p>Olá, {{ user.username }}!</p>
+                    <a href="{% url 'logout' %}">Sair</a>
+                {% else %}
+                    <a href="{% url 'login' %}">Entrar</a>
+                    <a href="{% url 'register' %}">Registro</a>
+                {% endif %}
+                    </div>
                 </ul>
+            </nav>
         {% endblock %}
     </header>
     <main>

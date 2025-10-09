@@ -3,8 +3,66 @@
 <div class="event-detail-container">
     <h2>{{ event.title }}</h2>
     
+    <!-- Tipo do Evento -->
+    <div style="text-align: center; margin-bottom: 20px;">
+        <span class="event-type-badge">{{ event.event_type }}</span>
+    </div>
+    
+    <!-- Descrição -->
     <p class="event-description">{{ event.description }}</p>
     
+    <!-- Informações do Criador -->
+    {% if event.creator %}
+    <div class="event-creator-info">
+        <span>👤</span>
+        <span><strong>Organizador:</strong> {{ event.creator.username }}</span>
+    </div>
+    {% endif %}
+    
+    <!-- Grid de Informações -->
+    <div class="event-info-grid">
+        <!-- Data de Início -->
+        <div class="event-info-card">
+            <div class="event-info-label">
+                📅 Data de Início
+            </div>
+            <div class="event-info-value">
+                {{ event.initial_date|date:"d/m/Y" }}
+            </div>
+        </div>
+        
+        <!-- Data de Término -->
+        <div class="event-info-card">
+            <div class="event-info-label">
+                📅 Data de Término
+            </div>
+            <div class="event-info-value">
+                {{ event.final_date|date:"d/m/Y" }}
+            </div>
+        </div>
+        
+        <!-- Horário -->
+        <div class="event-info-card">
+            <div class="event-info-label">
+                🕐 Horário
+            </div>
+            <div class="event-info-value">
+                {{ event.hours_event|time:"H:i" }}
+            </div>
+        </div>
+        
+        <!-- Local -->
+        <div class="event-info-card highlight">
+            <div class="event-info-label">
+                📍 Local
+            </div>
+            <div class="event-info-value">
+                {{ event.location }}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Capacidade -->
     <div class="event-capacity {% if event.is_full %}full{% endif %}">
         <span>👥 Participantes:</span>
         <span>{{ event.current_participants_count }} / {{ event.max_capacity }}</span>
@@ -12,6 +70,7 @@
    
     <hr>
    
+    <!-- Formulário de Inscrição -->
     <form method="post" action="{% url 'toggle_registration' pk=event.pk %}" class="registration-form">
         {% csrf_token %}
        
