@@ -1,24 +1,26 @@
 {% extends "base.html" %}
-
 {% load static %}
-{% block title %}Event remove - Event Management{% endblock %}
-
+{% block title %}Remover Evento - Event Management{% endblock %}
 {% block content %}
-<div>
-    <div role="alert">
+<div class="delete-confirmation-container">
+    <div class="delete-alert" role="alert">
         <h4>Tem certeza que deseja remover este evento?</h4>
-        <p>Você está prestes a deletar permanentemente o evento:</p>
-        
-        <strong>Título:</strong> {{ evento.titulo }}<br>
-        <strong>Data:</strong> {{ evento.data }}
-        
+        <p>⚠️ Você está prestes a deletar permanentemente o evento:</p>
+       
+        <div class="event-details-box">
+            <strong>📌 Título:</strong> {{ evento.title }}<br><br>
+            <strong>📅 Data:</strong> {{ evento.date|date:"d/m/Y H:i" }}
+        </div>
+       
         <hr>
-        
+       
         <form method="post">
             {% csrf_token %}
-            
-            <button type="submit">Sim, Deletar Evento</button>
-            <a href="{% url 'event_list' %}">Não, Cancelar</a>
+           
+            <div class="delete-form-actions">
+                <button type="submit">🗑️ Sim, Deletar Evento</button>
+                <a href="{% url 'event_list' %}">✅ Não, Cancelar</a>
+            </div>
         </form>
     </div>
 </div>

@@ -11,6 +11,14 @@
     {% csrf_token %}
 
     <p>
+        {{ form.name.label_tag }}
+        {{ form.name }}
+        {% for error in form.username.errors %}
+            <span class="field-error">{{ error }}</span>
+        {% endfor %}
+    </p>
+
+    <p>
         {{ form.username.label_tag }}
         {{ form.username }}
         {% for error in form.username.errors %}
@@ -27,22 +35,46 @@
     </p>
     
     <p>
-        {{ form.password1.label_tag }}
-        {{ form.password1 }}
-        {% for error in form.password1.errors %}
+        {{ form.password.label_tag }}
+        {{ form.password }}
+        {% for error in form.password.errors %}
             <span class="field-error">{{ error }}</span>
         {% endfor %}
     </p>
     
     <p>
-        {{ form.password2.label_tag }}
-        {{ form.password2 }}
-        {% for error in form.password2.errors %}
+        {{ form.password_confirm.label_tag }}
+        {{ form.password_confirm }}
+        {% for error in form.password_confirm.errors %}
+            <span class="field-error">{{ error }}</span>
+        {% endfor %}
+    </p>
+    
+    <p>
+        {{ form.phone.label_tag }}
+        {{ form.phone }}
+        {% for error in form.phone.errors %}
             <span class="field-error">{{ error }}</span>
         {% endfor %}
     </p>
 
-    <button type="submit">Registrar</button>
+    <p>
+        {{ form.institution.label_tag }}
+        {{ form.institution }}
+        {% for error in form.institution.errors %}
+            <span class="field-error">{{ error }}</span>
+        {% endfor %}
+    </p>
+
+    <p>
+        {{ form.type_user.label_tag }}
+        {{ form.type_user }}
+        {% for error in form.type_user.errors %}
+            <span class="field-error">{{ error }}</span>
+        {% endfor %}
+    </p>
+
+    <button type="submit" class="btn-register">Registrar</button>
 </form>
 </div>
 {% endblock %}
