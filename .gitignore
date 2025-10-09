@@ -1,4 +1,5 @@
 venv/
 .git
-__pycache__/*
+event_management/app/__pycache__/*
+event_management/event_management/__pycache__/*
 *.pyc
