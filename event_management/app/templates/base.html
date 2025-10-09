@@ -6,7 +6,7 @@
     <title>{% block title %}Event Management{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block head %}{% endblock %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2">
 </head>
 <body>
     <header class="header">
@@ -27,7 +27,7 @@
                     <li><a href="{% url 'event_list' %}">Eventos</a></li>
                     {% if user.is_authenticated %}
                         <li class="nav-item">
-                        <a class="nav-link" href="{% url 'event_subscribed' %}">Meus Eventos</a>
+                            <a class="nav-link" href="{% url 'event_subscribed' %}">Meus Eventos</a>
                         </li>
                     {% else %}
                     {% endif %}
@@ -36,8 +36,7 @@
     </header>
     <main>
         {% block content %}{% endblock %}
-    </main>
-            <div>
+        <div>
         {% if messages %}
             {% for message in messages %}
                 <div class="alert">
@@ -46,6 +45,8 @@
             {% endfor %}
         {% endif %}
     </div>
+    </main>
+
     <footer class="footer">
         {% block footer %}
             <p>&copy; 2024 Event Management. Todos os direitos reservados.</p>

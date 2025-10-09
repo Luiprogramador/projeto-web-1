@@ -2,10 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required 
-
 from .models import Event
 from .forms import RegisterForm, LoginForm, EventForm
-
 
 def home(request):
     return render(request, 'index.html')
@@ -21,11 +19,11 @@ def login_view(request):
         return redirect('home')
 
     if request.method == 'POST':
-        form = LoginForm(request, data=request.POST)
+        form = LoginForm(request, data=request.POST) 
         if form.is_valid():
             user = form.get_user()
 
-            login(request, user) 
+            login(request, user)
             
             return redirect('home')
         else:
@@ -42,15 +40,11 @@ def logout_view(request):
 
 
 def register_view(request): 
-    form = RegisterForm()
-        
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         
         if form.is_valid():
             user = form.save() 
-            
-            login(request, user)
             
             messages.success(request, f'Conta criada com sucesso! Bem-vindo(a), {user.username}.')
             
@@ -81,17 +75,29 @@ def event_detail(request, pk):
 
 @login_required
 def add_event(request):
+    if not request.user.type_user:
+        messages.error(request, 'Apenas usuários do tipo Professor têm permissão para criar eventos.')
+        return redirect('event_list')
+        
     if request.method == 'POST':
         form = EventForm(request.POST)
         if form.is_valid():
+            
             evento = form.save(commit=False)
             
             evento.creator = request.user 
             
-            evento.save() 
+            try:
+                evento.save() 
+                form.save_m2m() 
             
-            messages.success(request, 'Evento adicionado com sucesso!')
-            return redirect('event_list')
+                messages.success(request, 'Evento adicionado com sucesso!')
+                return redirect('event_list')
+            
+            except Exception as e:
+                 messages.error(request, f'Erro ao salvar o evento. Detalhe: {e}')
+                 return render(request, 'add_event.html', {'form': form})
+            
     else:
         form = EventForm()
         

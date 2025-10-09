@@ -1,35 +1,35 @@
 {% extends 'base.html' %}
-
 {% block content %}
-<div>
+<div class="subscribed-events-container">
     <h2>Meus Eventos Inscritos</h2>
     <hr>
-    
+   
     {% if eventos %}
-        <p>Você está inscrito em {{ eventos|length }} evento(s).</p>
-        <ul>
+        <p class="events-count">📋 Você está inscrito em {{ eventos|length }} evento(s).</p>
+        
+        <ul class="subscribed-events-list">
             {% for evento in eventos %}
-                <li>
-                    <div>
+                <li class="subscribed-event-item">
+                    <div class="event-info">
                         <a href="{% url 'event_detail' pk=evento.pk %}">
                             <strong>{{ evento.title }}</strong>
                         </a>
-                        <small>({{ evento.date|date:"d/m/Y H:i" }})</small>
+                        <small>📅 {{ evento.date|date:"d/m/Y H:i" }}</small>
                     </div>
-                    
-                    <form method="post" action="{% url 'toggle_registration' pk=evento.pk %}">
+                   
+                    <form method="post" action="{% url 'toggle_registration' pk=evento.pk %}" class="unsubscribe-form">
                         {% csrf_token %}
-                        <button type="submit">Cancelar Inscrição</button>
+                        <button type="submit">❌ Cancelar Inscrição</button>
                     </form>
                 </li>
             {% endfor %}
         </ul>
     {% else %}
-        <div>
-            Você ainda não está inscrito em nenhum evento. 
-            <a href="{% url 'event_list' %}">Veja todos os eventos disponíveis.</a>
+        <div class="no-events-message">
+            <p>🎫 Você ainda não está inscrito em nenhum evento.</p>
+            <a href="{% url 'event_list' %}">👉 Veja todos os eventos disponíveis</a>
         </div>
     {% endif %}
-    
+   
 </div>
 {% endblock %}
