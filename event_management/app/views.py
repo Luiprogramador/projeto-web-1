@@ -2,14 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required 
-<<<<<<< HEAD
 from .models import Event, Certificate, EventParticipant 
 from .forms import RegisterForm, LoginForm, EventForm
 from datetime import datetime, time, timedelta
-=======
-from .models import Event
-from .forms import RegisterForm, LoginForm, EventForm
->>>>>>> 5a96fedf93e6b0de9087d57868d0edb4fd6311c1
 
 def home(request):
     eventos = Event.objects.all()
@@ -82,11 +77,7 @@ def event_detail(request, pk):
 
 @login_required
 def add_event(request):
-<<<<<<< HEAD
     if request.user.user_type != 'Organizador': 
-=======
-    if request.user.type_user != 'Organizador':
->>>>>>> 5a96fedf93e6b0de9087d57868d0edb4fd6311c1
         messages.error(request, 'Apenas usuários do tipo Organizador têm permissão para criar eventos.')
         return redirect('event_list')
         
