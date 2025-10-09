@@ -23,7 +23,7 @@ ative a venv:
 "nome da venv que quiser"\Scripts\activate.bat
 ```
 
-## Installation Django
+## Instalação Django
 
 Com a venv ja ativa use o gerenciador de pacotes [pip](https://pip.pypa.io/en/stable/) para instalar o Django
 
@@ -38,12 +38,12 @@ python manage.py runserver
 ```
 
 
-## Contributing
+## Contribuição
 
-Pull requests are welcome. For major changes, please open an issue first
-to discuss what you would like to change.
+Pull requests são bem vindas. Para maiores mudanças, por favor abra um issue primeiro
+para discutirmos oque você quer trocar.
 
-Please make sure to update tests as appropriate.
+por gentileza lembre de fazer testes quando necessário.
 
 ## License
 
