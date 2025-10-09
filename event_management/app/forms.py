@@ -1,11 +1,20 @@
 from django import forms
 from .models import Event, EventRegister, UserRegister
 from django.contrib.auth.forms import AuthenticationForm
+<<<<<<< HEAD
 from django.forms import ModelForm, SplitDateTimeWidget, DateInput, TimeInput, NumberInput
+=======
+from django.contrib.auth.hashers import make_password
+
+>>>>>>> 5a96fedf93e6b0de9087d57868d0edb4fd6311c1
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(label='Usuário')
     password = forms.CharField(label='Senha', widget=forms.PasswordInput)
+<<<<<<< HEAD
+=======
+# ...existing code...
+>>>>>>> 5a96fedf93e6b0de9087d57868d0edb4fd6311c1
     def save(self, commit=True):
         user = super().save(commit=False)
         # use set_password para manter a lógica do AbstractBaseUser
@@ -13,6 +22,10 @@ class LoginForm(AuthenticationForm):
         if commit:
             user.save()
         return user
+<<<<<<< HEAD
+=======
+# ...existing code...
+>>>>>>> 5a96fedf93e6b0de9087d57868d0edb4fd6311c1
 
 
 class EventForm(forms.ModelForm):
@@ -40,6 +53,7 @@ class EventForm(forms.ModelForm):
         fields = [
             'title', 
             'description', 
+<<<<<<< HEAD
             'initial_date',
             'final_date',
             'location', 
@@ -75,6 +89,26 @@ class EventForm(forms.ModelForm):
             'event_type': 'Tipo de Evento',          
             'event_start': 'Horário de Início',
             'event_end': 'Horário de Término',         
+=======
+            'initial_date',  # <-- Adicionado
+            'final_date',    # <-- Adicionado
+            'location', 
+            'max_capacity', 
+            'event_type',    # <-- Adicionado
+            'hours_event'    # <-- Adicionado
+        ]
+        # 'creator' e 'participants' geralmente são gerenciados fora do formulário de criação (como no salvamento da view)
+        
+        labels = {
+            'title': 'Título do Evento',
+            'description': 'Descrição do Evento',
+            'initial_date': 'Data e Hora de Início',
+            'final_date': 'Data e Hora de Fim',      
+            'location': 'Local do Evento',
+            'max_capacity': 'Capacidade Máxima',      
+            'event_type': 'Tipo de Evento',          
+            'hours_event': 'Duração (Horas)',         
+>>>>>>> 5a96fedf93e6b0de9087d57868d0edb4fd6311c1
         }
         
         help_texts = {
@@ -85,8 +119,12 @@ class EventForm(forms.ModelForm):
             'location': 'Insira o local onde o evento será realizado.',
             'max_capacity': 'O número máximo de participantes permitidos.', 
             'event_type': 'Selecione o tipo de evento.',                   
+<<<<<<< HEAD
             'event_start': 'Horário de início do evento.',
             'event_end': 'Horário de término do evento.',
+=======
+            'hours_event': 'A duração total prevista para o evento (apenas horas:minutos:segundos).',
+>>>>>>> 5a96fedf93e6b0de9087d57868d0edb4fd6311c1
         }
         
         error_messages = {
@@ -116,10 +154,14 @@ class EventForm(forms.ModelForm):
             'event_type': {
                 'required': 'O tipo de evento é obrigatório.',
             },
+<<<<<<< HEAD
             'event_start': {
                 'invalid': 'Insira um formato de hora válido (HH:MM:SS).',
             },
             'event_end': {
+=======
+            'hours_event': {
+>>>>>>> 5a96fedf93e6b0de9087d57868d0edb4fd6311c1
                 'invalid': 'Insira um formato de hora válido (HH:MM:SS).',
             },
         }
@@ -133,6 +175,7 @@ class RegistrationForm(forms.ModelForm):
             'event': 'Event',
             'name': 'Your Name',
             'email': 'Your Email',
+            
         }
         help_texts = {
             'event': 'Select the event you want to register for.',
@@ -185,7 +228,11 @@ class RegisterForm(forms.ModelForm):
             'password',
             'phone', 
             'institution', 
+<<<<<<< HEAD
             'user_type'
+=======
+            'type_user'
+>>>>>>> 5a96fedf93e6b0de9087d57868d0edb4fd6311c1
         ]
         
         labels = {
@@ -193,14 +240,22 @@ class RegisterForm(forms.ModelForm):
             'username': 'Nome de Usuário',
             'phone': 'Telefone',
             'institution': 'Instituição/Empresa',
+<<<<<<< HEAD
             'user_type': 'Tipo de Usuário (Professor/Aluno)'
+=======
+            'type_user': 'Tipo de Usuário (Professor/Aluno)'
+>>>>>>> 5a96fedf93e6b0de9087d57868d0edb4fd6311c1
         }
         
         help_texts = {
             'username': 'Nome único que você usará para fazer login.',
             'phone': 'Opcional. Para contato de emergência ou recuperação de conta.',
             'institution': 'Opcional. Sua afiliação institucional/profissional.',
+<<<<<<< HEAD
             'user_type': 'Marque se você for um Professor; desmarque para Aluno.'
+=======
+            'type_user': 'Marque se você for um Professor; desmarque para Aluno.'
+>>>>>>> 5a96fedf93e6b0de9087d57868d0edb4fd6311c1
         }
         
         error_messages = {
@@ -227,7 +282,11 @@ class RegisterForm(forms.ModelForm):
             'institution': {
                 'max_length': 'O nome da instituição não pode exceder 150 caracteres.',
             },
+<<<<<<< HEAD
             'user_type': {
+=======
+            'type_user': {
+>>>>>>> 5a96fedf93e6b0de9087d57868d0edb4fd6311c1
                 'required': 'O tipo de usuário (Professor/Aluno) é obrigatório.',
             }
         }
@@ -249,5 +308,9 @@ class RegisterForm(forms.ModelForm):
             raise forms.ValidationError(
                 "As senhas não coincidem."
             )
+<<<<<<< HEAD
         return cleaned_data
     
+=======
+        return cleaned_data
+>>>>>>> 5a96fedf93e6b0de9087d57868d0edb4fd6311c1

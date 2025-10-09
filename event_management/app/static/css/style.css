@@ -912,6 +912,7 @@ main {
     .delete-alert h4 {
         font-size: 20px;
     }
+<<<<<<< HEAD
     .event-info-grid {
         grid-template-columns: 1fr;
         gap: 15px;
@@ -1459,4 +1460,6 @@ main {
        e adiciona de volta apenas o padding-bottom para manter o espaçamento com o próximo grupo. */
     margin-bottom: 0 !important; 
     padding-bottom: 20px; 
+=======
+>>>>>>> 5a96fedf93e6b0de9087d57868d0edb4fd6311c1
 }

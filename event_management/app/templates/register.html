@@ -67,9 +67,15 @@
     </p>
 
     <p>
+<<<<<<< HEAD
         {{ form.user_type.label_tag }}
         {{ form.user_type }}
         {% for error in form.user_type.errors %}
+=======
+        {{ form.type_user.label_tag }}
+        {{ form.type_user }}
+        {% for error in form.type_user.errors %}
+>>>>>>> 5a96fedf93e6b0de9087d57868d0edb4fd6311c1
             <span class="field-error">{{ error }}</span>
         {% endfor %}
     </p>
