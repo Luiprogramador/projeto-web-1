@@ -25,19 +25,24 @@ body {
     color: #fff;
     padding: 10px 0;
     text-align: center;
-    border-radius: 8px;
+    border-radius: 10px;
 }
 
 .header h1 {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
-nav ul {
+nav ul{
     list-style: none;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     align-items: center;
+}
+
+nav ul li {
+    margin: 5px 15px;
+    font-size: 16px;
 }
 
 nav ul li {
@@ -50,13 +55,49 @@ nav ul li p {
 }
 
 nav ul li a {
+    display: inline-block;
     color: #fff;
     text-decoration: none;
     transition: all 0.3s ease;
+    padding: 8px 16px;
+    background-color: grey; 
+    border-radius: 4px;
 }
 
 nav ul li a:hover {
-    text-decoration: underline;
+    background-color: #555;
+    transform: scale(1.05);
+}
+
+.user-actions {
+    position: absolute;
+    top: 35px;
+    right: 25px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-actions p {
+    color: #fff;
+    margin-right: 14px;
+    margin: 0;
+    font-size: 16px;
+}
+
+.user-actions a {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 16px;
+    background-color: grey;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+.user-actions a:hover {
+    background-color: #555;
+    transform: scale(1.05);
 }
 
 /* ========================================
@@ -80,10 +121,11 @@ main {
     left: 0;
     box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
     z-index: 1000;
+    border-radius: 10px 10px 0 0;
 }
 
 .footer p {
-    margin: 0;
+    margin: -10px;
 }
 
 /* ========================================
@@ -98,15 +140,26 @@ main {
     background: #fff;
     margin: 30px auto;
     padding: 40px;
-    border-radius: 8px;
+    border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .welcome-container {
+
     text-align: center;
-    padding: 50px 20px;
-    max-width: 600px;
-    margin: 20px auto;
+    padding: 30px;
+    margin: 30px auto;
+    max-width: 900px;
+}
+
+.welcome-container p {
+    font-size: 18px;
+    color: #555;
+    margin-top: 25px;
+}
+
+.welcome-container p:hover {
+    color: #333;
 }
 
 .events-container,

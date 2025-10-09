@@ -9,6 +9,8 @@
         <span>👥 Participantes:</span>
         <span>{{ event.current_participants_count }} / {{ event.max_capacity }}</span>
     </div>
+
+    <p class="event-date">📅 Data de Início: {{ event.initial_date|date:"d/m/Y" }}</p>
    
     <hr>
    

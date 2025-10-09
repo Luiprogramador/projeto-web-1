@@ -103,6 +103,7 @@ class UserRegister(AbstractBaseUser):
     type_user_choices = [
         ('Estudante', 'Estudante'),
         ('Professor', 'Professor'),
+        ('Organizador', 'Organizador'),
     ]
     username = models.CharField(max_length=150, unique=True)
     email = models.EmailField(unique=True)
@@ -112,9 +113,6 @@ class UserRegister(AbstractBaseUser):
     institution = models.CharField(max_length=150, blank=True, null=True)
     type_user = models.CharField(max_length=20, choices=type_user_choices, default='Estudante')
     
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
-    date_joined = models.DateTimeField(auto_now_add=True)
     
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email', 'name']

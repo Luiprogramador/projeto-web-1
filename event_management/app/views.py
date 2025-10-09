@@ -6,7 +6,8 @@ from .models import Event
 from .forms import RegisterForm, LoginForm, EventForm
 
 def home(request):
-    return render(request, 'index.html')
+    eventos = Event.objects.all()
+    return render(request, 'event_list.html', {'eventos': eventos})
 # Create your views here.
 
 
@@ -75,8 +76,8 @@ def event_detail(request, pk):
 
 @login_required
 def add_event(request):
-    if not request.user.type_user:
-        messages.error(request, 'Apenas usuários do tipo Professor têm permissão para criar eventos.')
+    if request.user.type_user != 'Organizador':
+        messages.error(request, 'Apenas usuários do tipo Organizador têm permissão para criar eventos.')
         return redirect('event_list')
         
     if request.method == 'POST':
