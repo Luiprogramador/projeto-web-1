@@ -3,15 +3,21 @@
 <div class="event-detail-container">
     <h2>{{ event.title }}</h2>
     
-    <!-- Tipo do Evento -->
     <div style="text-align: center; margin-bottom: 20px;">
         <span class="event-type-badge">{{ event.event_type }}</span>
     </div>
+    <div class="event-info-grid">
+        
+        <div class="event-info-card">
+            <div class="event-info-label">
+                Descrição
+            </div>
+            <div class="event-info-value">
+                {{ event.description}}
+            </div>
+        </div>
     
-    <!-- Descrição -->
-    <p class="event-description">{{ event.description }}</p>
     
-    <!-- Informações do Criador -->
     {% if event.creator %}
     <div class="event-creator-info">
         <span>👤</span>
@@ -19,39 +25,35 @@
     </div>
     {% endif %}
     
-    <!-- Grid de Informações -->
-    <div class="event-info-grid">
-        <!-- Data de Início -->
+    <hr> <div class="event-info-grid">
+        
         <div class="event-info-card">
             <div class="event-info-label">
-                📅 Data de Início
+                📅 Início
             </div>
             <div class="event-info-value">
-                {{ event.initial_date|date:"d/m/Y" }}
+                {{ event.initial_date|date:"d/m/Y" }} às {{ event.event_start|date:"H:i" }}
             </div>
         </div>
         
-        <!-- Data de Término -->
         <div class="event-info-card">
             <div class="event-info-label">
-                📅 Data de Término
+                📅 Término
             </div>
             <div class="event-info-value">
-                {{ event.final_date|date:"d/m/Y" }}
+                {{ event.final_date|date:"d/m/Y" }} às {{ event.event_end|date:"H:i" }}
             </div>
         </div>
         
-        <!-- Horário -->
         <div class="event-info-card">
             <div class="event-info-label">
-                🕐 Horário
+                🕐 Duração Total
             </div>
             <div class="event-info-value">
-                {{ event.hours_event|time:"H:i" }}
+                {{ event.calculated_duration_hours }} horas
             </div>
         </div>
         
-        <!-- Local -->
         <div class="event-info-card highlight">
             <div class="event-info-label">
                 📍 Local
@@ -60,39 +62,38 @@
                 {{ event.location }}
             </div>
         </div>
+        
     </div>
     
-    <!-- Capacidade -->
     <div class="event-capacity {% if event.is_full %}full{% endif %}">
         <span>👥 Participantes:</span>
-        <span>{{ event.current_participants_count }} / {{ event.max_capacity }}</span>
+        <span>{{ event.participants.count }} / {{ event.max_capacity }}</span>
     </div>
-   
+    
     <hr>
-   
-    <!-- Formulário de Inscrição -->
+    
     <form method="post" action="{% url 'toggle_registration' pk=event.pk %}" class="registration-form">
         {% csrf_token %}
-       
+        
         {% if user.is_authenticated %}
             {% if user in event.participants.all %}
                 <button type="submit" class="btn-unsubscribe">❌ Cancelar Inscrição</button>
-           
+            
             {% elif event.is_full %}
                 <button type="button" class="btn-full" disabled>🚫 EVENTO LOTADO</button>
-           
+            
             {% else %}
                 <button type="submit" class="btn-subscribe">✅ Inscrever-se Agora</button>
             {% endif %}
-           
+            
         {% else %}
             <div class="login-message">
                 🔒 Faça <a href="{% url 'login' %}">login</a> para se inscrever neste evento.
             </div>
         {% endif %}
-       
+        
     </form>
-   
+    
     <a href="{% url 'event_list' %}" class="back-link">← Voltar à Lista</a>
 </div>
 {% endblock %}

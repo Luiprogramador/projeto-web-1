@@ -2,19 +2,105 @@
 {% load static %}
 {% block title %}Adicionar Evento - Event Management{% endblock %}
 {% block content %}
+
 <div class="event-form-container">
     <h2>Adicionar Novo Evento</h2>
     <hr>
-   
+    
     <form method="post">
         {% csrf_token %}
-       
-        {{ form.as_p }}
-       
+        
+        <p>
+            <label for="{{ form.title.id_for_label }}">{{ form.title.label }}:</label>
+            {{ form.title }}
+            {% for error in form.title.errors %}
+                <span class="field-error">{{ error }}</span>
+            {% endfor %}
+            {% if form.title.help_text %}<small class="helptext">{{ form.title.help_text }}</small>{% endif %}
+        </p>
+
+        <p>
+            <label for="{{ form.description.id_for_label }}">{{ form.description.label }}:</label>
+            {{ form.description }}
+            {% for error in form.description.errors %}
+                <span class="field-error">{{ error }}</span>
+            {% endfor %}
+        </p>
+        
+        <div class="form-row-group">
+            <p>
+                <label for="{{ form.initial_date.id_for_label }}">{{ form.initial_date.label }}:</label>
+                {{ form.initial_date }} 
+                {% for error in form.initial_date.errors %}
+                    <span class="field-error">{{ error }}</span>
+                {% endfor %}
+            </p>
+
+            <p>
+                <label for="{{ form.final_date.id_for_label }}">{{ form.final_date.label }}:</label>
+                {{ form.final_date }}
+                {% for error in form.final_date.errors %}
+                    <span class="field-error">{{ error }}</span>
+                {% endfor %}
+            </p>
+        </div>
+        <div class="form-row-group">
+            <p>
+                <label for="{{ form.event_duration.id_for_label }}">{{ form.event_start.label }}:</label>
+                {{ form.event_start }}
+                {% for error in form.event_start.errors %}
+                    <span class="field-error">{{ error }}</span>
+                {% endfor %}
+            </p>
+            <p>
+                <label for="{{ form.event_duration.id_for_label }}">{{ form.event_end.label }}:</label>
+                {{ form.event_end }}
+                {% for error in form.event_end.errors %}
+                    <span class="field-error">{{ error }}</span>
+                {% endfor %}
+            </p>
+        </div>
+        <div class="form-row-group">
+            <p>
+                <label for="{{ form.location.id_for_label }}">{{ form.location.label }}:</label>
+                {{ form.location }}
+                {% for error in form.location.errors %}
+                    <span class="field-error">{{ error }}</span>
+                {% endfor %}
+            </p>
+
+            <p>
+                <label for="{{ form.max_capacity.id_for_label }}">{{ form.max_capacity.label }}:</label>
+                {{ form.max_capacity }}
+                {% for error in form.max_capacity.errors %}
+                    <span class="field-error">{{ error }}</span>
+                {% endfor %}
+            </p>
+        </div>
+        
+        <div class="form-row-group">
+            <p>
+                <label for="{{ form.event_type.id_for_label }}">{{ form.event_type.label }}:</label>
+                {{ form.event_type }}
+                {% for error in form.event_type.errors %}
+                    <span class="field-error">{{ error }}</span>
+                {% endfor %}
+            </p>
+        </div>
+        
         <div class="form-actions">
             <button type="submit">💾 Salvar Evento</button>
             <a href="{% url 'event_list' %}">✖ Cancelar</a>
         </div>
+        
+        {% if form.non_field_errors %}
+            <ul class="errorlist">
+                {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
     </form>
 </div>
 {% endblock %}

@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager 
 from django.conf import settings 
 import uuid
-from datetime import date
+from datetime import date, datetime
 
 # Create your models here.
 
@@ -30,30 +30,30 @@ class Event(models.Model):
         ('Fórum', 'Fórum'),
         ('Mesa Redonda', 'Mesa Redonda'),
     ]
-    title = models.CharField(max_length=200, verbose_name="Título") # Adicionado verbose_name
-    description = models.TextField(verbose_name="Descrição") # Adicionado verbose_name
-    initial_date = models.DateTimeField(default= '9999-12-31 00:00:00', verbose_name="Data de Início") # Adicionado verbose_name
-    final_date = models.DateTimeField(default='9999-12-31 23:59:59', verbose_name="Data Final") # Adicionado verbose_name
-    location = models.CharField(max_length=200, verbose_name="Local") # Adicionado verbose_name
-    max_capacity = models.IntegerField(verbose_name="Capacidade Máxima") # Adicionado verbose_name
+    title = models.CharField(max_length=200, verbose_name="Título")
+    description = models.TextField(verbose_name="Descrição")
+    initial_date = models.DateField(default= '9999-12-31', verbose_name="Data de Início")
+    final_date = models.DateField(default='9999-12-31', verbose_name="Data Final")
+    location = models.CharField(max_length=200, verbose_name="Local")
+    max_capacity = models.IntegerField(verbose_name="Capacidade Máxima")
     creator = models.ForeignKey(
         settings.AUTH_USER_MODEL,  
         on_delete=models.CASCADE, 
-        related_name='created_events', # Renomeado para Inglês
+        related_name='created_events',
         null=True,
         blank=True,
-        verbose_name="Criador" # Adicionado verbose_name
+        verbose_name="Criador"
     )
-    event_type = models.CharField(max_length=20, choices=event_type_choices, default='Palestra', verbose_name="Tipo de Evento") # Adicionado verbose_name
-    # hours_event é misturado. Mude para event_duration ou similar.
-    event_duration = models.TimeField(null=False, blank=True, default='00:00:00', verbose_name="Carga Horária") # Renomeado para Inglês e verbose_name em Português
+    event_type = models.CharField(max_length=20, choices=event_type_choices, default='Palestra', verbose_name="Tipo de Evento")
+    event_start = models.TimeField(null=False, blank=True, verbose_name="Horario de Início") 
+    event_end = models.TimeField(null=False, blank=True, verbose_name="Horario de Término")
     participants = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         through='EventParticipant',
         through_fields=('event', 'participant'), 
-        related_name='attended_events', # Renomeado para Inglês
+        related_name='attended_events',
         blank=True,
-        verbose_name="Participantes" # Adicionado verbose_name
+        verbose_name="Participantes"
     )
     
     class Meta:
@@ -64,6 +64,20 @@ class Event(models.Model):
     
     def __str__(self):
         return self.title
+
+    @property
+    def calculated_duration_hours(self):
+        # 1. Combina Data de Início e Hora de Início
+        start_datetime = datetime.combine(self.initial_date, self.event_start)
+        # 2. Combina Data Final e Hora de Término
+        final_datetime = datetime.combine(self.final_date, self.event_end)
+        
+        # 3. Calcula a diferença (timedelta)
+        duration = final_datetime - start_datetime
+        
+        # 4. Converte o total de segundos da duração para horas
+        # Arredondado para uma casa decimal para exibição (opcional)
+        return round(duration.total_seconds() / 3600, 1)
 
     @property
     def current_participants_count(self):
@@ -136,6 +150,7 @@ class Certificate(models.Model):
     @property
     def full_name_participant(self): # Nome do método em Inglês
         return self.participant.name
+
 
 class UserRegisterManager(BaseUserManager):
     def create_user(self, username, email, password=None, **extra_fields):

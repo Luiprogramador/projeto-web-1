@@ -1,13 +1,11 @@
 from django import forms
 from .models import Event, EventRegister, UserRegister
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.hashers import make_password
-
+from django.forms import ModelForm, SplitDateTimeWidget, DateInput, TimeInput, NumberInput
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(label='Usuário')
     password = forms.CharField(label='Senha', widget=forms.PasswordInput)
-# ...existing code...
     def save(self, commit=True):
         user = super().save(commit=False)
         # use set_password para manter a lógica do AbstractBaseUser
@@ -15,33 +13,68 @@ class LoginForm(AuthenticationForm):
         if commit:
             user.save()
         return user
-# ...existing code...
 
 
 class EventForm(forms.ModelForm):
+    initial_date = forms.DateTimeField(
+        widget=forms.DateTimeInput(
+            attrs={
+                'type': 'date',
+                'class': 'form-control'
+            }
+        ),
+        label="Data de Início" 
+    )
+    final_date = forms.DateTimeField(
+        widget=forms.DateTimeInput(
+            attrs={
+                'type': 'date',
+                'class': 'form-control'
+            }
+        ),
+        label="Data de Fim"
+    )
+    
     class Meta:
         model = Event
         fields = [
             'title', 
             'description', 
-            'initial_date',  # <-- Adicionado
-            'final_date',    # <-- Adicionado
+            'initial_date',
+            'final_date',
             'location', 
             'max_capacity', 
-            'event_type',    # <-- Adicionado
-            'event_duration'    # <-- Adicionado
+            'event_type',
+            'event_start',
+            'event_end',
         ]
-        # 'creator' e 'participants' geralmente são gerenciados fora do formulário de criação (como no salvamento da view)
-        
+        widgets = {
+            'initial_date': forms.SplitDateTimeWidget(
+                date_attrs={'type': 'date'},
+            ),
+            'final_date': forms.SplitDateTimeWidget(
+                date_attrs={'type': 'date'},
+            ),
+            'event_start': forms.TimeInput(
+                attrs={'type': 'time'}
+            ),
+            'event_end': forms.TimeInput(
+                attrs={'type': 'time'}
+            ),
+            'max_capacity': forms.NumberInput(
+                attrs={'min': 1}
+            ),
+        }
         labels = {
             'title': 'Título do Evento',
             'description': 'Descrição do Evento',
-            'initial_date': 'Data e Hora de Início',
-            'final_date': 'Data e Hora de Fim',      
+            'initial_date': 'Data de Início',
+            'final_date': 'Data de Fim',      
             'location': 'Local do Evento',
             'max_capacity': 'Capacidade Máxima',      
             'event_type': 'Tipo de Evento',          
-            'event_duration': 'Duração (Horas)',         
+            'event_start': 'Horário de Início',
+            'event_end': 'Horário de Término',         
         }
         
         help_texts = {
@@ -52,7 +85,8 @@ class EventForm(forms.ModelForm):
             'location': 'Insira o local onde o evento será realizado.',
             'max_capacity': 'O número máximo de participantes permitidos.', 
             'event_type': 'Selecione o tipo de evento.',                   
-            'event_duration': 'A duração total prevista para o evento (apenas horas:minutos:segundos).',
+            'event_start': 'Horário de início do evento.',
+            'event_end': 'Horário de término do evento.',
         }
         
         error_messages = {
@@ -82,7 +116,10 @@ class EventForm(forms.ModelForm):
             'event_type': {
                 'required': 'O tipo de evento é obrigatório.',
             },
-            'event_duration': {
+            'event_start': {
+                'invalid': 'Insira um formato de hora válido (HH:MM:SS).',
+            },
+            'event_end': {
                 'invalid': 'Insira um formato de hora válido (HH:MM:SS).',
             },
         }
@@ -96,7 +133,6 @@ class RegistrationForm(forms.ModelForm):
             'event': 'Event',
             'name': 'Your Name',
             'email': 'Your Email',
-            
         }
         help_texts = {
             'event': 'Select the event you want to register for.',
@@ -215,46 +251,3 @@ class RegisterForm(forms.ModelForm):
             )
         return cleaned_data
     
-class EventForm(forms.ModelForm):
-    
-    # Você pode adicionar campos customizados ou widgets aqui para melhor UX
-    # Exemplo para a data/hora:
-    initial_date = forms.DateTimeField(
-        widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}),
-        label="Data de Início" # Rótulo em Português
-    )
-    final_date = forms.DateTimeField(
-        widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}),
-        label="Data Final" # Rótulo em Português
-    )
-    
-    # Exemplo para a carga horária (TimeField)
-    event_duration = forms.TimeField(
-        widget=forms.TimeInput(attrs={'type': 'time', 'step': '3600'}), # step='3600' para passos de hora
-        label="Carga Horária (HH:MM)" # Rótulo em Português
-    )
-
-    class Meta:
-        model = Event
-        # USE OS NOMES DOS CAMPOS EM INGLÊS AQUI:
-        fields = [
-            'title',
-            'description',
-            'initial_date',  # Já definido acima
-            'final_date',    # Já definido acima
-            'location',
-            'max_capacity',
-            'event_type',
-            'event_duration', # CAMPO CORRIGIDO: de 'hours_event' para 'event_duration'
-            # 'participants' (Geralmente excluído se for um ManyToMany gerenciado por views)
-        ]
-        
-        # Você pode usar a propriedade 'labels' para configurar os rótulos em Português
-        # se não o fez diretamente nos campos como acima.
-        labels = {
-            'title': 'Título',
-            'description': 'Descrição',
-            'location': 'Local',
-            'max_capacity': 'Capacidade Máxima',
-            'event_type': 'Tipo de Evento',
-        }

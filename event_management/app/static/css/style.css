@@ -986,6 +986,12 @@ main {
     .btn-certificate {
         width: 100%;
     }
+    
+    .form-row-group {
+        flex-direction: column;
+        gap: 0;
+    }
+}
 }
 
 /* ========================================
@@ -1438,4 +1444,19 @@ main {
 .btn-explore:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(255,255,255,0.3);
+}
+
+/* Define um container flex para agrupar campos lado a lado */
+.form-row-group {
+    display: flex;
+    gap: 20px; /* Espaço entre as colunas */
+}
+
+/* Garante que o elemento interno ocupe o mesmo espaço em layouts de duas colunas */
+.form-row-group > p {
+    flex: 1;
+    /* Remove a margem inferior do <p> herdada para que o espaçamento seja controlado pelo gap,
+       e adiciona de volta apenas o padding-bottom para manter o espaçamento com o próximo grupo. */
+    margin-bottom: 0 !important; 
+    padding-bottom: 20px; 
 }

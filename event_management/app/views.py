@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required 
 from .models import Event, Certificate, EventParticipant 
 from .forms import RegisterForm, LoginForm, EventForm
+from datetime import datetime, time, timedelta
 
 def home(request):
     eventos = Event.objects.all()
@@ -166,15 +167,45 @@ def add_event(request):
     if request.method == 'POST':
         form = EventForm(request.POST)
         if form.is_valid():
-            
             evento = form.save(commit=False)
             
-            # creator deve estar usando o nome correto (creator no model, request.user é o objeto)
+            # --- Lógica de Cálculo da Duração (Novo) ---
+            start_date = evento.initial_date
+            end_date = evento.final_date
+            
+            # O cálculo retorna um objeto timedelta
+            duration_timedelta = end_date - start_date
+
+            # Se a duração for negativa ou nula, você pode adicionar uma mensagem de erro:
+            if duration_timedelta <= timedelta(minutes=0):
+                messages.error(request, 'A Data e Hora de Início deve ser anterior à Data e Hora de Fim.')
+                return render(request, 'add_event.html', {'form': form})
+            
+            # Converte o timedelta (duração) para um objeto time para salvar no campo TimeField (event_duration)
+            # Obs: Isso só funciona corretamente para eventos menores que 24 horas.
+            # Se o evento for maior que 24h, você precisará armazenar a duração em um campo IntegerField (minutos)
+            
+            # Cálculo para TimeField (máximo 23:59:59)
+            total_seconds = int(duration_timedelta.total_seconds())
+            hours = total_seconds // 3600
+            minutes = (total_seconds % 3600) // 60
+            
+            # Garante que o valor não ultrapasse o limite do TimeField (23:59:59)
+            # Se for maior que 24h, você pode decidir armazenar 23:59:59 ou emitir erro.
+            if hours >= 24:
+                 # Exemplo: Armazenar a duração total em minutos em um campo IntegerField no modelo, em vez de TimeField.
+                 # Ou, como um TimeField não suporta mais de 24h, você define um limite:
+                 hours = 23
+                 minutes = 59
+                 
+            evento.event_duration = time(hours, minutes)
+            # --------------------------------------------
+
             evento.creator = request.user 
             
             try:
                 evento.save() 
-                form.save_m2m() # Salva relações ManyToMany, como 'participants'
+                form.save_m2m() 
             
                 messages.success(request, 'Evento adicionado com sucesso!')
                 return redirect('event_list')
