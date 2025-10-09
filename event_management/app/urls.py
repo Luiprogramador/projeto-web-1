@@ -16,4 +16,5 @@ path('certificates/', views.certificate_list, name='certificate_list'),
 path('login/', views.login_view, name='login'),
 path('logout/', views.logout_view, name='logout'), 
 path('register/', views.register_view, name='register'),
+path('eventos/editar/<int:pk>/', views.event_edit, name='event_edit'),
 ]

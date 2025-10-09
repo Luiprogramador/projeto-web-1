@@ -48,18 +48,41 @@ class EventForm(forms.ModelForm):
             'event_end',
         ]
         widgets = {
-            'initial_date': forms.SplitDateTimeWidget(
-                date_attrs={'type': 'date'},
+            # initial_date (DateField): Usa DateInput e define o formato de input.
+            'initial_date': forms.DateInput(
+                attrs={'type': 'date', 'class': 'form-control'},
+                format='%Y-%m-%d' 
             ),
-            'final_date': forms.SplitDateTimeWidget(
-                date_attrs={'type': 'date'},
+            
+            # final_date (DateField): Usa DateInput e define o formato de input.
+            'final_date': forms.DateInput(
+                attrs={'type': 'date', 'class': 'form-control'},
+                format='%Y-%m-%d'
             ),
+            
+            # event_start (TimeField): Usa TimeInput (HTML type="time").
             'event_start': forms.TimeInput(
-                attrs={'type': 'time'}
+        attrs={
+            'type': 'time',
+            # O 'step' 60 desativa o seletor de segundos em muitos navegadores
+            'step': '60', 
+            'class': 'form-control'
+            },
+                # VITAL: Diz ao Django para esperar/exibir apenas HH:MM
+            format='%H:%M'
             ),
+            
+            # event_end (TimeField): Usa TimeInput (HTML type="time").
             'event_end': forms.TimeInput(
-                attrs={'type': 'time'}
+            attrs={
+                'type': 'time',
+                'step': '60', 
+                'class': 'form-control'
+            },
+            format='%H:%M'
             ),
+            
+            # max_capacity (IntegerField): Usa NumberInput com atributo min.
             'max_capacity': forms.NumberInput(
                 attrs={'min': 1}
             ),

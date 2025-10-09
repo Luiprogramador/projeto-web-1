@@ -6,17 +6,17 @@
     <div style="text-align: center; margin-bottom: 20px;">
         <span class="event-type-badge">{{ event.event_type }}</span>
     </div>
+    
     <div class="event-info-grid">
-        
         <div class="event-info-card">
             <div class="event-info-label">
                 Descrição
             </div>
-            <div class="event-info-value">
-                {{ event.description}}
+            <div class="event-info-value description-content">
+                {{ event.description }}
             </div>
         </div>
-    
+    </div>
     
     {% if event.creator %}
     <div class="event-creator-info">
@@ -25,8 +25,9 @@
     </div>
     {% endif %}
     
-    <hr> <div class="event-info-grid">
-        
+    <hr>
+    
+    <div class="event-info-grid">
         <div class="event-info-card">
             <div class="event-info-label">
                 📅 Início
@@ -62,16 +63,13 @@
                 {{ event.location }}
             </div>
         </div>
-        
     </div>
     
     <div class="event-capacity {% if event.is_full %}full{% endif %}">
         <span>👥 Participantes:</span>
         <span>{{ event.participants.count }} / {{ event.max_capacity }}</span>
     </div>
-    
-    <hr>
-    
+        
     <form method="post" action="{% url 'toggle_registration' pk=event.pk %}" class="registration-form">
         {% csrf_token %}
         
@@ -91,9 +89,12 @@
                 🔒 Faça <a href="{% url 'login' %}">login</a> para se inscrever neste evento.
             </div>
         {% endif %}
-        
     </form>
-    
     <a href="{% url 'event_list' %}" class="back-link">← Voltar à Lista</a>
+    {% if request.user == event.creator %}
+        <a href="{% url 'event_edit' pk=event.pk %}" class="btn-edit">
+            Editar
+        </a>
+    {% endif %}
 </div>
 {% endblock %}

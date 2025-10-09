@@ -31,7 +31,9 @@
     {% for message in messages %}
     <div class="message">{{ message }}</div>
 {% endfor %}
-
+    <p>
+        Não tem uma conta? <a href="{% url 'register' %}">Registre-se aqui</a>
+    </p>
     <button type="submit">Entrar</button>
 </form>
 

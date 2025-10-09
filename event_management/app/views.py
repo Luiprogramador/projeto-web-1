@@ -171,8 +171,11 @@ def add_event(request):
 
             duration_timedelta = end_date - start_date
 
-            if duration_timedelta <= timedelta(minutes=0):
-                messages.error(request, 'A Data e Hora de Início deve ser anterior à Data e Hora de Fim.')
+            if duration_timedelta < timedelta(minutes=0):
+                messages.error(request, 'A Data de Início deve ser anterior à Data de Fim.')
+                return render(request, 'add_event.html', {'form': form})
+            if evento.event_start == evento.event_end:
+                messages.error(request, 'O horário de início e horário de fim não podem ser iguais.')
                 return render(request, 'add_event.html', {'form': form})
             
             total_seconds = int(duration_timedelta.total_seconds())
@@ -269,3 +272,31 @@ def issue_certificate(request, event_id):
     }
 
     return render(request, 'certificate_detail.html', context)
+
+def event_edit(request, pk):
+    # Busca o evento existente pelo ID (pk) ou lança erro 404
+    event = get_object_or_404(Event, pk=pk)
+    
+    # RECOMENDAÇÃO DE SEGURANÇA:
+    # Verifique se o usuário logado é o criador do evento antes de permitir a edição
+    # if request.user != event.creator:
+    #     # Redireciona se o usuário não for o criador
+    #     return redirect('event_detail', pk=pk) 
+    
+    if request.method == 'POST':
+        # Se for POST, preenche o formulário com os dados enviados (request.POST) 
+        # e a instância do evento existente
+        form = EventForm(request.POST, instance=event)
+        
+        if form.is_valid():
+            # O save() atualiza a instância existente, pois 'instance=event' foi passado
+            form.save() 
+            # Redireciona para a página de detalhes do evento atualizado
+            return redirect('event_detail', pk=event.pk)
+    else:
+        # Se for GET, inicializa o formulário com os dados da instância existente 
+        # (pré-preenchimento)
+        form = EventForm(instance=event) 
+
+    # Reutiliza o template de criação de eventos (event_form.html)
+    return render(request, 'add_event.html', {'form': form, 'is_edit': True, 'event': event})
