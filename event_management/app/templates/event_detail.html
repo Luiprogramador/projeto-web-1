@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 {% extends 'base.html' %}
 {% block content %}
 <div class="event-detail-container">
@@ -97,46 +97,5 @@
     
     <a href="{% url 'event_list' %}" class="back-link">← Voltar à Lista</a>
 </div>
-=======
-{% extends 'base.html' %}
-{% block content %}
-<div class="event-detail-container">
-    <h2>{{ event.title }}</h2>
-    
-    <p class="event-description">{{ event.description }}</p>
-    
-    <div class="event-capacity {% if event.is_full %}full{% endif %}">
-        <span>👥 Participantes:</span>
-        <span>{{ event.current_participants_count }} / {{ event.max_capacity }}</span>
-    </div>
 
-    <p class="event-date">📅 Data de Início: {{ event.initial_date|date:"d/m/Y" }}</p>
-   
-    <hr>
-   
-    <form method="post" action="{% url 'toggle_registration' pk=event.pk %}" class="registration-form">
-        {% csrf_token %}
-       
-        {% if user.is_authenticated %}
-            {% if user in event.participants.all %}
-                <button type="submit" class="btn-unsubscribe">❌ Cancelar Inscrição</button>
-           
-            {% elif event.is_full %}
-                <button type="button" class="btn-full" disabled>🚫 EVENTO LOTADO</button>
-           
-            {% else %}
-                <button type="submit" class="btn-subscribe">✅ Inscrever-se Agora</button>
-            {% endif %}
-           
-        {% else %}
-            <div class="login-message">
-                🔒 Faça <a href="{% url 'login' %}">login</a> para se inscrever neste evento.
-            </div>
-        {% endif %}
-       
-    </form>
-   
-    <a href="{% url 'event_list' %}" class="back-link">← Voltar à Lista</a>
-</div>
->>>>>>> 5a96fedf93e6b0de9087d57868d0edb4fd6311c1
 {% endblock %}

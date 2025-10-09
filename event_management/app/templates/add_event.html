@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 {% extends "base.html" %}
 {% load static %}
 {% block title %}Adicionar Evento - Event Management{% endblock %}
@@ -104,25 +104,5 @@
 
     </form>
 </div>
-=======
-{% extends "base.html" %}
-{% load static %}
-{% block title %}Adicionar Evento - Event Management{% endblock %}
-{% block content %}
-<div class="event-form-container">
-    <h2>Adicionar Novo Evento</h2>
-    <hr>
-   
-    <form method="post">
-        {% csrf_token %}
-       
-        {{ form.as_p }}
-       
-        <div class="form-actions">
-            <button type="submit">💾 Salvar Evento</button>
-            <a href="{% url 'event_list' %}">✖ Cancelar</a>
-        </div>
-    </form>
-</div>
->>>>>>> 5a96fedf93e6b0de9087d57868d0edb4fd6311c1
+
 {% endblock %}
