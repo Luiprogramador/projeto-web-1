@@ -37,6 +37,11 @@ entre na pasta event management no terminal que tem um arquivo chamado manage.py
 python manage.py runserver
 ```
 
+# Preview do site
+
+<img width="1919" height="1018" alt="image" src="https://github.com/user-attachments/assets/3ff31afd-06e6-499d-add3-b30c56b4bc27" />
+
+
 
 ## Contribuição
 
