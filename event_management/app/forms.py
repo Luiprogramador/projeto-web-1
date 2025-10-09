@@ -8,7 +8,6 @@ class LoginForm(AuthenticationForm):
     password = forms.CharField(label='Senha', widget=forms.PasswordInput)
     def save(self, commit=True):
         user = super().save(commit=False)
-        # use set_password para manter a lógica do AbstractBaseUser
         user.set_password(self.cleaned_data["password"])
         if commit:
             user.save()
@@ -160,7 +159,6 @@ class RegisterForm(forms.ModelForm):
         label='E-mail',
         required=True,
         help_text='Obrigatório. Usado para comunicação e recuperação de conta.',
-        # Exemplo de widget
         widget=forms.EmailInput(attrs={'placeholder': 'seu.email@exemplo.com'})
     )
     
@@ -235,7 +233,6 @@ class RegisterForm(forms.ModelForm):
     
     def save(self, commit=True):
         user = super().save(commit=False)
-        # use set_password para manter a lógica do AbstractBaseUser
         user.set_password(self.cleaned_data["password"])
         if commit:
             user.save()

@@ -75,8 +75,6 @@ class Event(models.Model):
         # 3. Calcula a diferença (timedelta)
         duration = final_datetime - start_datetime
         
-        # 4. Converte o total de segundos da duração para horas
-        # Arredondado para uma casa decimal para exibição (opcional)
         return round(duration.total_seconds() / 3600, 1)
 
     @property
@@ -106,7 +104,6 @@ class EventRegister(models.Model):
 class Certificate(models.Model):
     """Model to track certificates issued to event participants."""
     
-    # Links to the Event.
     event = models.ForeignKey(
         'Event', 
         on_delete=models.CASCADE, 
@@ -114,7 +111,6 @@ class Certificate(models.Model):
         verbose_name="Evento" # Português
     )
     
-    # Links to the User (Participant).
     participant = models.ForeignKey(
         settings.AUTH_USER_MODEL, 
         on_delete=models.CASCADE, 
@@ -122,13 +118,11 @@ class Certificate(models.Model):
         verbose_name="Participante" # Português
     )
     
-    # Date the certificate was issued.
     issue_date = models.DateField( # Nome do campo em Inglês
         default=date.today, 
         verbose_name="Data de Emissão" # Português
     )
     
-    # Unique and immutable UUID for verification.
     verification_code = models.UUIDField( # Nome do campo em Inglês
         default=uuid.uuid4, 
         unique=True, 
@@ -140,7 +134,6 @@ class Certificate(models.Model):
         db_table = 'certificate'
         verbose_name = "Certificado" # Português
         verbose_name_plural = "Certificados" # Português
-        # Ensure a participant only gets one certificate per event.
         unique_together = ('event', 'participant') 
         ordering = ['-issue_date']
 

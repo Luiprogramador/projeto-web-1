@@ -6,7 +6,13 @@
     <title>{% block title %}Event Management{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block head %}{% endblock %}
+<<<<<<< HEAD
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+=======
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+>>>>>>> b550a9bf24ca49d10aba8a436e6bb89d6041ca0e
 </head>
 <body>
     <header class="header">
@@ -20,9 +26,17 @@
                             <a class="nav-link" href="{% url 'event_subscribed' %}">Meus Eventos</a>
                         </li>
                     {% endif %}
+<<<<<<< HEAD
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'certificate_list' %}">Meus Certificado</a>
                         </li>
+=======
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'certificate_list' %}">Meus Certificado</a>
+                        </li>
+                        
+>>>>>>> b550a9bf24ca49d10aba8a436e6bb89d6041ca0e
                     <div class="user-actions">
                 {% if user.is_authenticated %}
                     <p>Olá, {{ user.username }}!</p>
