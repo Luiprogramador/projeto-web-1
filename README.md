@@ -44,8 +44,8 @@ um preview da página inicial do projeto
 
 1. **Clone o repositório**
 ```bash
-git clone https://github.com/seu-usuario/event-manager.git
-cd event-manager
+git clone https://github.com/Luiprogramador/projeto-web-1
+cd projeto-web-1
 ```
 
 2. **Instale as dependências do Django**
@@ -73,10 +73,12 @@ O projeto estará disponível em `http://localhost:8000`
 ## 🗂️ Estrutura do Projeto
 
 ```
-event_management/
-├── app/            # App principal de eventos
-├── event_management/    # Configurações do projeto
-└── staticfiles/           # Arquivos estáticos 
+projeto-web-1/
+├── event_management/
+│  ├── app/            # App principal de eventos
+│  ├── event_management/    # Configurações do projeto
+│  └── staticfiles/           # Arquivos estáticos
+│
 ```
 
 ## 📊 Modelos Principais
