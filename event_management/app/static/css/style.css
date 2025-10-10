@@ -841,6 +841,15 @@ main {
 
 .form-actions button[type="submit"]:hover {
     background: #218838;
+    transform: translateY(-8px) rotate(-6deg) scale(1.08);
+    background-image: linear-gradient(135deg, #34d399 0%, #06b6d4 50%, #7c3aed 100%);
+    background-size: 200% 200%;
+    background-position: 0% 50%;
+    color: #fff;
+    text-shadow: 0 3px 10px rgba(0,0,0,0.12);
+    box-shadow: 0 12px 30px rgba(34,197,94,0.18), 0 6px 18px rgba(6,182,212,0.12), inset 0 -4px 10px rgba(0,0,0,0.06);
+    filter: drop-shadow(0 6px 18px rgba(0,0,0,0.12)) saturate(1.08) brightness(1.02);
+    transition: transform 360ms cubic-bezier(.2,.8,.2,1), box-shadow 360ms ease, background-position 600ms ease, filter 320ms ease;
 }
 
 .form-actions a {
@@ -853,6 +862,15 @@ main {
 
 .form-actions a:hover {
     background: #5a6268;
+    transform: translateY(-8px) rotate(-6deg) scale(1.08);
+    background-image: linear-gradient(135deg, #ff7a18 0%, #ffc107 25%, #28a745 50%, #00d4ff 75%, #7c3aed 100%);
+    background-size: 200% 200%;
+    background-position: 0% 50%;
+    color: #fff;
+    text-shadow: 0 3px 10px rgba(0,0,0,0.12);
+    box-shadow: 0 12px 30px rgba(112, 112, 112, 0.18), 0 6px 18px rgba(6,182,212,0.12), inset 0 -4px 10px rgba(0,0,0,0.06);
+    filter: drop-shadow(0 6px 18px rgba(0,0,0,0.12)) saturate(1.08) brightness(1.02);
+    transition: transform 360ms cubic-bezier(.2,.8,.2,1), box-shadow 360ms ease, background-position 600ms ease, filter 320ms ease;
 }
 
 /* ========================================
