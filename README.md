@@ -88,7 +88,7 @@ projeto-web-1/
 - `title` - Título do evento
 - `description` - Descrição do evento
 - `location` - Local do evento
-- `max_capacity` - capacidade máxima do evento
+- `max_capacity` - Capacidade máxima do evento
 - `created_id` - Id do organizador do evento
 - `inicial_date` - Data de início do evento
 - `final_date` - Data final do evento
