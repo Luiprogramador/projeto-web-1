@@ -159,12 +159,12 @@ Para contribuir com o projeto:
 
 ## 📝 Licença
 
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para detalhes.
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para detalhes.
 
 ## 👥 Desenvolvedores
 
 - **Lui Mendes** - [luiprogramador@gmail.com](mailto:luiprogramador@gmail.com)
-- **Alejandro Reyes** - [alejandro.reyesd.dev@gmail.com](mailto:alejandro.reyes.dev@gmail.com)
+- **Alejandro Reyes** - [alejandro.reyes.dev@gmail.com](mailto:alejandro.reyes.dev@gmail.com)
 
 ---
 
