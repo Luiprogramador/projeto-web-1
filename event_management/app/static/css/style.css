@@ -688,8 +688,15 @@ main {
     text-decoration: underline;
 }
 
+
 .btn-edit {
-    display: inline-block;
+    display: block;
+    width: calc(100% - 40px);
+    max-width: 420px;
+    margin: 20px auto 0;
+    box-sizing: border-box;
+    text-align: center;
+    margin-left: auto;
     padding: 12px 24px;
     background: #007bff;
     color: #fff;
@@ -697,10 +704,8 @@ main {
     border-radius: 6px;
     font-weight: 500;
     transition: all 0.3s ease;
-    margin-top: 20px;
-    margin-left: 15px;
-    float: right;
-}
+    border: none;
+    }
 
 .btn-edit:hover {
     background: #0056b3;
@@ -708,7 +713,10 @@ main {
 }
 
 .back-link {
-    display: inline-block;
+    display: block;
+    width: calc(100% - 40px);
+    max-width: 420px;
+    text-align: center;
     padding: 12px 24px;
     background: #6c757d;
     color: #fff;
@@ -716,7 +724,7 @@ main {
     border-radius: 6px;
     font-weight: 500;
     transition: all 0.3s ease;
-    margin-top: 20px;
+    margin: 20px auto 0;
 }
 
 .back-link:hover {
@@ -911,7 +919,7 @@ main {
         gap: 5px;
         font-size: 16px;
     }
-    
+
     .registration-form button {
         width: 100%;
         min-width: auto;
