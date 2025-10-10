@@ -1,7 +1,7 @@
 from django import forms
 from .models import Event, EventRegister, UserRegister
 from django.contrib.auth.forms import AuthenticationForm
-from django.forms import ModelForm, SplitDateTimeWidget, DateInput, TimeInput, NumberInput
+import datetime
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(label='Usuário')
@@ -14,26 +14,7 @@ class LoginForm(AuthenticationForm):
         return user
 
 
-class EventForm(forms.ModelForm):
-    initial_date = forms.DateTimeField(
-        widget=forms.DateTimeInput(
-            attrs={
-                'type': 'date',
-                'class': 'form-control'
-            }
-        ),
-        label="Data de Início" 
-    )
-    final_date = forms.DateTimeField(
-        widget=forms.DateTimeInput(
-            attrs={
-                'type': 'date',
-                'class': 'form-control'
-            }
-        ),
-        label="Data de Fim"
-    )
-    
+class EventForm(forms.ModelForm):   
     class Meta:
         model = Event
         fields = [
@@ -102,8 +83,8 @@ class EventForm(forms.ModelForm):
         help_texts = {
             'title': 'Insira o título do evento.',
             'description': 'Insira uma breve descrição do evento.',
-            'initial_date': 'Data e hora em que o evento começará.', 
-            'final_date': 'Data e hora em que o evento terminará.',  
+            'initial_date': 'Data em que o evento começará.', 
+            'final_date': 'Data em que o evento terminará.',  
             'location': 'Insira o local onde o evento será realizado.',
             'max_capacity': 'O número máximo de participantes permitidos.', 
             'event_type': 'Selecione o tipo de evento.',                   
@@ -121,11 +102,11 @@ class EventForm(forms.ModelForm):
             },
             'initial_date': {
                 'required': 'A data de início é obrigatória.',
-                'invalid': 'Insira uma data e hora válidas para o início.',
+                'invalid': 'Insira uma data válidas para o início.',
             },
             'final_date': {
                 'required': 'A data de fim é obrigatória.',
-                'invalid': 'Insira uma data e hora válidas para o fim.',
+                'invalid': 'Insira uma data válidas para o fim.',
             },
             'location': {
                 'max_length': 'O local é muito longo.',
@@ -145,6 +126,24 @@ class EventForm(forms.ModelForm):
                 'invalid': 'Insira um formato de hora válido (HH:MM:SS).',
             },
         }
+        def clean(self):
+            cleaned_data = super().clean()
+            initial_date = cleaned_data.get("initial_date")
+            final_date = cleaned_data.get("final_date")
+            event_start = cleaned_data.get("event_start")
+            event_end = cleaned_data.get("event_end")
+
+            if initial_date and final_date and event_start and event_end:
+                start_datetime = datetime.combine(initial_date, event_start)
+                final_datetime = datetime.combine(final_date, event_end)
+                
+                if final_datetime <= start_datetime:
+                    self.add_error(
+                        None, 
+                        "A data de término devem ser estritamente posteriores à data de início."
+                    )
+                    
+            return cleaned_data
 
 
 class RegistrationForm(forms.ModelForm):

@@ -8,7 +8,7 @@
     </div>
     
     <div class="event-info-grid">
-        <div class="event-info-card">
+        <div class="event-info-card description-card">
             <div class="event-info-label">
                 Descrição
             </div>
@@ -83,18 +83,19 @@
             {% else %}
                 <button type="submit" class="btn-subscribe">✅ Inscrever-se Agora</button>
             {% endif %}
-            
         {% else %}
             <div class="login-message">
                 🔒 Faça <a href="{% url 'login' %}">login</a> para se inscrever neste evento.
             </div>
         {% endif %}
-    </form>
+        </form>
+        
     <a href="{% url 'event_list' %}" class="back-link">← Voltar à Lista</a>
+    
     {% if request.user == event.creator %}
         <a href="{% url 'event_edit' pk=event.pk %}" class="btn-edit">
             Editar
         </a>
-    {% endif %}
+        {% endif %}
 </div>
 {% endblock %}

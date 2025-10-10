@@ -28,12 +28,11 @@
             <span class="field-error">{{ error }}</span>
         {% endfor %}
     </p>
-    {% for message in messages %}
-    <div class="message">{{ message }}</div>
-{% endfor %}
-    <p>
-        Não tem uma conta? <a href="{% url 'register' %}">Registre-se aqui</a>
-    </p>
+
+    <p>Não tem conta? <a class ="register-link" href="{% url 'register' %}">faça o cadastro</a></p>
+    
+
+    
     <button type="submit">Entrar</button>
 </form>
 

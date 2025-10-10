@@ -76,37 +76,6 @@ def event_detail(request, pk):
 
 
 @login_required
-def add_event(request):
-    if request.user.user_type != 'Organizador': 
-        messages.error(request, 'Apenas usuários do tipo Organizador têm permissão para criar eventos.')
-        return redirect('event_list')
-        
-    if request.method == 'POST':
-        form = EventForm(request.POST)
-        if form.is_valid():
-            
-            evento = form.save(commit=False)
-            
-            evento.creator = request.user 
-            
-            try:
-                evento.save() 
-                form.save_m2m() 
-            
-                messages.success(request, 'Evento adicionado com sucesso!')
-                return redirect('event_list')
-            
-            except Exception as e:
-                 messages.error(request, f'Erro ao salvar o evento. Detalhe: {e}')
-                 return render(request, 'add_event.html', {'form': form})
-            
-    else:
-        form = EventForm()
-        
-    return render(request, 'add_event.html', {'form': form})
-
-
-@login_required
 def remove_event(request, pk):
     evento = get_object_or_404(Event, pk=pk)
     
@@ -171,11 +140,12 @@ def add_event(request):
 
             duration_timedelta = end_date - start_date
 
+            
             if duration_timedelta < timedelta(minutes=0):
                 messages.error(request, 'A Data de Início deve ser anterior à Data de Fim.')
                 return render(request, 'add_event.html', {'form': form})
             if evento.event_start == evento.event_end:
-                messages.error(request, 'O horário de início e horário de fim não podem ser iguais.')
+                messages.error(request, 'A Data de Início e Data de Fim não podem ser iguais.')
                 return render(request, 'add_event.html', {'form': form})
             
             total_seconds = int(duration_timedelta.total_seconds())
@@ -273,6 +243,7 @@ def issue_certificate(request, event_id):
 
     return render(request, 'certificate_detail.html', context)
 
+
 def event_edit(request, pk):
     # Busca o evento existente pelo ID (pk) ou lança erro 404
     event = get_object_or_404(Event, pk=pk)
@@ -300,3 +271,4 @@ def event_edit(request, pk):
 
     # Reutiliza o template de criação de eventos (event_form.html)
     return render(request, 'add_event.html', {'form': form, 'is_edit': True, 'event': event})
+
