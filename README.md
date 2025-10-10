@@ -115,6 +115,7 @@ projeto-web-1/
 - **Criar evento**: Formulário para criação de novos eventos
 - **Meus eventos**: Eventos criados pelo usuário logado
 - **Minhas inscrições**: Eventos onde o usuário está inscrito
+- **Certificados**: Certificados de participação dos eventos
 
 ### Fluxo do Usuário
 1. **Cadastro/Login** no sistema
@@ -122,6 +123,7 @@ projeto-web-1/
 3. **Criar** eventos (se organizador)
 4. **Inscrever-se** em eventos de interesse
 5. **Gerenciar** próprios eventos e inscrições
+6. **Retirar certificados** em eventos ao participar de algum
 
 ## 🧪 Comandos Úteis
 
