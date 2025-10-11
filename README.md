@@ -83,7 +83,7 @@ projeto-web-1/
 
 ## 📊 Modelos Principais
 
-### Event
+### event
 - `id` - Id do evento
 - `title` - Título do evento
 - `description` - Descrição do evento
@@ -95,7 +95,7 @@ projeto-web-1/
 - `event_end` - Hora final do evento
 - `event_start` - Hora inicial do evento
   
-### User
+### user_register
 - `id` - Id do usuário
 - `name` - Nome real do usuário
 - `username` - Apelido do usuário
