@@ -165,6 +165,7 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para
 
 - **Lui Mendes** - [luiprogramador@gmail.com](mailto:luiprogramador@gmail.com)
 - **Alejandro Reyes** - [alejandro.reyes.dev@gmail.com](mailto:alejandro.reyes.dev@gmail.com)
+- **Cleudes Içami** - [icamichirico@gmail.com](mailto:icamichirico@gmail.com)
 
 ---
 
