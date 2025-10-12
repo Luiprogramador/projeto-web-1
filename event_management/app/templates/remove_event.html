@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load static %}
 {% block title %}Remover Evento - Event Management{% endblock %}
 {% block content %}
 <div class="delete-confirmation-container">
@@ -8,8 +7,7 @@
         <p>⚠️ Você está prestes a deletar permanentemente o evento:</p>
        
         <div class="event-details-box">
-            <strong>📌 Título:</strong> {{ evento.title }}<br><br>
-            <strong>📅 Data:</strong> {{ evento.date|date:"d/m/Y H:i" }}
+            <strong>📌 Título:</strong> {{ evento.title }}
         </div>
        
         <hr>
