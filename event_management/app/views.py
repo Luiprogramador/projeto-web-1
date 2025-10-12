@@ -245,30 +245,17 @@ def issue_certificate(request, event_id):
 
 
 def event_edit(request, pk):
-    # Busca o evento existente pelo ID (pk) ou lança erro 404
     event = get_object_or_404(Event, pk=pk)
-    
-    # RECOMENDAÇÃO DE SEGURANÇA:
-    # Verifique se o usuário logado é o criador do evento antes de permitir a edição
-    # if request.user != event.creator:
-    #     # Redireciona se o usuário não for o criador
-    #     return redirect('event_detail', pk=pk) 
-    
+
     if request.method == 'POST':
-        # Se for POST, preenche o formulário com os dados enviados (request.POST) 
-        # e a instância do evento existente
+       
         form = EventForm(request.POST, instance=event)
         
         if form.is_valid():
-            # O save() atualiza a instância existente, pois 'instance=event' foi passado
             form.save() 
-            # Redireciona para a página de detalhes do evento atualizado
             return redirect('event_detail', pk=event.pk)
     else:
-        # Se for GET, inicializa o formulário com os dados da instância existente 
-        # (pré-preenchimento)
         form = EventForm(instance=event) 
 
-    # Reutiliza o template de criação de eventos (event_form.html)
     return render(request, 'add_event.html', {'form': form, 'is_edit': True, 'event': event})
 

@@ -185,7 +185,8 @@ main {
 }
 
 .welcome-container p:hover {
-    color: #333;
+    color: #28a745;
+    transition: color 0.3s ease;
 }
 
 .events-container,
