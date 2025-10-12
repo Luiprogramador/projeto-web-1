@@ -77,6 +77,7 @@ projeto-web-1/
 ├── event_management/
 │  ├── app/            # App principal de eventos
 │  ├── event_management/    # Configurações do projeto
+│  ├── scripts/    # arquivos de população e criação do banco de dados
 │  └── staticfiles/           # Arquivos estáticos
 │
 ```
