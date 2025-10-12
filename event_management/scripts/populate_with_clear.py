@@ -2,6 +2,11 @@
 import os
 import django
 from django.db import connection
+import sys
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(BASE_DIR)
+
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'event_management.settings')
 django.setup()
@@ -16,7 +21,6 @@ def execute_sql_file(file_path):
         cursor.execute("DELETE FROM certificate;")
         cursor.execute("DELETE FROM app_eventparticipant;")
         cursor.execute("DELETE FROM event;")
-        cursor.execute("DELETE FROM user_register;")
         
         print("✓ Todas as tabelas limpas")
         
