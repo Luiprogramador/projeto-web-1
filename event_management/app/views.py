@@ -145,7 +145,7 @@ def add_event(request):
                 messages.error(request, 'A Data de Início deve ser anterior à Data de Fim.')
                 return render(request, 'add_event.html', {'form': form})
             if evento.event_start == evento.event_end:
-                messages.error(request, 'A Data de Início e Data de Fim não podem ser iguais.')
+                messages.error(request, 'adicione hora de início e de fim diferentes para que a data de inicio seja anterior à data de fim.')
                 return render(request, 'add_event.html', {'form': form})
             
             total_seconds = int(duration_timedelta.total_seconds())

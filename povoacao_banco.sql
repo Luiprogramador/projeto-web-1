@@ -1,22 +1,22 @@
 -- POPULAÇÃO DA TABELA user_register
-INSERT INTO user_register (username, email, password, phone, institution, last_login, user_type) VALUES
+INSERT INTO user_register (name, username, email, password, phone, institution, last_login, user_type) VALUES
 -- Organizadores
-('joao_organizador', 'joao.organizador@faculdade.edu.br', 'hashed_password_789', '(31) 97777-6666', 'Faculdade Tecnológica', '2024-01-15 09:15:00', 'Organizador'),
-('ana_organizadora', 'ana.organizadora@universidade.edu.br', 'hashed_password_101', '(41) 96666-5555', 'Universidade Estadual', '2024-01-13 16:45:00', 'Organizador'),
-('carlos_organizador', 'carlos.organizador@colégio.edu.br', 'hashed_password_202', '(51) 95555-4444', 'Colégio Técnico', '2024-01-14 11:20:00', 'Organizador'),
+('João Silva', 'joao_organizador', 'joao.organizador@faculdade.edu.br', 'hashed_password_789', '(31) 97777-6666', 'Faculdade Tecnológica', '2024-01-15 09:15:00', 'Organizador'),
+('Ana Costa', 'ana_organizadora', 'ana.organizadora@universidade.edu.br', 'hashed_password_101', '(41) 96666-5555', 'Universidade Estadual', '2024-01-13 16:45:00', 'Organizador'),
+('Carlos Oliveira', 'carlos_organizador', 'carlos.organizador@colégio.edu.br', 'hashed_password_202', '(51) 95555-4444', 'Colégio Técnico', '2024-01-14 11:20:00', 'Organizador'),
 
 -- Professores
-('prof_maria', 'maria.silva@universidade.edu.br', 'hashed_password_123', '(11) 9999-8888', 'Universidade Federal', '2024-01-15 10:30:00', 'Professor'),
-('prof_pedro', 'pedro.santos@instituto.edu.br', 'hashed_password_456', '(21) 98888-7777', 'Instituto Federal', '2024-01-14 14:20:00', 'Professor'),
-('prof_fernanda', 'fernanda.oliveira@faculdade.edu.br', 'hashed_password_303', '(31) 97777-6666', 'Faculdade de Tecnologia', '2024-01-13 15:30:00', 'Professor'),
+('Maria Silva', 'prof_maria', 'maria.silva@universidade.edu.br', 'hashed_password_123', '(11) 9999-8888', 'Universidade Federal', '2024-01-15 10:30:00', 'Professor'),
+('Pedro Santos', 'prof_pedro', 'pedro.santos@instituto.edu.br', 'hashed_password_456', '(21) 98888-7777', 'Instituto Federal', '2024-01-14 14:20:00', 'Professor'),
+('Fernanda Oliveira', 'prof_fernanda', 'fernanda.oliveira@faculdade.edu.br', 'hashed_password_303', '(31) 97777-6666', 'Faculdade de Tecnologia', '2024-01-13 15:30:00', 'Professor'),
 
 -- Estudantes
-('aluno_lucas', 'lucas.pereira@gmail.com', 'hashed_password_505', '(11) 94444-3333', 'Universidade Federal', '2024-01-15 08:00:00', 'Estudante'),
-('aluna_julia', 'julia.rodrigues@hotmail.com', 'hashed_password_404', '(21) 93333-2222', 'Instituto de Pesquisas', '2024-01-14 13:10:00', 'Estudante'),
-('aluno_rafael', 'rafael.costa@outlook.com', 'hashed_password_606', '(31) 92222-1111', 'Faculdade de Tecnologia', '2024-01-15 12:45:00', 'Estudante'),
-('aluna_camila', 'camila.souza@yahoo.com', 'hashed_password_707', '(41) 91111-0000', 'Universidade Tecnológica', '2024-01-12 17:20:00', 'Estudante'),
-('aluno_bruno', 'bruno.alves@bol.com.br', 'hashed_password_808', '(51) 90000-9999', 'Centro de Ciências', '2024-01-14 10:15:00', 'Estudante'),
-('aluna_patricia', 'patricia.lima@uol.com.br', 'hashed_password_909', '(11) 98888-7777', 'Faculdade de Medicina', '2024-01-13 14:25:00', 'Estudante');
+('Lucas Pereira', 'aluno_lucas', 'lucas.pereira@gmail.com', 'hashed_password_505', '(11) 94444-3333', 'Universidade Federal', '2024-01-15 08:00:00', 'Estudante'),
+('Julia Rodrigues', 'aluna_julia', 'julia.rodrigues@hotmail.com', 'hashed_password_404', '(21) 93333-2222', 'Instituto de Pesquisas', '2024-01-14 13:10:00', 'Estudante'),
+('Rafael Costa', 'aluno_rafael', 'rafael.costa@outlook.com', 'hashed_password_606', '(31) 92222-1111', 'Faculdade de Tecnologia', '2024-01-15 12:45:00', 'Estudante'),
+('Camila Souza', 'aluna_camila', 'camila.souza@yahoo.com', 'hashed_password_707', '(41) 91111-0000', 'Universidade Tecnológica', '2024-01-12 17:20:00', 'Estudante'),
+('Bruno Alves', 'aluno_bruno', 'bruno.alves@bol.com.br', 'hashed_password_808', '(51) 90000-9999', 'Centro de Ciências', '2024-01-14 10:15:00', 'Estudante'),
+('Patricia Lima', 'aluna_patricia', 'patricia.lima@uol.com.br', 'hashed_password_909', '(11) 98888-7777', 'Faculdade de Medicina', '2024-01-13 14:25:00', 'Estudante');
 
 -- POPULAÇÃO DA TABELA event
 INSERT INTO event (title, description, location, max_capacity, creator_id, event_type, final_date, initial_date, event_end, event_start) VALUES
@@ -147,7 +147,7 @@ FROM event
 GROUP BY event_type 
 ORDER BY quantidade DESC;
 
--- Verificar participantes por evento
+-- Verificar participantes por evento (agora incluindo o nome)
 SELECT 
     e.title as evento,
     e.event_type as tipo,
@@ -158,3 +158,13 @@ FROM event e
 LEFT JOIN app_eventparticipant ap ON e.id = ap.event_id
 GROUP BY e.id, e.title, e.event_type, e.max_capacity
 ORDER BY e.event_type, e.title;
+
+-- Nova consulta: Verificar usuários com seus nomes
+SELECT 
+    name as nome_completo,
+    username,
+    email,
+    user_type as tipo_usuario,
+    institution as instituicao
+FROM user_register 
+ORDER BY user_type, name;
