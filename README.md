@@ -126,6 +126,33 @@ projeto-web-1/
 5. **Gerenciar** próprios eventos e inscrições
 6. **Retirar certificados** em eventos ao participar de algum
 
+# 🧪 Testes
+
+## Credenciais para Teste
+
+O banco de dados já está populado com 5 usuários de exemplo. Você pode utilizar qualquer uma das contas abaixo para fazer login no sistema:
+
+### 👥 Contas Disponíveis
+
+|    Nome    |     Username      | Tipo de Usuário |           Email                |
+|------------|-------------------|----------------|---------------------------------|
+| João Silva | `joao_organizador` | Organizador | joao.organizador@faculdade.edu.br |
+| Ana Costa | `ana_organizadora` | Organizador | ana.organizadora@universidade.edu.br |
+| Maria Silva | `prof_maria` | Professor | maria.silva@universidade.edu.br |
+| Pedro Santos | `prof_pedro` | Professor | pedro.santos@instituto.edu.br |
+| Lucas Pereira | `aluno_lucas` | Estudante | lucas.pereira@gmail.com |
+
+### 🔑 Senha de Acesso
+**Todas as contas utilizam a mesma senha:** `senha123`
+
+### 📝 Como Fazer Login
+1. Acesse a página de login do sistema
+2. Utilize um dos **usernames** listados acima
+3. Digite a senha: `senha123`
+4. Clique em "Entrar"
+
+Cada tipo de usuário terá permissões e funcionalidades diferentes de acordo com seu perfil (Organizador, Professor ou Estudante).
+
 ## 🧪 Comandos Úteis
 
 ### Criar migrações
