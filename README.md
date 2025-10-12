@@ -83,7 +83,7 @@ projeto-web-1/
 
 ## 📊 Modelos Principais
 
-### Event
+### event
 - `id` - Id do evento
 - `title` - Título do evento
 - `description` - Descrição do evento
@@ -95,7 +95,7 @@ projeto-web-1/
 - `event_end` - Hora final do evento
 - `event_start` - Hora inicial do evento
   
-### User
+### user_register
 - `id` - Id do usuário
 - `name` - Nome real do usuário
 - `username` - Apelido do usuário
@@ -165,6 +165,7 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para
 
 - **Lui Mendes** - [luiprogramador@gmail.com](mailto:luiprogramador@gmail.com)
 - **Alejandro Reyes** - [alejandro.reyes.dev@gmail.com](mailto:alejandro.reyes.dev@gmail.com)
+- **Cleudes Içami** - [icamichirico@gmail.com](mailto:icamichirico@gmail.com)
 
 ---
 
