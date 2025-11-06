@@ -7,7 +7,7 @@
     <h2>Adicionar Novo Evento</h2>
     <hr>
     
-    <form method="post">
+    <form method="post" **enctype="multipart/form-data"**>
         {% csrf_token %}
         
         <p>
@@ -46,14 +46,15 @@
         </div>
         <div class="form-row-group">
             <p>
-                <label for="{{ form.event_duration.id_for_label }}">{{ form.event_start.label }}:</label>
-                {{ form.event_start }}
+                <label for="{{ form.event_start.id_for_label }}">{{ form.event_start.label }}:</label>
+                {{ form.event_start }} 
                 {% for error in form.event_start.errors %}
                     <span class="field-error">{{ error }}</span>
                 {% endfor %}
             </p>
+
             <p>
-                <label for="{{ form.event_duration.id_for_label }}">{{ form.event_end.label }}:</label>
+                <label for="{{ form.event_end.id_for_label }}">{{ form.event_end.label }}:</label>
                 {{ form.event_end }}
                 {% for error in form.event_end.errors %}
                     <span class="field-error">{{ error }}</span>
@@ -73,6 +74,27 @@
                 <label for="{{ form.max_capacity.id_for_label }}">{{ form.max_capacity.label }}:</label>
                 {{ form.max_capacity }}
                 {% for error in form.max_capacity.errors %}
+                    <span class="field-error">{{ error }}</span>
+                {% endfor %}
+            </p>
+        </div>
+
+        <div class="image">
+            <p>
+                <label for="{{ form.image.id_for_label }}">{{ form.image.label }}:</label>
+
+                {% if is_edit and event.image %}
+                    <div class="current-image-preview" style="margin-bottom: 10px;">
+                        <strong>Imagem Atual:</strong><br>
+                        <a href="{{ event.image.url }}" target="_blank">
+                            <img src="{{ event.image.url }}" alt="Imagem atual do evento {{ event.title }}" style="max-height: 150px; border-radius: 4px; margin-top: 5px;">
+                        </a>
+                    </div>
+                {% endif %}
+
+                {{ form.image }} 
+                
+                {% for error in form.image.errors %}
                     <span class="field-error">{{ error }}</span>
                 {% endfor %}
             </p>

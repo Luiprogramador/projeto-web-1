@@ -2,7 +2,12 @@
 {% block content %}
 <div class="event-detail-container">
     <h2>{{ event.title }}</h2>
-    
+
+    {% if event.image %}
+        <img src="{{ event.image.url }}" alt="Imagem de {{ event.title }}">
+    {% else %}
+    <p>Nah</p>
+    {% endif %}
     <div style="text-align: center; margin-bottom: 20px;">
         <span class="event-type-badge">{{ event.event_type }}</span>
     </div>

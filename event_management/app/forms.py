@@ -22,6 +22,7 @@ class EventForm(forms.ModelForm):
             'description', 
             'initial_date',
             'final_date',
+            'image',
             'location', 
             'max_capacity', 
             'event_type',
@@ -184,15 +185,17 @@ class RegisterForm(forms.ModelForm):
         widget=forms.EmailInput(attrs={'placeholder': 'seu.email@exemplo.com'})
     )
     
+    phone = forms.CharField(widget=forms.TextInput(attrs={'placeholder': '(99) 99999-9999', 'data-mask': '(00) 00000-0000'}))
+
     password_confirm = forms.CharField(
         label='Confirmação de Senha',
-        widget=forms.PasswordInput,
-        help_text='Repita a senha para confirmação.'
+        widget=forms.PasswordInput(attrs={'placeholder': 'Djgh@1234'}),
+        help_text='Repita a senha para confirmação.',
     )
     
     password = forms.CharField(
         label='Senha',
-        widget=forms.PasswordInput
+        widget=forms.PasswordInput(attrs={'placeholder': 'Djgh@1234'})
     )
 
     class Meta:

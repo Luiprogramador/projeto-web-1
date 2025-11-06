@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required 
 from .models import Event, Certificate, EventParticipant 
 from .forms import RegisterForm, LoginForm, EventForm
-from datetime import datetime, time, timedelta
+from datetime import datetime, time, timedelta # O 'time' não é mais usado aqui, mas pode deixar
 
 def home(request):
     eventos = Event.objects.all()
@@ -132,33 +132,20 @@ def add_event(request):
         return redirect('event_list')
         
     if request.method == 'POST':
-        form = EventForm(request.POST)
+        # ✅ GARANTIA: request.FILES está aqui
+        form = EventForm(request.POST, request.FILES)
+        
         if form.is_valid():
             evento = form.save(commit=False)
-            start_date = evento.initial_date
-            end_date = evento.final_date
-
-            duration_timedelta = end_date - start_date
-
             
-            if duration_timedelta < timedelta(minutes=0):
+            # Validação simples de data (a validação de data/hora combinada
+            # está no clean() do seu forms.py, o que é ótimo)
+            if evento.final_date < evento.initial_date:
                 messages.error(request, 'A Data de Início deve ser anterior à Data de Fim.')
                 return render(request, 'add_event.html', {'form': form})
-            if evento.event_start == evento.event_end:
-                messages.error(request, 'adicione hora de início e de fim diferentes para que a data de inicio seja anterior à data de fim.')
-                return render(request, 'add_event.html', {'form': form})
-            
-            total_seconds = int(duration_timedelta.total_seconds())
-            hours = total_seconds // 3600
-            minutes = (total_seconds % 3600) // 60
-            
 
-            if hours >= 24:
-                hours = 23
-                minutes = 59
-                 
-            evento.event_duration = time(hours, minutes)
-            # --------------------------------------------
+            # ✅ REMOVIDO: Todo o bloco de cálculo de 'event_duration'
+            # que estava aqui foi removido.
 
             evento.creator = request.user 
             
@@ -170,7 +157,6 @@ def add_event(request):
                 return redirect('event_list')
             
             except Exception as e:
-                # Mensagem de erro em Português
                 messages.error(request, f'Erro ao salvar o evento. Detalhe: {e}')
                 return render(request, 'add_event.html', {'form': form})
             
@@ -249,7 +235,8 @@ def event_edit(request, pk):
 
     if request.method == 'POST':
        
-        form = EventForm(request.POST, instance=event)
+        # ✅ CORREÇÃO: request.FILES está aqui, junto com request.POST e instance
+        form = EventForm(request.POST, request.FILES, instance=event)
         
         if form.is_valid():
             form.save() 
@@ -257,5 +244,5 @@ def event_edit(request, pk):
     else:
         form = EventForm(instance=event) 
 
+    # Passamos 'is_edit' e 'event' para o template (como na sua versão original)
     return render(request, 'add_event.html', {'form': form, 'is_edit': True, 'event': event})
-

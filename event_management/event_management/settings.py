@@ -16,6 +16,9 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Auterado
 AUTH_USER_MODEL = 'app.UserRegister'
 
@@ -40,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -123,3 +128,28 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    # Autenticação: Define TokenAuthentication como o método principal
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+
+    # Permissões: Exige autenticação para TODOS os endpoints da API por padrão
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+
+    # Throttling (Limitação de Taxa):
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.UserRateThrottle',
+    ],
+
+    # Define os limites personalizados que usaremos nas views
+    'DEFAULT_THROTTLE_RATES': {
+        # 'throttle_scope' -> 'limite'
+        'eventos': '20/day',        # Para Consulta de Eventos
+        'inscricoes': '50/day',     # Para Inscrições de Participantes
+        'user': '1000/day',         # Limite genérico para outros endpoints
+    }
+}
