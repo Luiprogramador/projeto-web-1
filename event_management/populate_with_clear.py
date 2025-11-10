@@ -18,9 +18,9 @@ def execute_sql_file(file_path):
         cursor.execute("PRAGMA ignore_check_constraints = ON;")
         
         # Limpa TUDO sem se preocupar com ordem
-        cursor.execute("DELETE FROM certificate;")
+        """ cursor.execute("DELETE FROM certificate;")
         cursor.execute("DELETE FROM app_eventparticipant;")
-        cursor.execute("DELETE FROM event;")
+        cursor.execute("DELETE FROM event;") """
         
         print("✓ Todas as tabelas limpas")
         
