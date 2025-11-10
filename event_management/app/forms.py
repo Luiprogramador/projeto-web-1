@@ -35,7 +35,8 @@ class EventForm(forms.ModelForm):
             'initial_date': forms.DateInput(
                 attrs={
                     'type': 'date',
-                    'class': 'form-control'
+                    'class': 'form-control',
+                    'min': datetime.date.today().strftime('%d-%m-%Y')
                 }
             ),
             'final_date': forms.DateInput(
@@ -87,8 +88,26 @@ class EventForm(forms.ModelForm):
                     'class': 'form-control'
                 }
             ),
+            'image': forms.ClearableFileInput(
+                attrs={
+                    'class': 'form-control-file'
+                }
+            ),
         }
 
+    def clean(self):
+        cleaned = super().clean()
+        inicial = cleaned.get('initial_date')
+        final = cleaned.get('final_date')
+        hoje = datetime.date.today()
+
+        if inicial and inicial < hoje:
+            raise forms.ValidationError("A data inicial não pode ser anterior a hoje.")
+
+        if inicial and final and final < inicial:
+            raise forms.ValidationError("A data final não pode ser anterior à data inicial.")
+
+        return cleaned
 
 class RegistrationForm(forms.ModelForm):
     class Meta:
