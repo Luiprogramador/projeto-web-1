@@ -2,7 +2,7 @@
 INSERT INTO event (title, description, location, max_capacity, creator_id, event_type, final_date, initial_date, event_end, event_start) VALUES
 -- Palestras
 ('Palestra: Inteligência Artificial na Educação', 'Discussão sobre aplicações de IA no ambiente educacional', 'Auditório Principal - Bloco A', 150, 1, 'Palestra', '2024-02-15', '2024-02-15', '18:00:00', '14:00:00'),
-('Palestra: Sustentabilidade e Tecnologia', 'Como a tecnologia pode contribuir para um futuro sustentável', 'Sala de Conferências - Campus Central', 100, 2, 'Palestra', '2024-03-10', '2024-03-10', '17:30:00', '15:00:00'),
+('Palestra: Sustentabilidade e Tecnologia', 'Como a tecnologia pode contribuir para um futuro sustentável', 'Sala de Conferências - Campus Central', 100, 2, 'Palestra', '2024-03-10', '2024-03-10', '17:30:00', '15:00:00',),
 
 -- Workshops
 ('Workshop de Python para Iniciantes', 'Aprenda os fundamentos da programação em Python com projetos práticos', 'Laboratório de Informática - Bloco B', 30, 1, 'Workshop', '2024-02-20', '2024-02-15', '17:00:00', '09:00:00'),

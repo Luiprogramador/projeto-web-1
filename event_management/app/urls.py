@@ -32,8 +32,4 @@ path('register/', views.register_view, name='register'),
 path('api/token-auth/', authtoken_views.obtain_auth_token, name='api_token_auth'),
 path('api/eventos/', api_views.EventListAPIView.as_view(), name='api_event_list'),
 path('api/inscricoes/', api_views.EventSubscriptionCreateAPIView.as_view(), name='api_subscription_create'),
-]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

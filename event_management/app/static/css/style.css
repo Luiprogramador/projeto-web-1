@@ -1663,3 +1663,11 @@ main {
     margin-bottom: 0 !important; 
     padding-bottom: 20px; 
 }
+
+.event-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}

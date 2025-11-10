@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from .models import Event, Certificate, EventParticipant 
 from .forms import RegisterForm, LoginForm, EventForm
 from datetime import datetime, time, timedelta # O 'time' não é mais usado aqui, mas pode deixar
+from .utils import get_relative_path, salvar_imagem_em_pasta
+from django.conf import settings
 
 def home(request):
     eventos = Event.objects.all()
@@ -127,43 +129,17 @@ def event_subscribed(request):
 
 @login_required
 def add_event(request):
-    if request.user.user_type != 'Organizador':
-        messages.error(request, 'Apenas usuários do tipo Organizador têm permissão para criar eventos.')
-        return redirect('event_list')
-        
     if request.method == 'POST':
-        # ✅ GARANTIA: request.FILES está aqui
         form = EventForm(request.POST, request.FILES)
-        
         if form.is_valid():
-            evento = form.save(commit=False)
-            
-            # Validação simples de data (a validação de data/hora combinada
-            # está no clean() do seu forms.py, o que é ótimo)
-            if evento.final_date < evento.initial_date:
-                messages.error(request, 'A Data de Início deve ser anterior à Data de Fim.')
-                return render(request, 'add_event.html', {'form': form})
-
-            # ✅ REMOVIDO: Todo o bloco de cálculo de 'event_duration'
-            # que estava aqui foi removido.
-
-            evento.creator = request.user 
-            
-            try:
-                evento.save() 
-                form.save_m2m() 
-            
-                messages.success(request, 'Evento adicionado com sucesso!')
-                return redirect('event_list')
-            
-            except Exception as e:
-                messages.error(request, f'Erro ao salvar o evento. Detalhe: {e}')
-                return render(request, 'add_event.html', {'form': form})
-            
+            event = form.save(commit=False)
+            event.creator = request.user
+            event.save()
+            return redirect('event_list')
     else:
         form = EventForm()
-        
     return render(request, 'add_event.html', {'form': form})
+
 
 @login_required
 def certificate_list(request):
@@ -230,19 +206,25 @@ def issue_certificate(request, event_id):
     return render(request, 'certificate_detail.html', context)
 
 
+@login_required
 def event_edit(request, pk):
     event = get_object_or_404(Event, pk=pk)
 
     if request.method == 'POST':
-       
-        # ✅ CORREÇÃO: request.FILES está aqui, junto com request.POST e instance
         form = EventForm(request.POST, request.FILES, instance=event)
-        
         if form.is_valid():
-            form.save() 
-            return redirect('event_detail', pk=event.pk)
-    else:
-        form = EventForm(instance=event) 
+            evento = form.save(commit=False)
 
-    # Passamos 'is_edit' e 'event' para o template (como na sua versão original)
+            # Salva a imagem diretamente no campo do modelo
+            if 'image' in request.FILES:
+                evento.image = request.FILES['image']
+
+            evento.save()
+            messages.success(request, 'Evento atualizado com sucesso!')
+            return redirect('event_detail', pk=evento.pk)
+        else:
+            messages.error(request, 'Erro ao atualizar o evento. Verifique os dados e tente novamente.')
+    else:
+        form = EventForm(instance=event)
+
     return render(request, 'add_event.html', {'form': form, 'is_edit': True, 'event': event})

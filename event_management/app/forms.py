@@ -18,133 +18,76 @@ class EventForm(forms.ModelForm):
     class Meta:
         model = Event
         fields = [
-            'title', 
-            'description', 
+            'title',
+            'description',
             'initial_date',
             'final_date',
-            'image',
-            'location', 
-            'max_capacity', 
-            'event_type',
             'event_start',
             'event_end',
+            'location',
+            'max_capacity',
+            'image',
+            'event_type',
         ]
+        
         widgets = {
-            # initial_date (DateField): Usa DateInput e define o formato de input.
+            # Campos de data
             'initial_date': forms.DateInput(
-                attrs={'type': 'date', 'class': 'form-control'},
-                format='%Y-%m-%d' 
+                attrs={
+                    'type': 'date',
+                    'class': 'form-control'
+                }
             ),
-            
-            # final_date (DateField): Usa DateInput e define o formato de input.
             'final_date': forms.DateInput(
-                attrs={'type': 'date', 'class': 'form-control'},
-                format='%Y-%m-%d'
+                attrs={
+                    'type': 'date',
+                    'class': 'form-control'
+                }
             ),
-            
-            # event_start (TimeField): Usa TimeInput (HTML type="time").
+            # Campos de hora
             'event_start': forms.TimeInput(
-        attrs={
-            'type': 'time',
-            # O 'step' 60 desativa o seletor de segundos em muitos navegadores
-            'step': '60', 
-            'class': 'form-control'
-            },
-                # VITAL: Diz ao Django para esperar/exibir apenas HH:MM
-            format='%H:%M'
+                attrs={
+                    'type': 'time',
+                    'class': 'form-control'
+                }
             ),
-            
-            # event_end (TimeField): Usa TimeInput (HTML type="time").
             'event_end': forms.TimeInput(
-            attrs={
-                'type': 'time',
-                'step': '60', 
-                'class': 'form-control'
-            },
-            format='%H:%M'
+                attrs={
+                    'type': 'time',
+                    'class': 'form-control'
+                }
             ),
-            
-            # max_capacity (IntegerField): Usa NumberInput com atributo min.
+            # Outros campos
+            'title': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Digite o título do evento'
+                }
+            ),
+            'description': forms.Textarea(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Digite a descrição do evento'
+                }
+            ),
+            'location': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Digite o local do evento'
+                }
+            ),
             'max_capacity': forms.NumberInput(
-                attrs={'min': 1}
+                attrs={
+                    'class': 'form-control',
+                    'min': '1'
+                }
+            ),
+            'event_type': forms.Select(
+                attrs={
+                    'class': 'form-control'
+                }
             ),
         }
-        labels = {
-            'title': 'Título do Evento',
-            'description': 'Descrição do Evento',
-            'initial_date': 'Data de Início',
-            'final_date': 'Data de Fim',      
-            'location': 'Local do Evento',
-            'max_capacity': 'Capacidade Máxima',      
-            'event_type': 'Tipo de Evento',          
-            'event_start': 'Horário de Início',
-            'event_end': 'Horário de Término',         
-        }
-        
-        help_texts = {
-            'title': 'Insira o título do evento.',
-            'description': 'Insira uma breve descrição do evento.',
-            'initial_date': 'Data em que o evento começará.', 
-            'final_date': 'Data em que o evento terminará.',  
-            'location': 'Insira o local onde o evento será realizado.',
-            'max_capacity': 'O número máximo de participantes permitidos.', 
-            'event_type': 'Selecione o tipo de evento.',                   
-            'event_start': 'Horário de início do evento.',
-            'event_end': 'Horário de término do evento.',
-        }
-        
-        error_messages = {
-            'title': {
-                'max_length': 'O título é muito longo.',
-                'required': 'O título é obrigatório.',
-            },
-            'description': {
-                'required': 'A descrição é obrigatória.',
-            },
-            'initial_date': {
-                'required': 'A data de início é obrigatória.',
-                'invalid': 'Insira uma data válidas para o início.',
-            },
-            'final_date': {
-                'required': 'A data de fim é obrigatória.',
-                'invalid': 'Insira uma data válidas para o fim.',
-            },
-            'location': {
-                'max_length': 'O local é muito longo.',
-                'required': 'O local é obrigatório.',
-            },
-            'max_capacity': {
-                'required': 'A capacidade máxima é obrigatória.',
-                'invalid': 'Insira um número inteiro para a capacidade.',
-            },
-            'event_type': {
-                'required': 'O tipo de evento é obrigatório.',
-            },
-            'event_start': {
-                'invalid': 'Insira um formato de hora válido (HH:MM:SS).',
-            },
-            'event_end': {
-                'invalid': 'Insira um formato de hora válido (HH:MM:SS).',
-            },
-        }
-        def clean(self):
-            cleaned_data = super().clean()
-            initial_date = cleaned_data.get("initial_date")
-            final_date = cleaned_data.get("final_date")
-            event_start = cleaned_data.get("event_start")
-            event_end = cleaned_data.get("event_end")
-
-            if initial_date and final_date and event_start and event_end:
-                start_datetime = datetime.combine(initial_date, event_start)
-                final_datetime = datetime.combine(final_date, event_end)
-                
-                if final_datetime <= start_datetime:
-                    self.add_error(
-                        None, 
-                        "A data de término devem ser estritamente posteriores à data de início."
-                    )
-                    
-            return cleaned_data
 
 
 class RegistrationForm(forms.ModelForm):
@@ -273,4 +216,3 @@ class RegisterForm(forms.ModelForm):
                 "As senhas não coincidem."
             )
         return cleaned_data
-    

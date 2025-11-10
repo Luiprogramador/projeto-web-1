@@ -32,7 +32,12 @@ class Event(models.Model):
     ]
     title = models.CharField(max_length=200, verbose_name="Título")
     description = models.TextField(verbose_name="Descrição")
-    image = models.ImageField(upload_to='eventos/', blank=True, null=True)
+    image = models.ImageField(
+        upload_to='eventos/',
+        verbose_name='Imagem do Evento',
+        null=True,
+        blank=True
+    )
     initial_date = models.DateField(default= '9999-12-31', verbose_name="Data de Início")
     final_date = models.DateField(default='9999-12-31', verbose_name="Data Final")
     location = models.CharField(max_length=200, verbose_name="Local")
@@ -190,5 +195,3 @@ class UserRegister(AbstractBaseUser):
         
     def __str__(self):
         return self.username
-
-
