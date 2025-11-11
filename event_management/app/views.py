@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404 
 from django.contrib.auth import login, logout
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required 
-from .models import Event, Certificate, EventParticipant 
-from .forms import RegisterForm, LoginForm, EventForm
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from .models import Event, Certificate, EventParticipant, UserRegister
+from .forms import RegisterForm, LoginForm, EventForm, ProfileForm
 from datetime import datetime, time, timedelta # O 'time' não é mais usado aqui, mas pode deixar
 from .utils import get_relative_path, salvar_imagem_em_pasta
 from django.conf import settings
@@ -228,3 +229,45 @@ def event_edit(request, pk):
         form = EventForm(instance=event)
 
     return render(request, 'add_event.html', {'form': form, 'is_edit': True, 'event': event})
+
+
+@login_required
+def perfil(request):
+    """
+    Exibe a página de perfil do usuário logado.
+    Tenta usar o próprio request.user (caso UserRegister seja o modelo de usuário)
+    ou busca a instância em UserRegister por pk/username como fallback.
+    """
+    user = request.user
+    profile = None
+    try:
+        # se o user já for instância de UserRegister
+        if isinstance(user, UserRegister):
+            profile = user
+        else:
+            # tenta localizar um UserRegister correspondente
+            profile = UserRegister.objects.filter(pk=user.pk).first() or \
+                      UserRegister.objects.filter(username=user.username).first()
+    except Exception:
+        profile = None
+
+    return render(request, 'perfil.html', {'profile': profile})
+
+@login_required
+def perfil_edicao(request):
+    """
+    Edita o perfil do usuário logado.
+    """
+    user = request.user
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Perfil atualizado com sucesso.")
+            return redirect('perfil')
+        else:
+            messages.error(request, "Corrija os erros no formulário.")
+    else:
+        form = ProfileForm(instance=user)
+
+    return render(request, 'perfil_edicao.html', {'form': form})

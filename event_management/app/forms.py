@@ -1,7 +1,10 @@
 from django import forms
 from .models import Event, EventRegister, UserRegister
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import get_user_model
 import datetime
+
+User = get_user_model()
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(label='Usuário')
@@ -206,6 +209,7 @@ class RegisterForm(forms.ModelForm):
             },
             'password': {
                 'required': 'A senha é obrigatória.',
+                'help_text': 'A senha deve ter pelo menos 8 caracteres, incluindo letras maiúsculas, minúsculas, números e caracteres especiais.'
             },
             'phone': {
                 'max_length': 'O telefone não pode exceder 20 caracteres.',
@@ -229,9 +233,54 @@ class RegisterForm(forms.ModelForm):
         cleaned_data = super().clean()
         password = cleaned_data.get("password")
         password_confirm = cleaned_data.get("password_confirm")
+        username = cleaned_data.get('username')
 
+        # Limpa erros anteriores deste formulário (se houver)
+        # (Django já lida com isso, mas mantemos para clareza)
+        
+        # Verifica confirmação
         if password and password_confirm and password != password_confirm:
-            raise forms.ValidationError(
-                "As senhas não coincidem."
-            )
+            self.add_error('password_confirm', "As senhas não coincidem.")
+
+        # Regras de força da senha (cada uma gera erro no campo 'password')
+        if password:
+            if len(password) < 8:
+                self.add_error('password', "A senha deve ter pelo menos 8 caracteres.")
+            if not any(char.isdigit() for char in password):
+                self.add_error('password', "A senha deve conter pelo menos um número.")
+            if not any(char.isalpha() for char in password):
+                self.add_error('password', "A senha deve conter pelo menos uma letra.")
+            if password.islower():
+                self.add_error('password', "A senha deve conter pelo menos uma letra maiúscula.")
+            if password.isupper():
+                self.add_error('password', "A senha deve conter pelo menos uma letra minúscula.")
+            if not any(char in '!@#$%^&*()_+-=[]{}|;:,.<>?/' for char in password):
+                self.add_error('password', "A senha deve conter pelo menos um caractere especial.")
+            if ' ' in password:
+                self.add_error('password', "A senha não pode conter espaços.")
+            if password.lower() in ['senha', '12345678', 'qwerty', 'abcdefg']:
+                self.add_error('password', "A senha é muito comum. Por favor, escolha uma senha mais forte.")
+            if username and username.lower() in password.lower():
+                self.add_error('password', "A senha não pode conter o nome de usuário.")
+
         return cleaned_data
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = [
+            'name',
+            'email',
+            'phone',
+            'institution',
+            'image',
+            'user_type',
+        ]
+        widgets = {
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '(00) 00000-0000'}),
+            'institution': forms.TextInput(attrs={'class': 'form-control'}),
+            'user_type': forms.Select(attrs={'class': 'form-control'}),
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
+        }

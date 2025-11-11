@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}Editar Perfil{% endblock %}
+
+{% block content %}
+<div class="profile-edit-container">
+    <h2>Editar Perfil</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div>
+            {{ form.name.label_tag }}<br>
+            {{ form.name }}
+            {% for e in form.name.errors %}<span class="field-error">{{ e }}</span>{% endfor %}
+        </div>
+
+        <div>
+            {{ form.email.label_tag }}<br>
+            {{ form.email }}
+            {% for e in form.email.errors %}<span class="field-error">{{ e }}</span>{% endfor %}
+        </div>
+
+        <div>
+            {{ form.phone.label_tag }}<br>
+            {{ form.phone }}
+            {% for e in form.phone.errors %}<span class="field-error">{{ e }}</span>{% endfor %}
+        </div>
+
+        <div>
+            {{ form.institution.label_tag }}<br>
+            {{ form.institution }}
+            {% for e in form.institution.errors %}<span class="field-error">{{ e }}</span>{% endfor %}
+        </div>
+
+        <div>
+            {{ form.user_type.label_tag }}<br>
+            {{ form.user_type }}
+            {% for e in form.user_type.errors %}<span class="field-error">{{ e }}</span>{% endfor %}
+        </div>
+
+        <div>
+            {{ form.image.label_tag }}<br>
+            {{ form.image }}
+            {% if request.user.image %}
+                <div style="margin-top:8px;">
+                    <img src="{{ request.user.image.url }}" alt="foto" style="max-width:160px;">
+                </div>
+            {% endif %}
+            {% for e in form.image.errors %}<span class="field-error">{{ e }}</span>{% endfor %}
+        </div>
+
+        <button type="submit" class="btn-register">Salvar</button>
+        <a href="{% url 'perfil' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

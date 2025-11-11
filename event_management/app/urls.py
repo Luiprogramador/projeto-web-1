@@ -27,6 +27,8 @@ path('certificates/', views.certificate_list, name='certificate_list'),
 path('login/', views.login_view, name='login'),
 path('logout/', views.logout_view, name='logout'), 
 path('register/', views.register_view, name='register'),
+path('perfil/', views.perfil, name='perfil'),
+path('perfil/editar/', views.perfil_edicao, name='perfil_edicao'),
 
 # api urls
 path('api/token-auth/', authtoken_views.obtain_auth_token, name='api_token_auth'),

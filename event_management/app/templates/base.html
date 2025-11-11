@@ -28,13 +28,20 @@
                     {% endif %}
                     <div class="user-actions">
                 {% if user.is_authenticated %}
-                    <p>Olá, {{ user.username }}!</p>
-                    <a href="{% url 'logout' %}">Sair</a>
-                {% else %}
-                    <a href="{% url 'login' %}">Entrar</a>
-                    <a href="{% url 'register' %}">Registro</a>
-                {% endif %}
-                    </div>
+                    <a class="profile-link" href="{% url 'perfil' %}">
+                        {% if user.image %}
+                            <img class="user-avatar" src="{{ user.image.url }}" alt="Avatar de {{ user.username }}">
+                        {% else %}
+                            <img class="user-avatar" src="{% static 'img/default-avatar.jpg' %}" alt="Avatar padrão">
+                        {% endif %}
+                        <span class="profile-username">{{ user.username }}</span>
+                    </a>
+                    <a class="logout-link" href="{% url 'logout' %}">Sair</a>
+                 {% else %}
+                     <a href="{% url 'login' %}">Entrar</a>
+                     <a href="{% url 'register' %}">Registro</a>
+                 {% endif %}
+                     </div>
                 </ul>
             </nav>
         {% endblock %}

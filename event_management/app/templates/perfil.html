@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Meu Perfil{% endblock %}
+{% load static %}
+{% block content %}
+<div class="profile-container">
+    <h2>Meu Perfil</h2>
+
+    {% if profile %}
+        {% if profile.image %}
+            <div class="profile-image">
+                <img src="{{ profile.image.url }}" alt="Imagem de perfil" style="max-width:200px;">
+            </div>
+        {% else %}
+            <img class="user-avatar-perfil" src="{% static 'img/default-avatar.jpg' %}" alt="Avatar padrão">
+        {% endif %}
+        <p><strong>Nome:</strong>
+            {% if profile.name %}
+                {{ profile.name }}
+            {% elif profile.get_full_name %}
+                {{ profile.get_full_name }}
+            {% else %}
+                {{ profile.username }}
+            {% endif %}
+        </p>
+
+        <p><strong>Usuário:</strong> {{ profile.username }}</p>
+        <p><strong>E-mail:</strong> {{ profile.email }}</p>
+        <p><strong>Telefone:</strong> {{ profile.phone|default:"Não informado" }}</p>
+        <p><strong>Instituição:</strong> {{ profile.institution|default:"Não informada" }}</p>
+        <p><strong>Tipo:</strong> {{ profile.user_type|default:"Não informado" }}</p>
+
+        {% if user.is_authenticated and user.pk == profile.pk %}
+            <a class="btn btn-primary" href="{% url 'perfil_edicao' %}">Editar perfil</a>
+        {% endif %}
+    {% else %}
+        <p>Perfil não encontrado.</p>
+    {% endif %}
+</div>
+{% endblock %}

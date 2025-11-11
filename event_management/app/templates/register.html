@@ -10,6 +10,15 @@
     <h2>Registro</h2>
     {% csrf_token %}
 
+    {# mostra erros não vinculados a campos (se houver) #}
+    {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+            {% for err in form.non_field_errors %}
+                <p>{{ err }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <p>
         {{ form.name.label_tag }}
         {{ form.name }}

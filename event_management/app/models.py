@@ -180,7 +180,7 @@ class UserRegister(AbstractBaseUser):
     phone = models.CharField(max_length=20, blank=True, null=True)
     institution = models.CharField(max_length=150, blank=True, null=True)
     user_type = models.CharField(max_length=20, choices=type_user_choices, default='Estudante', verbose_name="Tipo de Usuário") 
-    
+    image = models.ImageField(upload_to='usuarios/', null=True, blank=True)  # <-- novo campo
     
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email', 'name']
@@ -195,3 +195,15 @@ class UserRegister(AbstractBaseUser):
         
     def __str__(self):
         return self.username
+
+    def get_full_name(self):
+        # Retorna name (se existir), senão first_name + last_name, senão username
+        name = getattr(self, 'name', None)
+        if name:
+            return name
+        first = getattr(self, 'first_name', '') or ''
+        last = getattr(self, 'last_name', '') or ''
+        full = f"{first} {last}".strip()
+        if full:
+            return full
+        return getattr(self, 'username', '') or ''
