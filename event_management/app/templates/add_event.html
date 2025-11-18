@@ -26,6 +26,14 @@
                 <span class="field-error">{{ error }}</span>
             {% endfor %}
         </p>
+
+        <p>
+            <label for="{{ form.professor.id_for_label }}">{{ form.professor.label }}:</label>
+            {{ form.professor }}
+            {% for error in form.professor.errors %}
+                <span class="field-error">{{ error }}</span>
+            {% endfor %}
+        </p>
         
         <div class="form-row-group">
             <p>

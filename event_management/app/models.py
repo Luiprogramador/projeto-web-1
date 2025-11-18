@@ -30,6 +30,7 @@ class Event(models.Model):
         ('Fórum', 'Fórum'),
         ('Mesa Redonda', 'Mesa Redonda'),
     ]
+
     title = models.CharField(max_length=200, verbose_name="Título")
     description = models.TextField(verbose_name="Descrição")
     image = models.ImageField(
@@ -49,6 +50,17 @@ class Event(models.Model):
         null=True,
         blank=True,
         verbose_name="Criador"
+    )
+    professor = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,  # Define o que fazer se o professor for deletado
+        null=True,                   # Permite que o campo fique nulo no DB
+        blank=True,                  # Permite que o campo fique em branco em formulários
+        verbose_name="Professor Responsável",
+        related_name="instructed_events", # Nome para acessar eventos a partir do usuário
+        
+        # Esta é a "mágica" que você estava procurando:
+        limit_choices_to={'user_type': 'Professor'} 
     )
     event_type = models.CharField(max_length=20, choices=event_type_choices, default='Palestra', verbose_name="Tipo de Evento")
     event_start = models.TimeField(null=False, blank=True, verbose_name="Horario de Início") 
@@ -90,7 +102,7 @@ class Event(models.Model):
     @property
     def is_full(self):
         return self.current_participants_count >= self.max_capacity
-
+        
  
 class EventRegister(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
@@ -179,7 +191,7 @@ class UserRegister(AbstractBaseUser):
     name = models.CharField(max_length=150)
     phone = models.CharField(max_length=20, blank=True, null=True)
     institution = models.CharField(max_length=150, blank=True, null=True)
-    user_type = models.CharField(max_length=20, choices=type_user_choices, default='Estudante', verbose_name="Tipo de Usuário") 
+    user_type = models.CharField(max_length=20, choices=type_user_choices, default ='Estudante', verbose_name="Tipo de Usuário") 
     image = models.ImageField(upload_to='usuarios/', null=True, blank=True)  # <-- novo campo
     
     USERNAME_FIELD = 'username'

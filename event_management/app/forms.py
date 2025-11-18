@@ -31,6 +31,7 @@ class EventForm(forms.ModelForm):
             'max_capacity',
             'image',
             'event_type',
+            'professor',
         ]
         
         widgets = {

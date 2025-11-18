@@ -27,6 +27,13 @@
         <span><strong>Organizador:</strong> {{ event.creator.username }}</span>
     </div>
     {% endif %}
+
+    {% if event.professor %}
+    <div class="event-professor-info">
+        <span>🎓</span>
+        <span><strong>Professor Responsável:</strong> {{ event.professor }}</span>
+    </div>
+    {% endif %}
     
     <hr>
     
