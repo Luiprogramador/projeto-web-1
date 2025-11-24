@@ -2000,3 +2000,107 @@ main {
         padding-bottom: 0;
     }
 }
+
+/* --- Estrutura Geral do Card --- */
+.container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 12px; /* Bordas arredondadas no container */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Sombra suave para destacar do fundo */
+    padding: 30px;
+    border: 1px solid #eaeaea;
+}
+
+.card h2 {
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 1.5rem;
+    border-left: 5px solid #007bff; /* Detalhe visual colorido ao lado do título */
+    padding-left: 15px;
+}
+
+/* --- A Tabela --- */
+.table-responsive {
+    overflow-x: auto; /* Garante scroll lateral em telas pequenas */
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 0;
+}
+
+/* Cabeçalho Escuro */
+.thead-dark th {
+    background-color: #343a40;
+    color: #ffffff;
+    padding: 15px;
+    font-weight: 500;
+    text-align: left;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Arredondar os cantos superiores do cabeçalho */
+.thead-dark th:first-child { border-top-left-radius: 8px; }
+.thead-dark th:last-child { border-top-right-radius: 8px; }
+
+/* Células do corpo */
+.table tbody td {
+    padding: 14px 15px;
+    border-bottom: 1px solid #f0f0f0;
+    color: #555;
+    vertical-align: middle; /* Centraliza o texto verticalmente */
+    font-size: 0.95rem;
+}
+
+/* Efeito Hover nas linhas */
+.table-hover tbody tr:hover {
+    background-color: #f8f9fa;
+    transition: background-color 0.2s ease-in-out;
+}
+
+/* --- Badges (As etiquetas coloridas de Ação) --- */
+.badge {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 50px; /* Formato de pílula */
+    color: #fff; /* Texto branco para contraste */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra leve na badge */
+}
+
+/* Cores Específicas para cada ação (baseado nas suas classes do HTML) */
+.bg-info { background-color: #17a2b8; }    /* Azul ciano para Emissão */
+.bg-success { background-color: #28a745; } /* Verde para Adicionar */
+.bg-primary { background-color: #007bff; } /* Azul forte para Registro */
+.bg-danger { background-color: #dc3545; }  /* Vermelho para Remoção */
+.bg-warning { background-color: #ffc107; color: #212529; } /* Amarelo para Edição */
+
+/* --- Alerta (caso não tenha registros) --- */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+}
+.alert-info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}

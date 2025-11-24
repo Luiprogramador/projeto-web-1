@@ -30,6 +30,9 @@ path('register/', views.register_view, name='register'),
 path('perfil/', views.perfil, name='perfil'),
 path('perfil/editar/', views.perfil_edicao, name='perfil_edicao'),
 
+# auditorial urls
+path('auditorial/', views.auditorial, name='auditorial'),
+
 # api urls
 path('api/token-auth/', authtoken_views.obtain_auth_token, name='api_token_auth'),
 path('api/eventos/', api_views.EventListAPIView.as_view(), name='api_event_list'),

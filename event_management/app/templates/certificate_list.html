@@ -20,7 +20,8 @@
                             </h5>
                             <div class="certificate-meta">
                                 <span>📅 {{ event.initial_date|date:"d/m/Y" }}</span>
-                                {% if event.event_duration %}
+                                {% if event.calculated_duration_hours %}
+                                    {# Usamos a nova propriedade event_duration que retorna um timedelta para usar o filtro time #}
                                     <span>⏱️ {{ event.event_duration|time:"H" }}h{{ event.event_duration|time:"i" }}min</span>
                                 {% endif %}
                                 <span>📍 {{ event.location|default:"Local não informado" }}</span>
@@ -40,14 +41,6 @@
                         </div>
                     </div>
                 {% endfor %}
-            {% else %}
-                <div class="no-certificates-alert" role="alert">
-                    <h3>📚 Nenhum certificado disponível ainda</h3>
-                    <p>Você ainda não participou de eventos com direito a certificado.</p>
-                    <a href="{% url 'event_list' %}" class="btn-explore">
-                        🔍 Explorar Eventos
-                    </a>
-                </div>
             {% endif %}
         </div>
     </div>

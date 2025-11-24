@@ -60,7 +60,7 @@ def register_view(request):
 
             Auditoria.objects.create(
                 user=user,
-                action_type='Registro',
+                action='Registro',
                 timestamp=datetime.now(),
             )
             return redirect('home') 
@@ -100,7 +100,12 @@ def remove_event(request, pk):
         evento.delete()
         messages.success(request, f'O evento "{evento.title}" foi removido com sucesso.')
         return redirect('event_list')
-        
+    
+    Auditoria.objects.create(
+                user=request.user,
+                action='Remover Evento',
+                timestamp=datetime.now(),
+            )
     return render(request, 'remove_event.html', {'evento': evento})
 
 
@@ -110,7 +115,10 @@ def toggle_registration(request, pk):
     user = request.user
 
     if request.method == 'POST':
-        
+        if user.user_type != 'organizer':
+            messages.error(request, 'Você não tem permissão para inscrever ou desinscrever este evento.')
+            return redirect('event_detail', pk=event.pk)
+         
         if event.participants.filter(pk=user.pk).exists():
             event.participants.remove(user)
             messages.info(request, f'Você foi desinscrito do evento "{event.title}".')
@@ -122,7 +130,11 @@ def toggle_registration(request, pk):
                  
             event.participants.add(user)
             messages.success(request, f'Inscrição confirmada no evento "{event.title}"!')
-
+            Auditoria.objects.create(
+                user=request.user,
+                action='Inscrição no Evento',
+                timestamp=datetime.now(),
+            )
     return redirect('event_detail', pk=event.pk)
 
 
@@ -134,7 +146,6 @@ def event_subscribed(request):
         'eventos': eventos,
         'page_title': 'Meus Eventos Inscritos'
     }
-    
     return render(request, 'event_subscribed.html', context)
 
 
@@ -149,6 +160,11 @@ def add_event(request):
             return redirect('event_list')
     else:
         form = EventForm()
+    Auditoria.objects.create(
+        user=request.user,
+        action='Adicionar Evento',
+        timestamp=datetime.now(),
+    )
     return render(request, 'add_event.html', {'form': form})
 
 
@@ -189,24 +205,30 @@ def issue_certificate(request, event_id):
     if not EventParticipant.objects.filter(event=event, participant=participant).exists():
         messages.error(request, f'Você não está registrado como participante do evento "{event.title}".')
 
-        return redirect('detalhe_evento', event_id=event_id)
+        return redirect('event_detail', pk=event_id)
     
-
     try:
+        certificate = Certificate.objects.get(event=event, participant=participant)
+        created = False
+        messages.info(request, 'Certificado já registrado. Visualizando registro...')
 
-        certificate, created = Certificate.objects.get_or_create(
-            event=event,
-            participant=participant
-        )
-        
-        if created:
-            messages.success(request, 'Registro do certificado criado com sucesso. Preparando visualização...')
+    except Certificate.DoesNotExist:
+        certificate = Certificate.objects.create(event=event, participant=participant)
+        created = True
+        messages.success(request, 'Registro do certificado criado com sucesso. Preparando visualização...')
+
+    except ValueError as e:
+        if "badly formed hexadecimal UUID string" in str(e):
+            
+            Certificate.objects.filter(event=event, participant=participant).delete()
+            messages.warning(request, f'Registro de certificado corrompido para "{event.title}" foi removido.')
+
+            certificate = Certificate.objects.create(event=event, participant=participant)
+            created = True
+            messages.success(request, f'Novo certificado válido para "{event.title}" criado com sucesso.')
         else:
-            messages.info(request, 'Certificado já registrado. Visualizando registro...')
-
-    except Exception as e:
-        messages.error(request, f'Erro ao acessar/criar o registro do certificado. Detalhe: {e}')
-        return redirect('detalhe_evento', event_id=event_id)
+            messages.error(request, f'Erro inesperado ao acessar/criar o registro do certificado. Detalhe: {e}')
+            return redirect('event_detail', pk=event_id)
     
     context = {
         'certificate': certificate,
@@ -214,6 +236,11 @@ def issue_certificate(request, event_id):
         'participant': participant
     }
 
+    Auditoria.objects.create(
+                user=request.user,
+                action='Emitir Certificado',
+                timestamp=datetime.now(),
+            )
     return render(request, 'certificate_detail.html', context)
 
 
@@ -238,6 +265,11 @@ def event_edit(request, pk):
     else:
         form = EventForm(instance=event)
 
+    Auditoria.objects.create(
+                user=request.user,
+                action='Editar Evento',
+                timestamp=datetime.now(),
+            )
     return render(request, 'add_event.html', {'form': form, 'is_edit': True, 'event': event})
 
 
@@ -282,12 +314,47 @@ def perfil_edicao(request):
 
     return render(request, 'perfil_edicao.html', {'form': form})
 
+def auditorial(request):
+    if not request.user.is_authenticated or request.user.user_type != 'Organizador':
+        messages.error(request, 'Você não tem permissão para acessar o auditorial.')
+        return redirect('home')
+
+    logs = Auditoria.objects.all().order_by('-timestamp')
+
+    context = {
+        'logs': logs
+    }
+
+    return render(request, 'auditorial.html', context)
+
 def enviar_email(user):
+    base_url = "http://127.0.0.1:8000/" # Ou o seu domínio público
+    link_para_site = f"{base_url}/login/"
+
+    html_content = f"""
+    <html>
+    <body>
+        <h2>Bem-vindo(a) ao Event Management!</h2>
+        <h3>Agradecemos por se cadastrar. Clique na imagem ou no link abaixo para começar:</h3>
+
+        <a href="{link_para_site}">
+            <img src="https://i.ibb.co/27j1wVmK/logo.png" alt="logo" border="0" />
+        </a>
+
+        <p>Se a imagem não carregar, acesse: <a href="{link_para_site}">Clique Aqui para Começar</a></p>
+
+        <p>Saudações!</p>
+    </body>
+    </html>
+    """
+
     send_mail(
-    subject="Saudação de boas vindas",
-    message="Seja bem vindo ao Event Management!",
-    from_email=None, # usa DEFAULT_FROM_EMAIL
-    recipient_list=[user.email],
-    fail_silently=False,
+        subject="Saudação de boas vindas 👋",
+        message="Seja bem vindo ao Event Management! (Para uma melhor visualização, ative o HTML em seu e-mail.)", # Versão texto simples (obrigatória)
+        from_email=None,
+        recipient_list=[user.email],
+        fail_silently=False,
+        html_message=html_content, # A versão HTML que inclui imagem e link
     )
+
     return HttpResponse("E-mail enviado com sucesso!")

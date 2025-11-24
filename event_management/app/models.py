@@ -94,6 +94,18 @@ class Event(models.Model):
         duration = final_datetime - start_datetime
         
         return round(duration.total_seconds() / 3600, 1)
+    
+    @property
+    def event_duration(self):
+        """Calcula a duração total do evento como um timedelta ou formata como string."""
+        start_datetime = datetime.combine(self.initial_date, self.event_start)
+        final_datetime = datetime.combine(self.final_date, self.event_end)
+        
+        duration = final_datetime - start_datetime
+        
+        # A formatação com time:"H" e time:"i" nos templates espera um objeto time/datetime/timedelta.
+        # Retornar o timedelta inteiro é mais seguro para o template atual.
+        return duration
 
     @property
     def current_participants_count(self):

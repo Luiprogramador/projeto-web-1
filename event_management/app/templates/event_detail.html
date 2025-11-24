@@ -90,8 +90,9 @@
             {% elif event.is_full %}
                 <button type="button" class="btn-full" disabled>🚫 EVENTO LOTADO</button>
             
-            {% else %}
-                <button type="submit" class="btn-subscribe">✅ Inscrever-se Agora</button>
+            {% elif user.user_type != 'Organizador' %}
+                <button type="submit" class="btn-subscribe">✅
+ Inscrever-se Agora</button>
             {% endif %}
         {% else %}
             <div class="login-message">

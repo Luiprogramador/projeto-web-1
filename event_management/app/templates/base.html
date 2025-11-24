@@ -36,6 +36,11 @@
                         <a href="{% url 'certificate_list' %}">Meus Certificados</a>
                     </li>
                 {% endif %}
+                {% if user.user_type == 'Organizador' %}
+                    <li>
+                        <a href="{% url 'auditorial' %}">Auditorial</a>
+                    </li>
+                {% endif %}
             </ul>
             
             <!-- Área do Usuário -->
