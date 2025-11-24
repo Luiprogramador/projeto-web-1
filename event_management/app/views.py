@@ -3,11 +3,13 @@ from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from .models import Event, Certificate, EventParticipant, UserRegister
+from .models import Event, Certificate, EventParticipant, UserRegister, Auditoria
 from .forms import RegisterForm, LoginForm, EventForm, ProfileForm
 from datetime import datetime, time, timedelta # O 'time' não é mais usado aqui, mas pode deixar
 from .utils import get_relative_path, salvar_imagem_em_pasta
 from django.conf import settings
+from django.core.mail import send_mail
+from django.http import HttpResponse
 
 def home(request):
     eventos = Event.objects.all()
@@ -52,7 +54,15 @@ def register_view(request):
             user = form.save() 
             
             messages.success(request, f'Conta criada com sucesso! Bem-vindo(a), {user.username}.')
-            
+            messages.info(request, 'Por favor, faça login para continuar.')
+            messages.info(request, 'Um e-mail de boas-vindas foi enviado para o seu endereço de e-mail.')
+            enviar_email(user)
+
+            Auditoria.objects.create(
+                user=user,
+                action_type='Registro',
+                timestamp=datetime.now(),
+            )
             return redirect('home') 
         else:
             messages.error(request, 'Erro ao criar a conta. Verifique os dados e tente novamente.')
@@ -271,3 +281,13 @@ def perfil_edicao(request):
         form = ProfileForm(instance=user)
 
     return render(request, 'perfil_edicao.html', {'form': form})
+
+def enviar_email(user):
+    send_mail(
+    subject="Saudação de boas vindas",
+    message="Seja bem vindo ao Event Management!",
+    from_email=None, # usa DEFAULT_FROM_EMAIL
+    recipient_list=[user.email],
+    fail_silently=False,
+    )
+    return HttpResponse("E-mail enviado com sucesso!")

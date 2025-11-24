@@ -219,3 +219,21 @@ class UserRegister(AbstractBaseUser):
         if full:
             return full
         return getattr(self, 'username', '') or ''
+
+class Auditoria(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        verbose_name="Usuário" # Português
+    )
+    action = models.CharField(max_length=255, verbose_name="Ação") # Português
+    timestamp = models.DateTimeField(auto_now_add=True, verbose_name="Data e Hora") # Português
+
+    class Meta:
+        db_table = 'auditoria'
+        verbose_name = "Auditoria" # Português
+        verbose_name_plural = "Auditorias" # Português
+        ordering = ['-timestamp']
+
+    def __str__(self):
+        return f"{self.user.username} - {self.action} at {self.timestamp}"
