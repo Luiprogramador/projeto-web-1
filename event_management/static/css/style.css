@@ -59,8 +59,6 @@ body {
     align-items: center;
     justify-content: center;
     padding: 8px 16px;
-    border-radius: 10px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
     transition: all 0.4s ease;
     max-width: 160px;
 }
@@ -74,11 +72,14 @@ body {
 
 .logo:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .logo:hover img {
     transform: scale(1.05);
+}
+
+.header .nav-brand a::after {
+    content: none;
 }
 
 /* Links de Navegação */
@@ -112,6 +113,10 @@ body {
 }
 
 /* Área do Usuário */
+
+.header .user-actions a::after {
+    content: none;
+}
 .user-actions {
     display: flex;
     align-items: center;
@@ -411,7 +416,7 @@ main {
 .profile-edit-container input[type="email"],
 .profile-edit-container input[type="tel"],
 .profile-edit-container select,
-.profile-edit-container textarea,
+s.profile-edit-container textarea,
 .profile-edit-container .form-control,
 .profile-edit-container .form-control-file {
     width: 100%;

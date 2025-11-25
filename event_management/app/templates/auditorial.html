@@ -29,15 +29,15 @@
                         <td>{{ log.timestamp|date:"d/m/Y H:i:s" }}</td>
                         <td>{{ log.user.get_full_name }}</td>
                         <td>
-                            {% if "Emissão" in log.action %}
+                            {% if "Emitir " in log.action %}
                                 <span class="badge bg-info">EMISSÃO</span>
                             {% elif "Adicionar" in log.action %}
                                 <span class="badge bg-success">ADICIONAR</span>
-                            {% elif "Registro" in log.action %}
+                            {% elif "Registro" in log.action %} 
                                 <span class="badge bg-primary">REGISTRO</span>
-                            {% elif "Remoção" in log.action %}
+                            {% elif "Remover" in log.action %}
                                 <span class="badge bg-danger">REMOÇÃO</span>
-                            {% elif "Edição" in log.action %}
+                            {% elif "Editar" in log.action %}
                                 <span class="badge bg-warning">EDIÇÃO</span>
                             {% else %}
                                 <span class="badge bg-primary">{{ log.action }}</span>

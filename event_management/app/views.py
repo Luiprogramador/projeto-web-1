@@ -99,13 +99,13 @@ def remove_event(request, pk):
     if request.method == 'POST':
         evento.delete()
         messages.success(request, f'O evento "{evento.title}" foi removido com sucesso.')
-        return redirect('event_list')
-    
-    Auditoria.objects.create(
+        Auditoria.objects.create(
                 user=request.user,
                 action='Remover Evento',
                 timestamp=datetime.now(),
             )
+        return redirect('event_list')
+    
     return render(request, 'remove_event.html', {'evento': evento})
 
 
@@ -157,14 +157,14 @@ def add_event(request):
             event = form.save(commit=False)
             event.creator = request.user
             event.save()
+            Auditoria.objects.create(
+                user=request.user,
+                action='Adicionar Evento',
+                timestamp=datetime.now(),
+            )
             return redirect('event_list')
     else:
         form = EventForm()
-    Auditoria.objects.create(
-        user=request.user,
-        action='Adicionar Evento',
-        timestamp=datetime.now(),
-    )
     return render(request, 'add_event.html', {'form': form})
 
 
@@ -211,11 +211,21 @@ def issue_certificate(request, event_id):
         certificate = Certificate.objects.get(event=event, participant=participant)
         created = False
         messages.info(request, 'Certificado já registrado. Visualizando registro...')
+        Auditoria.objects.create(
+                user=request.user,
+                action='Emitir Certificado',
+                timestamp=datetime.now(),
+            )
 
     except Certificate.DoesNotExist:
         certificate = Certificate.objects.create(event=event, participant=participant)
         created = True
         messages.success(request, 'Registro do certificado criado com sucesso. Preparando visualização...')
+        Auditoria.objects.create(
+                user=request.user,
+                action='Emitir Certificado',
+                timestamp=datetime.now(),
+            )
 
     except ValueError as e:
         if "badly formed hexadecimal UUID string" in str(e):
@@ -235,12 +245,6 @@ def issue_certificate(request, event_id):
         'event': event,
         'participant': participant
     }
-
-    Auditoria.objects.create(
-                user=request.user,
-                action='Emitir Certificado',
-                timestamp=datetime.now(),
-            )
     return render(request, 'certificate_detail.html', context)
 
 
@@ -259,17 +263,17 @@ def event_edit(request, pk):
 
             evento.save()
             messages.success(request, 'Evento atualizado com sucesso!')
+            Auditoria.objects.create(
+                user=request.user,
+                action='Editar Evento',
+                timestamp=datetime.now(),
+            )
             return redirect('event_detail', pk=evento.pk)
         else:
             messages.error(request, 'Erro ao atualizar o evento. Verifique os dados e tente novamente.')
     else:
         form = EventForm(instance=event)
 
-    Auditoria.objects.create(
-                user=request.user,
-                action='Editar Evento',
-                timestamp=datetime.now(),
-            )
     return render(request, 'add_event.html', {'form': form, 'is_edit': True, 'event': event})
 
 
