@@ -4,13 +4,6 @@
 {% block content %}
 <div class="profile-edit-container">
     <h2>Editar Perfil</h2>
-
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</div>
-        {% endfor %}
-    {% endif %}
-
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.non_field_errors }}
@@ -56,7 +49,7 @@
         </div>
 
         <button type="submit" class="btn-register">Salvar</button>
-        <a href="{% url 'perfil' %}" class="btn btn-secondary">Cancelar</a>
+        <a href="{% url 'profile' %}" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
 {% endblock %}

@@ -1,14 +1,16 @@
-from django import forms
-from .models import Event, EventRegister, UserRegister
 from django.contrib.auth.forms import AuthenticationForm
+from .models import Event, EventRegister, UserRegister
 from django.contrib.auth import get_user_model
+from django import forms
 import datetime
 
-User = get_user_model()
+User = get_user_model() # Obtém o modelo de usuário ativo configurado no Django
 
+# Formulário de login personalizado que herda do formulário de autenticação padrão do Django
 class LoginForm(AuthenticationForm):
     username = forms.CharField(label='Usuário')
     password = forms.CharField(label='Senha', widget=forms.PasswordInput)
+
     def save(self, commit=True):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data["password"])
@@ -16,11 +18,11 @@ class LoginForm(AuthenticationForm):
             user.save()
         return user
 
-
-class EventForm(forms.ModelForm):   
+# Formulário para criação ou edição de um Evento
+class EventForm(forms.ModelForm):  
     class Meta:
-        model = Event
-        fields = [
+        model = Event # Define o modelo associado
+        fields = [ # Define os campos do modelo que serão usados no formulário
             'title',
             'description',
             'initial_date',
@@ -34,12 +36,12 @@ class EventForm(forms.ModelForm):
             'professor',
         ]
         
-        widgets = {
-            # Campos de data
+        widgets = { # Configuração de widgets HTML para campos específicos
             'initial_date': forms.DateInput(
                 attrs={
                     'type': 'date',
                     'class': 'form-control',
+                    # Define a data mínima permitida como a data de hoje
                     'min': datetime.date.today().strftime('%d-%m-%Y')
                 }
             ),
@@ -49,7 +51,6 @@ class EventForm(forms.ModelForm):
                     'class': 'form-control'
                 }
             ),
-            # Campos de hora
             'event_start': forms.TimeInput(
                 attrs={
                     'type': 'time',
@@ -62,7 +63,6 @@ class EventForm(forms.ModelForm):
                     'class': 'form-control'
                 }
             ),
-            # Outros campos
             'title': forms.TextInput(
                 attrs={
                     'class': 'form-control',
@@ -99,36 +99,40 @@ class EventForm(forms.ModelForm):
             ),
         }
 
+    # Sobrescreve o método clean para adicionar validações personalizadas
     def clean(self):
         cleaned = super().clean()
         inicial = cleaned.get('initial_date')
         final = cleaned.get('final_date')
         hoje = datetime.date.today()
 
+        # Valida se a data inicial não é anterior à data de hoje
         if inicial and inicial < hoje:
             raise forms.ValidationError("A data inicial não pode ser anterior a hoje.")
 
+        # Valida se a data final não é anterior à data inicial
         if inicial and final and final < inicial:
             raise forms.ValidationError("A data final não pode ser anterior à data inicial.")
 
         return cleaned
 
-class RegistrationForm(forms.ModelForm):
+# Formulário para registro em um Evento
+class EventRegistrationForm(forms.ModelForm):
     class Meta:
-        model = EventRegister
+        model = EventRegister # Define o modelo de registro de evento
         fields = ['event', 'name', 'email']
-        labels = {
+        labels = { # Rótulos personalizados para os campos
             'event': 'Event',
             'name': 'Your Name',
             'email': 'Your Email',
             
         }
-        help_texts = {
+        help_texts = { # Textos de ajuda para os campos
             'event': 'Select the event you want to register for.',
             'name': 'Enter your full name.',
             'email': 'Enter your email address.',
         }
-        error_messages = {
+        error_messages = { # Mensagens de erro personalizadas por campo
             'event': {
                 'required': 'Event selection is required.',
             },
@@ -142,23 +146,26 @@ class RegistrationForm(forms.ModelForm):
             },
         }
 
-
-class RegisterForm(forms.ModelForm):
-    email = forms.EmailField(
+# Formulário de registro de novo Usuário
+class UserRegisterForm(forms.ModelForm):
+    email = forms.EmailField( # Redefine o campo email com configurações específicas
         label='E-mail',
         required=True,
         help_text='Obrigatório. Usado para comunicação e recuperação de conta.',
         widget=forms.EmailInput(attrs={'placeholder': 'seu.email@exemplo.com'})
     )
     
+    # Define o campo phone com um widget de entrada de texto e máscara de dados para o formato de telefone
     phone = forms.CharField(widget=forms.TextInput(attrs={'placeholder': '(99) 99999-9999', 'data-mask': '(00) 00000-0000'}))
 
+    # Campo extra para confirmação de senha, que não está no modelo UserRegister
     password_confirm = forms.CharField(
         label='Confirmação de Senha',
         widget=forms.PasswordInput(attrs={'placeholder': 'Djgh@1234'}),
         help_text='Repita a senha para confirmação.',
     )
     
+    # Redefine o campo password com um widget PasswordInput
     password = forms.CharField(
         label='Senha',
         widget=forms.PasswordInput(attrs={'placeholder': 'Djgh@1234'})
@@ -166,9 +173,9 @@ class RegisterForm(forms.ModelForm):
 
     class Meta:
 
-        model = UserRegister 
+        model = UserRegister # Modelo de usuário personalizado
         
-        fields = [
+        fields = [ # Campos do formulário
             'name', 
             'username', 
             'email', 
@@ -178,7 +185,7 @@ class RegisterForm(forms.ModelForm):
             'user_type'
         ]
         
-        labels = {
+        labels = { # Rótulos personalizados
             'name': 'Nome Completo',
             'username': 'Nome de Usuário',
             'phone': 'Telefone',
@@ -186,14 +193,14 @@ class RegisterForm(forms.ModelForm):
             'user_type': 'Tipo de Usuário (Professor/Aluno)'
         }
         
-        help_texts = {
+        help_texts = { # Textos de ajuda
             'username': 'Nome único que você usará para fazer login.',
             'phone': 'Opcional. Para contato de emergência ou recuperação de conta.',
             'institution': 'Opcional. Sua afiliação institucional/profissional.',
             'user_type': 'Marque se você for um Professor; desmarque para Aluno.'
         }
         
-        error_messages = {
+        error_messages = { # Mensagens de erro personalizadas
             'name': {
                 'required': 'O nome completo é obrigatório para o registro.',
                 'max_length': 'O nome não pode exceder 150 caracteres.',
@@ -223,27 +230,26 @@ class RegisterForm(forms.ModelForm):
             }
         }
     
+    # Sobrescreve o save para aplicar hash na senha antes de salvar o usuário
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.set_password(self.cleaned_data["password"])
+        user.set_password(self.cleaned_data["password"]) # Aplica hash na senha
         if commit:
             user.save()
         return user
     
+    # Método clean para validação do formulário, incluindo validações de senha
     def clean(self):
         cleaned_data = super().clean()
         password = cleaned_data.get("password")
         password_confirm = cleaned_data.get("password_confirm")
         username = cleaned_data.get('username')
 
-        # Limpa erros anteriores deste formulário (se houver)
-        # (Django já lida com isso, mas mantemos para clareza)
-        
-        # Verifica confirmação
+        # Verifica se as senhas coincidem
         if password and password_confirm and password != password_confirm:
             self.add_error('password_confirm', "As senhas não coincidem.")
 
-        # Regras de força da senha (cada uma gera erro no campo 'password')
+        # Adiciona várias regras de validação de força da senha
         if password:
             if len(password) < 8:
                 self.add_error('password', "A senha deve ter pelo menos 8 caracteres.")
@@ -255,21 +261,28 @@ class RegisterForm(forms.ModelForm):
                 self.add_error('password', "A senha deve conter pelo menos uma letra maiúscula.")
             if password.isupper():
                 self.add_error('password', "A senha deve conter pelo menos uma letra minúscula.")
+            
+            # Verifica se há pelo menos um caractere especial
             if not any(char in '!@#$%^&*()_+-=[]{}|;:,.<>?/' for char in password):
                 self.add_error('password', "A senha deve conter pelo menos um caractere especial.")
             if ' ' in password:
                 self.add_error('password', "A senha não pode conter espaços.")
+            
+            # Verifica senhas comuns/fracas
             if password.lower() in ['senha', '12345678', 'qwerty', 'abcdefg']:
                 self.add_error('password', "A senha é muito comum. Por favor, escolha uma senha mais forte.")
+            
+            # Verifica se a senha contém o nome de usuário
             if username and username.lower() in password.lower():
                 self.add_error('password', "A senha não pode conter o nome de usuário.")
 
         return cleaned_data
 
+# Formulário para edição do perfil do usuário
 class ProfileForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = [
+        model = User # Utiliza o modelo de usuário ativo
+        fields = [ # Campos permitidos para edição no perfil
             'name',
             'email',
             'phone',
@@ -277,7 +290,7 @@ class ProfileForm(forms.ModelForm):
             'image',
             'user_type',
         ]
-        widgets = {
+        widgets = { # Configuração de widgets de formulário com classes CSS
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '(00) 00000-0000'}),

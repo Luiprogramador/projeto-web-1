@@ -20,13 +20,11 @@
                             </h5>
                             <div class="certificate-meta">
                                 <span>📅 {{ event.initial_date|date:"d/m/Y" }}</span>
-                                {% if event.calculated_duration_hours %}
-                                    {# Usamos a nova propriedade event_duration que retorna um timedelta para usar o filtro time #}
-                                    <span>⏱️ {{ event.event_duration|time:"H" }}h{{ event.event_duration|time:"i" }}min</span>
+                                {% if event.event_duration %} 
+                                    <span>⏱️ {{ event.formatted_duration }}</span> 
                                 {% endif %}
                                 <span>📍 {{ event.location|default:"Local não informado" }}</span>
                             </div>
-                        </div>
                        
                         <div class="certificate-actions">
                             {% if event.certificate_issued %}

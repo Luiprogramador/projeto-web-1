@@ -1,10 +1,7 @@
-# Em app/utils.py
-
 import os
 from pathlib import Path
 from django.conf import settings
 from typing import Optional
-import shutil
 
 def get_relative_path(full_path: Path | str, base_path: Path | str) -> Optional[Path]:
     """

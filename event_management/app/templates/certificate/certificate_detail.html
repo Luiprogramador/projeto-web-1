@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}Certificado de Conclusão - {{ certificate.event.title }}{% endblock %}
+{% block messages %}{% endblock %}
 {% block content %}
     <div class="certificate-container">
         <!-- Decorações -->
@@ -25,8 +26,7 @@
             
             {% if certificate.event.event_duration %}
                 <div class="event-duration">
-                    {# Usa a nova propriedade event_duration que retorna um timedelta #}
-                    ⏱️ Carga horária: {{ certificate.event.event_duration|time:'H' }}h{{ certificate.event.event_duration|time:'i' }}min
+                    ⏱️ Carga horária: {{ certificate.event.formatted_duration }}
                 </div>
             {% endif %}
         </div>

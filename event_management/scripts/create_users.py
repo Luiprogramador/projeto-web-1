@@ -1,20 +1,19 @@
-# create_valid_users.py
 import os
 import django
-from django.contrib.auth.hashers import make_password
 import sys
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
 
+# Configura as variáveis de ambiente e inicializa o ambiente Django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'event_management.settings')
 django.setup()
 
-from app.models import UserRegister  # Ajuste para o nome do seu modelo
+from app.models import UserRegister # Importa o modelo de usuário personalizado
 
+# Função responsável por criar e salvar os dados de usuário
 def create_users():
     users_data = [
-    # Organizadores
     {
         'name': 'João Silva', 
         'username': 'joao_organizador', 
@@ -36,7 +35,7 @@ def create_users():
         'image': 'usuarios/79bcd3b64a5eab2ff09473f5de649edc.png' 
     },
     
-    # Professores  
+    # Professores  
     {
         'name': 'Maria Silva', 
         'username': 'prof_maria', 
@@ -71,8 +70,9 @@ def create_users():
     },
 ]
     
+    # Itera sobre a lista de dados para criar cada usuário
     for user_data in users_data:
-        # Cria o usuário usando o modelo (Django fará o hash automaticamente)
+        # Cria a instância do usuário no banco de dados, exceto a senha
         user = UserRegister.objects.create(
             name=user_data['name'],
             username=user_data['username'],
@@ -82,8 +82,9 @@ def create_users():
             user_type=user_data['user_type'],
             image=user_data['image']
         )
-        # Define a senha (Django faz o hash automaticamente)
+        # Define a senha do usuário, aplicando o hash
         user.set_password(user_data['password'])
+        # Salva o usuário no banco de dados com a senha já com hash
         user.save()
         print(f"✓ Usuário criado: {user.username}")
 

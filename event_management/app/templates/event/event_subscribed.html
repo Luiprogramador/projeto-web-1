@@ -16,7 +16,6 @@
                         </a>
                         <small>📅 {{ evento.date|date:"d/m/Y H:i" }}</small>
                     </div>
-                   
                     <form method="post" action="{% url 'toggle_registration' pk=evento.pk %}" class="unsubscribe-form">
                         {% csrf_token %}
                         <button type="submit">❌ Cancelar Inscrição</button>
@@ -30,6 +29,5 @@
             <a href="{% url 'event_list' %}">👉 Veja todos os eventos disponíveis</a>
         </div>
     {% endif %}
-   
 </div>
 {% endblock %}

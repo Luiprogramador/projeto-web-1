@@ -9,6 +9,7 @@
         {% endblock %}
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     {% block head %}{% endblock %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,7 +47,7 @@
             <!-- Área do Usuário -->
             <div class="user-actions">
                 {% if user.is_authenticated %}
-                    <a class="profile-link" href="{% url 'perfil' %}">
+                    <a class="profile-link" href="{% url 'profile' %}">
                         {% if user.image %}
                             <img class="user-avatar-menu" src="{{ user.image.url }}" alt="Avatar de {{ user.username }}">
                         {% else %}
@@ -64,16 +65,21 @@
         {% endblock %}
     </header>
     <main>
+        <!-- Bloco de conteudo -->
         {% block content %}{% endblock %}
-        <div>
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
-    </div>
+        
+        <!-- Mensagens de erro ou sucesso -->
+        {% block messages %}
+            <div>
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            {% endblock %}
     </main>
 
     <footer class="footer">

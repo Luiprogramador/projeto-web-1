@@ -9,7 +9,6 @@ class UserRegisterSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = UserRegister
-        # Informações públicas do organizador
         fields = ['id', 'username', 'name', 'email', 'user_type']
 
 
@@ -17,24 +16,22 @@ class EventSerializer(serializers.ModelSerializer):
     """
     Serializer para o Endpoint 3.1: Consulta de Eventos.
     """
-    # Usa o serializer acima para mostrar detalhes do organizador (creator)
-    creator = UserRegisterSerializer(read_only=True)
+    creator = UserRegisterSerializer(read_only=True) # Usa o serializer de UserRegister para aninhar os detalhes do criador.
     
-    # Renomeia 'title' para 'nome' no JSON de saída
-    nome = serializers.CharField(source='title')
-    data = serializers.DateField(source='initial_date')
-    local = serializers.CharField(source='location')
-    organizador_responsavel = serializers.CharField(source='creator.name', read_only=True)
+    nome = serializers.CharField(source='title') # Mapeia o campo 'title' do modelo para o nome 'nome' na API.
+    data = serializers.DateField(source='initial_date') # Mapeia 'initial_date' para 'data'.
+    local = serializers.CharField(source='location') # Mapeia 'location' para 'local'.
+    organizador_responsavel = serializers.CharField(source='creator.name', read_only=True) # Acessa o campo 'name' do objeto 'creator' (relacionamento).
 
     class Meta:
         model = Event
         fields = [
             'id', 
-            'nome',       # 'title' no modelo
-            'data',       # 'initial_date' no modelo
-            'local',      # 'location' no modelo
-            'organizador_responsavel', # 'creator.name' no modelo
-            'creator'     # Objeto aninhado completo (opcional, mas útil)
+            'nome',
+            'data',
+            'local',
+            'organizador_responsavel',
+            'creator'
         ]
 
 
@@ -44,20 +41,19 @@ class EventParticipantSerializer(serializers.ModelSerializer):
     Baseado no seu modelo 'EventParticipant'.
     """
     
-    # Pega o usuário logado (pelo token) e o define como participante
     participant = serializers.HiddenField(
-        default=serializers.CurrentUserDefault()
+        default=serializers.CurrentUserDefault() # Define automaticamente o participante como o usuário logado (requer autenticação).
     )
     
     class Meta:
         model = EventParticipant
-        fields = ['id', 'event', 'participant'] # 'event' será o ID do evento
+        fields = ['id', 'event', 'participant']
 
     def validate_event(self, event):
         """
         Validação: Verifica se o evento está lotado antes de permitir a inscrição.
         """
-        if event.is_full:
+        if event.is_full: # Acessa a propriedade `is_full` do objeto Event.
             raise ValidationError(
                 f'O evento "{event.title}" está lotado (Capacidade Máxima: {event.max_capacity}).'
             )
@@ -68,13 +64,12 @@ class EventParticipantSerializer(serializers.ModelSerializer):
         Validação: Verifica se o usuário já está inscrito.
         """
         event = data.get('event')
-        participant = self.context['request'].user # Pega o usuário da requisição
+        participant = self.context['request'].user # Obtém o usuário logado a partir do contexto da requisição.
         
-        if EventParticipant.objects.filter(event=event, participant=participant).exists():
+        if EventParticipant.objects.filter(event=event, participant=participant).exists(): # Verifica a existência de um registro EventParticipant.
             raise ValidationError(f'Você já está inscrito no evento "{event.title}".')
             
         return data
 
     def create(self, validated_data):
-        # A lógica de validação já foi executada
-        return EventParticipant.objects.create(**validated_data)
+        return EventParticipant.objects.create(**validated_data) # Cria o registro de inscrição.

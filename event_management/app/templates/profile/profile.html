@@ -30,7 +30,7 @@
         <p><strong>Tipo:</strong> {{ profile.user_type|default:"Não informado" }}</p>
 
         {% if user.is_authenticated and user.pk == profile.pk %}
-            <a class="btn btn-primary" href="{% url 'perfil_edicao' %}">Editar perfil</a>
+            <a class="btn btn-primary" href="{% url 'profile_edit' %}">Editar perfil</a>
         {% endif %}
     {% else %}
         <p>Perfil não encontrado.</p>

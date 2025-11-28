@@ -1,28 +1,29 @@
-# inicio/api_views.py
-from rest_framework import generics
+from .serializers import EventSerializer, EventParticipantSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.throttling import UserRateThrottle
-
-# Importa de seus arquivos existentes
 from .models import Event, EventParticipant
-from .serializers import EventSerializer, EventParticipantSerializer
+from rest_framework import generics
 
-# 3.1. Consulta de Eventos
+# View para listar todos os eventos (herda de ListAPIView do DRF)
 class EventListAPIView(generics.ListAPIView):
     """
     Endpoint para listar todos os eventos.
     """
-    queryset = Event.objects.all().select_related('creator')
-    serializer_class = EventSerializer
     
-    # Permissão e Throttling (já definidos globalmente, mas bom ser explícito)
-    permission_classes = [IsAuthenticated]
+    # Define o conjunto de consultas que a view deve retornar
+    queryset = Event.objects.all().select_related('creator') 
+    serializer_class = EventSerializer # Define qual serializador será usado para formatar os dados
+    
+    # Define que apenas usuários autenticados podem acessar este endpoint
+    permission_classes = [IsAuthenticated] 
+    
+    # Define a classe de limitação de taxa a ser aplicada
     throttle_classes = [UserRateThrottle] 
     
-    # Conecta esta view ao escopo 'eventos' (20/dia) do settings.py
-    throttle_scope = 'eventos'
+    # Define o escopo de limitação de taxa
+    throttle_scope = 'eventos' 
 
-# 3.2. Inscrição de Participantes
+# View para um usuário se inscrever em um evento
 class EventSubscriptionCreateAPIView(generics.CreateAPIView):
     """
     Endpoint para um usuário se inscrever em um evento.
@@ -30,14 +31,9 @@ class EventSubscriptionCreateAPIView(generics.CreateAPIView):
     queryset = EventParticipant.objects.all()
     serializer_class = EventParticipantSerializer
     
-    # Permissão e Throttling
-    permission_classes = [IsAuthenticated]
+    # Define que apenas usuários autenticados podem criar inscrições
+    permission_classes = [IsAuthenticated] 
     throttle_classes = [UserRateThrottle]
     
-    # Conecta esta view ao escopo 'inscricoes' (50/dia) do settings.py
+    # Define o escopo de limitação de taxa para inscrições
     throttle_scope = 'inscricoes'
-    
-    # O Serializer (EventParticipantSerializer) já cuida de:
-    # 1. Pegar o usuário logado (CurrentUserDefault)
-    # 2. Validar se o evento está lotado (validate_event)
-    # 3. Validar se o usuário já está inscrito (validate)
