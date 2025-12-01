@@ -21,9 +21,10 @@
     <header class="header">
         {% block header %}
         <nav>
+
             <!-- Logo -->
             <div class="nav-brand">
-                <a href="{% url 'home' %}"><img class="logo" src="{% static 'img/logo.png' %}" alt="logo"></a>
+                <a href="{% url 'home' %}"><img class="logo" src="{% static 'img/logo.png' %}" alt="logo do sistema de Gerenciamento de Eventos"></a>
             </div>
             
             <!-- Menu Principal -->
@@ -39,7 +40,7 @@
                 {% endif %}
                 {% if user.user_type == 'Organizador' %}
                     <li>
-                        <a href="{% url 'auditorial' %}">Auditorial</a>
+                        <a href="{% url 'auditorial' %}">Auditoria</a>
                     </li>
                 {% endif %}
             </ul>

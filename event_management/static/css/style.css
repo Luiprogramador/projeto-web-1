@@ -1,7 +1,7 @@
 /* ========================================
    RESET E CONFIGURAÇÕES GLOBAIS
    ======================================== */
-* {
+   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -15,6 +15,7 @@ body {
     font-style: normal;
     font-variation-settings: "wdth" 100;
     background: #f4f4f4;
+    color: #212529; /* ACESSIBILIDADE: Cor base mais escura */
     overflow-x: hidden;
     min-height: 100vh;
     display: flex;
@@ -64,9 +65,9 @@ body {
 }
 
 .logo img {
-    max-height: 30px; /* Reduzido de 40px */
+    max-height: 30px;
     width: auto;
-    filter: brightness(0) invert(1);
+    filter: brightness(0) invert(1); /* Nota: Se o logo for claro, verifique se o fundo contrasta bem */
     transition: all 0.4s ease;
 }
 
@@ -85,8 +86,8 @@ body {
 /* Links de Navegação */
 .header nav a {
     text-decoration: none;
-    color: #333;
-    font-weight: 500;
+    color: #212529; /* ACESSIBILIDADE: Quase preto para leitura */
+    font-weight: 600; /* ACESSIBILIDADE: Peso maior ajuda na leitura */
     font-size: 15px;
     transition: all 0.3s ease;
     position: relative;
@@ -94,7 +95,7 @@ body {
 }
 
 .header nav a:hover {
-    color: #667eea;
+    color: #0a58ca; /* ACESSIBILIDADE: Azul mais escuro */
 }
 
 .header nav a::after {
@@ -104,7 +105,7 @@ body {
     left: 0;
     width: 0;
     height: 2px;
-    background: #667eea;
+    background: #0a58ca;
     transition: width 0.3s ease;
 }
 
@@ -128,12 +129,12 @@ body {
     align-items: center;
     gap: 6px;
     text-decoration: none;
-    color: #333;
+    color: #212529;
     transition: all 0.3s ease;
 }
 
 .profile-link:hover {
-    color: #667eea;
+    color: #0a58ca;
     transform: translateY(-1px);
 }
 
@@ -143,49 +144,51 @@ body {
     height: 50px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #e0e0e0;
+    border: 2px solid #ced4da; /* Borda mais visível */
     transition: all 0.3s ease;
 }
 
 .profile-link:hover .user-avatar {
-    border-color: #667eea;
+    border-color: #0a58ca;
     transform: scale(1.1);
 }
 
 .profile-username {
-    font-weight: 500;
+    font-weight: 600;
     font-size: 14px;
 }
 
 /* Botões de Login/Registro */
 .user-actions a:not(.profile-link) {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    /* ACESSIBILIDADE: Gradiente ajustado para iniciar com cor mais escura */
+    background: linear-gradient(135deg, #4c51bf 0%, #764ba2 100%);
     color: white;
     padding: 8px 16px;
     border-radius: 20px;
-    font-weight: 600;
+    font-weight: 700; /* Texto em negrito para fundo colorido */
     font-size: 13px;
     text-decoration: none;
     transition: all 0.3s ease;
-    box-shadow: 0 3px 12px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 3px 12px rgba(76, 81, 191, 0.3);
 }
 
 .user-actions a:not(.profile-link):hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 5px 15px rgba(76, 81, 191, 0.4);
     color: white;
 }
 
 /* Botão Sair com nova cor - TONS DE CINZA/ELEGANTE */
 .logout-link {
-    background: linear-gradient(135deg, #6c757d 0%, #495057 100%) !important;
-    box-shadow: 0 3px 12px rgba(108, 117, 125, 0.3) !important;
+    background: linear-gradient(135deg, #495057 0%, #343a40 100%) !important; /* Mais escuro */
+    box-shadow: 0 3px 12px rgba(52, 58, 64, 0.3) !important;
 }
 
 .logout-link:hover {
-    background: linear-gradient(135deg, #5a6268 0%, #3d4348 100%) !important;
-    box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4) !important;
+    background: linear-gradient(135deg, #343a40 0%, #212529 100%) !important;
+    box-shadow: 0 5px 15px rgba(52, 58, 64, 0.4) !important;
 }
+
 /* ========================================
    MAIN E FOOTER
    ======================================== */
@@ -197,7 +200,7 @@ main {
 }
 
 .footer {
-    background: #333;
+    background: #212529; /* Cinza quase preto */
     color: #fff;
     text-align: center;
     padding: 15px 0;
@@ -248,12 +251,12 @@ main {
 
 .welcome-container p {
     font-size: 18px;
-    color: #555;
+    color: #495057; /* ACESSIBILIDADE: Cinza escuro */
     margin-top: 25px;
 }
 
 .welcome-container p:hover {
-    color: #28a745;
+    color: #157347; /* Verde acessível */
     transition: color 0.3s ease;
 }
 
@@ -282,7 +285,7 @@ main {
     max-width: 920px;
     margin: 28px auto;
     padding: 22px;
-    border: 1px solid #e6e9ee;
+    border: 1px solid #ced4da;
     box-shadow: 0 6px 18px rgba(24, 39, 75, 0.06);
 }
 
@@ -300,7 +303,7 @@ main {
 .event-form-container h2,
 .profile-container h2,
 .profile-edit-container h2 {
-    color: #333;
+    color: #212529; /* Preto suave */
     margin-bottom: 10px;
     font-size: 28px;
 }
@@ -312,12 +315,12 @@ main {
 .profile-container h2,
 .profile-edit-container h2 {
     font-size: 1.6rem;
-    color: #1f2a44;
+    color: #0f172a; /* Azul marinho muito escuro */
     margin-bottom: 18px;
 }
 
 .certificates-container h1 {
-    color: #333;
+    color: #212529;
     font-size: 32px;
     margin-bottom: 10px;
 }
@@ -327,7 +330,7 @@ main {
 .subscribed-events-container hr,
 .event-form-container hr {
     border: none;
-    border-top: 2px solid #e0e0e0;
+    border-top: 2px solid #dee2e6; /* Separador mais visível */
     margin-bottom: 25px;
 }
 
@@ -337,7 +340,7 @@ main {
 
 .event-detail-container hr {
     border: none;
-    border-top: 2px solid #e0e0e0;
+    border-top: 2px solid #dee2e6;
     margin: 30px 0;
 }
 
@@ -360,7 +363,7 @@ main {
 .login-container h2 {
     text-align: center;
     margin-bottom: 25px;
-    color: #333;
+    color: #212529;
 }
 
 .register-container form,
@@ -372,6 +375,7 @@ main {
 .login-container p,
 .event-form-container form p {
     margin-bottom: 18px;
+    color: #495057;
 }
 
 .event-form-container form p {
@@ -388,8 +392,8 @@ main {
 .event-form-container label {
     display: block;
     margin-bottom: 5px;
-    color: #333;
-    font-weight: 500;
+    color: #2c3e50; /* ACESSIBILIDADE: Azul escuro para labels */
+    font-weight: 700;
     font-size: 14px;
 }
 
@@ -398,6 +402,7 @@ main {
 }
 
 /* Inputs de texto */
+/* ACESSIBILIDADE: Bordas mais escuras para delimitação clara */
 .register-container input[type="text"],
 .register-container input[type="password"],
 .register-container input[type="email"],
@@ -416,14 +421,16 @@ main {
 .profile-edit-container input[type="email"],
 .profile-edit-container input[type="tel"],
 .profile-edit-container select,
-s.profile-edit-container textarea,
+.profile-edit-container textarea,
 .profile-edit-container .form-control,
 .profile-edit-container .form-control-file {
     width: 100%;
     padding: 12px;
-    border: 1px solid #ccc;
+    border: 2px solid #6c757d; /* Borda robusta */
     border-radius: 4px;
     font-size: 14px;
+    color: #212529; /* Texto digitado bem escuro */
+    background-color: #fcfcfc;
     transition: border-color 0.3s ease;
 }
 
@@ -435,7 +442,7 @@ s.profile-edit-container textarea,
 .login-container input[type="text"],
 .login-container select,
 .login-container input[type="password"] {
-    margin-bottom: 5px;
+    margin-bottom: 15px; /* Aumentei um pouco o espaçamento */
 }
 
 .register-container select,
@@ -447,7 +454,7 @@ s.profile-edit-container textarea,
 .event-form-container textarea {
     min-height: 120px;
     resize: vertical;
-    font-family: Arial, sans-serif;
+    font-family: 'BioRhyme', serif; /* Mantendo a fonte do body ou usar Arial se preferir legibilidade */
 }
 
 .profile-edit-container input[type="text"],
@@ -458,7 +465,7 @@ s.profile-edit-container textarea,
 .profile-edit-container .form-control,
 .profile-edit-container .form-control-file {
     padding: 8px 10px;
-    border: 1px solid #d8e0ee;
+    border: 2px solid #adb5bd;
     border-radius: 6px;
     background: #fff;
     font-size: 0.96rem;
@@ -473,7 +480,8 @@ s.profile-edit-container textarea,
 .event-form-container textarea:focus,
 .event-form-container select:focus {
     outline: none;
-    border-color: #007bff;
+    border-color: #0a58ca;
+    box-shadow: 0 0 0 3px rgba(10, 88, 202, 0.2);
 }
 
 /* Layout de formulário em linha */
@@ -489,7 +497,7 @@ s.profile-edit-container textarea,
 }
 
 /* ========================================
-   BOTÕES
+   BOTÕES (CORES AJUSTADAS PARA WCAG AA)
    ======================================== */
 /* Botões base */
 .btn,
@@ -505,7 +513,7 @@ s.profile-edit-container textarea,
     min-width: 110px;
     border-radius: 8px;
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 1rem;
     line-height: 1;
     cursor: pointer;
@@ -522,36 +530,34 @@ s.profile-edit-container textarea,
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 700;
     transition: background 0.3s ease;
     margin-top: 10px;
     margin-bottom: 30px;
 }
 
 .register-container button {
-    background: #28a745;
+    background: #157347; /* Verde acessível */
     color: #fff;
+    border: 1px solid #146c43;
 }
 
 .register-container button:hover {
-    background: #218838;
+    background: #0b4128;
     transform: scale(1.03);
-    box-shadow: 0 8px 20px rgba(33, 136, 56, 0.25), 0 0 0 4px rgba(33, 136, 56, 0.1);
-    filter: brightness(1.05) saturate(1.05);
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 20px rgba(21, 115, 71, 0.25);
 }
 
 .login-container button {
-    background: #007bff;
+    background: #0a58ca; /* Azul acessível */
     color: #fff;
+    border: 1px solid #0a53be;
 }
 
 .login-container button:hover {
-    background: #004085;
+    background: #06357b;
     transform: scale(1.03);
-    box-shadow: 0 8px 20px rgba(3, 19, 159, 0.25), 0 0 0 4px rgba(33, 136, 56, 0.1);
-    filter: brightness(1.05) saturate(1.05);
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 20px rgba(10, 88, 202, 0.25);
 }
 
 /* Botões primários */
@@ -559,16 +565,16 @@ s.profile-edit-container textarea,
 .btn-register,
 .profile-container .btn-primary,
 .profile-edit-container .btn-primary {
-    background: #2563eb;
+    background: #0a58ca;
     color: #fff;
-    border-color: rgba(37, 99, 235, 0.15);
+    border-color: #0a53be;
 }
 
 .btn-primary:hover,
 .btn-register:hover,
 .profile-container .btn-primary:hover,
 .profile-edit-container .btn-primary:hover {
-    background: #1e55d1;
+    background: #06357b;
     transform: translateY(-1px);
 }
 
@@ -577,16 +583,17 @@ s.profile-edit-container textarea,
 .btn.secondary,
 .profile-container .btn-secondary,
 .profile-edit-container .btn-secondary {
-    background: #f3f4f6;
-    color: #111827;
-    border-color: #e5e7eb;
+    background: #e9ecef;
+    color: #212529; /* Texto escuro */
+    border-color: #ced4da;
+    border-bottom-width: 2px;
 }
 
 .btn-secondary:hover,
 .btn.secondary:hover,
 .profile-container .btn-secondary:hover,
 .profile-edit-container .btn-secondary:hover {
-    filter: brightness(0.98);
+    background: #dee2e6;
     transform: translateY(-1px);
 }
 
@@ -594,17 +601,18 @@ s.profile-edit-container textarea,
 .add-event-btn {
     display: inline-block;
     padding: 12px 24px;
-    background: #28a745;
+    background: #157347;
     color: #fff;
     text-decoration: none;
     border-radius: 4px;
     margin-bottom: 30px;
-    font-weight: 500;
+    font-weight: 600;
     transition: background 0.3s ease;
+    border: 1px solid #146c43;
 }
 
 .add-event-btn:hover {
-    background: #218838;
+    background: #0b4128;
 }
 
 .add-event-btn:active {
@@ -618,7 +626,7 @@ s.profile-edit-container textarea,
     margin: 20px auto 0;
     text-align: center;
     padding: 12px 24px;
-    background: #007bff;
+    background: #0a58ca;
     color: #fff;
     text-decoration: none;
     border-radius: 6px;
@@ -628,10 +636,9 @@ s.profile-edit-container textarea,
 }
 
 .btn-edit:hover {
-    background: #0056b3;
+    background: #06357b;
     transform: perspective(800px) translateY(6px) rotateX(-8deg) scale(1.05);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-    filter: brightness(1.05);
 }
 
 .back-link,
@@ -641,7 +648,7 @@ s.profile-edit-container textarea,
     max-width: 420px;
     text-align: center;
     padding: 12px 24px;
-    background: #6c757d;
+    background: #495057; /* Cinza escuro */
     color: #fff;
     text-decoration: none;
     border-radius: 6px;
@@ -652,62 +659,59 @@ s.profile-edit-container textarea,
 
 .back-link:hover,
 .btn-cancel:hover {
-    background: #5a6268;
+    background: #343a40;
     transform: perspective(800px) translateY(-6px) rotateX(6deg) scale(1.03);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
-    filter: brightness(1.05);
 }
 
 /* Botões de eventos */
 .btn-subscribe {
-    background: #28a745;
+    background: #157347;
     color: #fff;
+    border: 1px solid #0f5132;
 }
 
 .btn-subscribe:hover {
-    background: #218838;
+    background: #0b4128;
     transform: translateY(-6px) rotate(-3deg) scale(1.06);
-    box-shadow: 0 12px 28px rgba(35, 200, 38, 0.35), 0 0 0 6px rgba(200, 35, 51, 0.08);
-    filter: brightness(1.06) saturate(1.08);
-    text-shadow: 0 2px 6px rgba(200, 35, 51, 0.12);
+    box-shadow: 0 12px 28px rgba(21, 115, 71, 0.35);
 }
 
 .btn-unsubscribe {
-    background: #dc3545;
+    background: #bb2d3b; /* Vermelho mais escuro/acessível */
     color: #fff;
+    border: 1px solid #b02a37;
 }
 
 .btn-unsubscribe:hover {
-    background: #c82333;
+    background: #842029;
     transform: translateY(-6px) rotate(-3deg) scale(1.06);
-    box-shadow: 0 12px 28px rgba(200, 35, 51, 0.35), 0 0 0 6px rgba(200, 35, 51, 0.08);
-    filter: brightness(1.06) saturate(1.08);
-    text-shadow: 0 2px 6px rgba(200, 35, 51, 0.12);
+    box-shadow: 0 12px 28px rgba(187, 45, 59, 0.35);
 }
 
 .btn-full {
     background: #6c757d;
     color: #fff;
     cursor: not-allowed;
-    opacity: 0.6;
+    opacity: 0.8; /* Aumentei opacidade para leitura */
 }
 
 .btn-remove {
-    background: #dc3545;
+    background: #bb2d3b;
     color: #fff;
 }
 
 .btn-remove:hover {
-    background: #c82333;
+    background: #842029;
 }
 
 .btn-details {
-    background: #007bff;
+    background: #0a58ca;
     color: #fff;
 }
 
 .btn-details:hover {
-    background: #0056b3;
+    background: #06357b;
 }
 
 .btn-print {
@@ -715,7 +719,7 @@ s.profile-edit-container textarea,
     align-items: center;
     gap: 10px;
     padding: 14px 30px;
-    background: #007bff;
+    background: #0a58ca;
     color: #fff;
     text-decoration: none;
     border-radius: 6px;
@@ -727,9 +731,9 @@ s.profile-edit-container textarea,
 }
 
 .btn-print:hover {
-    background: #0056b3;
+    background: #06357b;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(10, 88, 202, 0.3);
 }
 
 /* Botões de certificado */
@@ -750,41 +754,43 @@ s.profile-edit-container textarea,
 }
 
 .btn-issue {
-    background: #007bff;
+    background: #0a58ca;
     color: #fff;
 }
 
 .btn-issue:hover {
-    background: #0056b3;
+    background: #06357b;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+    box-shadow: 0 4px 8px rgba(10, 88, 202, 0.3);
 }
 
 .btn-download {
-    background: #28a745;
+    background: #157347;
     color: #fff;
 }
 
 .btn-download:hover {
-    background: #218838;
+    background: #0b4128;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+    box-shadow: 0 4px 8px rgba(21, 115, 71, 0.3);
 }
 
 .btn-explore {
     display: inline-block;
     padding: 12px 30px;
     background: #fff;
-    color: #667eea;
+    color: #0a58ca;
     text-decoration: none;
     border-radius: 6px;
     font-weight: 600;
     transition: all 0.3s ease;
+    border: 2px solid #0a58ca; /* Adicionei borda para contraste */
 }
 
 .btn-explore:hover {
+    background: #f8f9fa;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Grupos de ações de formulário */
@@ -809,31 +815,28 @@ s.profile-edit-container textarea,
     text-decoration: none;
     border-radius: 4px;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 700;
     transition: all 0.3s ease;
     border: none;
     cursor: pointer;
 }
 
 .form-actions button[type="submit"] {
-    background: #28a745;
+    background: #157347;
     color: #fff;
+    border: 1px solid #0f5132;
 }
 
 .form-actions button[type="submit"]:hover {
-    background: #218838;
+    background: #0b4128;
     transform: translateY(-8px) rotate(-6deg) scale(1.08);
-    background-image: linear-gradient(135deg, #34d399 0%, #06b6d4 50%, #7c3aed 100%);
-    background-size: 200% 200%;
-    background-position: 0% 50%;
+    /* Mantive o gradiente mas escureci */
+    background-image: linear-gradient(135deg, #157347 0%, #0891b2 50%, #6d28d9 100%);
     color: #fff;
-    text-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
-    box-shadow: 0 12px 30px rgba(34, 197, 94, 0.18), 0 6px 18px rgba(6, 182, 212, 0.12), inset 0 -4px 10px rgba(0, 0, 0, 0.06);
-    filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.12)) saturate(1.08) brightness(1.02);
 }
 
 .form-actions a {
-    background: #6c757d;
+    background: #495057;
     color: #fff;
     display: flex;
     align-items: center;
@@ -841,29 +844,22 @@ s.profile-edit-container textarea,
 }
 
 .form-actions a:hover {
-    background: #5a6268;
+    background: #343a40;
     transform: translateY(-8px) rotate(-6deg) scale(1.08);
-    background-image: linear-gradient(135deg, #ff7a18 0%, #ffc107 25%, #28a745 50%, #00d4ff 75%, #7c3aed 100%);
-    background-size: 200% 200%;
-    background-position: 0% 50%;
-    color: #fff;
-    text-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
-    box-shadow: 0 12px 30px rgba(112, 112, 112, 0.18), 0 6px 18px rgba(6, 182, 212, 0.12), inset 0 -4px 10px rgba(0, 0, 0, 0.06);
-    filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.12)) saturate(1.08) brightness(1.02);
 }
 
 .delete-form-actions button[type="submit"] {
-    background: #dc3545;
+    background: #bb2d3b;
     color: #fff;
 }
 
 .delete-form-actions button[type="submit"]:hover {
-    background: #c82333;
+    background: #842029;
     transform: scale(1.02);
 }
 
 .delete-form-actions a {
-    background: #28a745;
+    background: #157347;
     color: #fff;
     display: flex;
     align-items: center;
@@ -871,25 +867,25 @@ s.profile-edit-container textarea,
 }
 
 .delete-form-actions a:hover {
-    background: #218838;
+    background: #0b4128;
     transform: scale(1.02);
 }
 
 /* Botões de desinscrição */
 .unsubscribe-form button {
     padding: 10px 20px;
-    background: #dc3545;
+    background: #bb2d3b;
     color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     transition: background 0.3s ease;
 }
 
 .unsubscribe-form button:hover {
-    background: #c82333;
+    background: #842029;
 }
 
 /* Botões de registro */
@@ -911,17 +907,18 @@ s.profile-edit-container textarea,
     padding: 15px;
     margin: 20px auto;
     max-width: 600px;
-    background: #d1ecf1;
-    border: 1px solid #bee5eb;
+    background: #cff4fc; /* Azul bem claro */
+    border: 1px solid #b6effb;
     border-radius: 4px;
-    color: #0c5460;
+    color: #055160; /* Azul escuro para texto */
     text-align: center;
+    font-weight: 500;
 }
 
 .alert.alert-danger {
     background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
+    color: #842029; /* Vermelho escuro para texto */
+    border: 1px solid #f5c2c7;
     padding: 12px 16px;
     border-radius: 6px;
     margin-bottom: 1rem;
@@ -936,8 +933,9 @@ s.profile-edit-container textarea,
 }
 
 .field-error {
-    color: #dc3545;
-    font-size: 0.85em;
+    color: #b02a37; /* Vermelho mais legível */
+    font-size: 0.9em; /* Ligeiramente maior */
+    font-weight: 600;
     display: block;
     margin-top: 3px;
     margin-bottom: 8px;
@@ -948,9 +946,9 @@ s.profile-edit-container textarea,
     text-align: center;
     padding: 20px;
     background: #fff3cd;
-    border: 1px solid #ffeaa7;
+    border: 1px solid #ffecb5;
     border-radius: 6px;
-    color: #856404;
+    color: #664d03; /* Marrom escuro */
 }
 
 .no-events-message {
@@ -959,20 +957,21 @@ s.profile-edit-container textarea,
 
 .login-message a,
 .no-events-message a {
-    color: #007bff;
+    color: #0a58ca;
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 700;
+    text-decoration: underline;
 }
 
 .login-message a:hover,
 .no-events-message a:hover {
-    text-decoration: underline;
+    color: #003768;
 }
 
 .no-certificates-alert {
     text-align: center;
     padding: 60px 40px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #4c51bf 0%, #764ba2 100%);
     color: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -985,7 +984,7 @@ s.profile-edit-container textarea,
 
 .no-certificates-alert p {
     font-size: 16px;
-    opacity: 0.9;
+    opacity: 1; /* Removida opacidade para contraste total */
     margin-bottom: 25px;
 }
 
@@ -1006,14 +1005,15 @@ s.profile-edit-container textarea,
     margin-bottom: 15px;
     border-radius: 6px;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid #dee2e6; /* Borda sutil adicionada */
 }
 
 .event-item {
-    border-left: 4px solid #007bff;
+    border-left: 5px solid #0a58ca;
 }
 
 .subscribed-event-item {
-    border-left: 4px solid #28a745;
+    border-left: 5px solid #157347;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -1027,15 +1027,16 @@ s.profile-edit-container textarea,
 
 .event-title {
     font-size: 20px;
-    font-weight: 600;
-    color: #333;
+    font-weight: 700;
+    color: #212529;
     margin-bottom: 8px;
 }
 
 .event-date {
-    color: #666;
+    color: #495057; /* Cinza escuro */
     font-size: 14px;
     margin-bottom: 15px;
+    font-weight: 500;
 }
 
 .event-actions {
@@ -1055,7 +1056,7 @@ s.profile-edit-container textarea,
 .no-events {
     text-align: center;
     padding: 40px;
-    color: #666;
+    color: #495057;
     font-size: 16px;
 }
 
@@ -1064,9 +1065,10 @@ s.profile-edit-container textarea,
     background: #e7f3ff;
     padding: 12px 20px;
     border-radius: 6px;
-    color: #004085;
+    color: #003768; /* Azul escuro */
     margin-bottom: 25px;
-    border-left: 4px solid #007bff;
+    border-left: 4px solid #0a58ca;
+    border-bottom: 1px solid #cfe2ff;
 }
 
 .event-info {
@@ -1075,20 +1077,20 @@ s.profile-edit-container textarea,
 
 .event-info a {
     text-decoration: none;
-    color: #007bff;
+    color: #0a58ca;
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 700;
     transition: color 0.3s ease;
 }
 
 .event-info a:hover {
-    color: #0056b3;
+    color: #06357b;
     text-decoration: underline;
 }
 
 .event-info small {
     display: block;
-    color: #666;
+    color: #495057;
     font-size: 14px;
     margin-top: 5px;
 }
@@ -1101,21 +1103,23 @@ s.profile-edit-container textarea,
    DETALHES DO EVENTO
    ======================================== */
 .event-detail-container h2 {
-    color: #333;
+    color: #212529;
     font-size: 32px;
     margin-bottom: 20px;
     text-align: center;
 }
 
 .event-description {
-    color: #555;
+    color: #212529;
     font-size: 16px;
     line-height: 1.6;
     margin-bottom: 25px;
     padding: 20px;
     background: #f8f9fa;
     border-radius: 6px;
-    border-left: 4px solid #007bff;
+    border-left: 4px solid #0a58ca;
+    border: 1px solid #dee2e6;
+    border-left-width: 4px;
 }
 
 .description-card {
@@ -1124,14 +1128,10 @@ s.profile-edit-container textarea,
 
 .description-card:hover {
     background: linear-gradient(135deg, #e7f3ff 0%, #d7f0ff 50%);
-    border-left-color: #0056b3;
-    color: #333;
-    transition: transform 360ms cubic-bezier(.2, .8, .2, 1), box-shadow 360ms ease, filter 360ms ease, background-position 600ms ease;
-    box-shadow: 0 12px 30px rgba(0, 86, 179, 0.12), 0 4px 10px rgba(0, 0, 0, 0.06);
-    transform: perspective(900px) translateY(-10px) rotateX(6deg) rotateZ(-2deg) scale(1.03);
-    filter: brightness(1.04) saturate(1.08);
-    background-size: 200% 200%;
-    text-shadow: 0 2px 8px rgba(0, 86, 179, 0.06);
+    border-left-color: #06357b;
+    color: #212529;
+    transition: transform 360ms cubic-bezier(.2, .8, .2, 1);
+    transform: perspective(900px) translateY(-5px);
 }
 
 .description-content {
@@ -1146,9 +1146,9 @@ s.profile-edit-container textarea,
     max-height: 200px;
     overflow-y: auto;
     padding: 10px;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #ced4da;
     border-radius: 4px;
-    background: #fafafa;
+    background: #fff;
 }
 
 .event-capacity {
@@ -1157,28 +1157,22 @@ s.profile-edit-container textarea,
     justify-content: center;
     gap: 15px;
     padding: 15px;
-    background: #e7f3ff;
+    background: #cfe2ff; /* Azul claro mais forte */
     border-radius: 6px;
     margin-bottom: 25px;
     font-size: 18px;
-    font-weight: 600;
-    color: #004085;
+    font-weight: 700;
+    color: #052c65; /* Texto escuro */
 }
 
 .event-capacity.full {
     background: #f8d7da;
-    color: #721c24;
+    color: #842029;
 }
 
 .event-capacity:hover {
-    background: linear-gradient(135deg, #ff7a18 0%, #ffc107 30%, #28a745 60%, #00d4ff 100%);
-    background-size: 300% 300%;
-    background-position: right center;
-    transform: rotate(-1deg) scale(1.08);
-    color: #fff;
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12), 0 0 18px rgba(255, 193, 7, 0.18);
-    filter: saturate(1.15) brightness(1.03);
+    background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+    color: #000;
     transition: all 400ms ease;
 }
 
@@ -1208,31 +1202,28 @@ s.profile-edit-container textarea,
     background: #f8f9fa;
     padding: 20px;
     border-radius: 6px;
-    border-left: 4px solid #007bff;
+    border-left: 4px solid #0a58ca;
+    border: 1px solid #dee2e6;
+    border-left-width: 4px;
 }
 
 .event-info-card:hover {
-    background: linear-gradient(135deg, #e7f3ff 0%, #d7f0ff 50%);
-    border-left-color: #0056b3;
-    color: #333;
-    transition: transform 360ms cubic-bezier(.2, .8, .2, 1), box-shadow 360ms ease, filter 360ms ease, background-position 600ms ease;
-    box-shadow: 0 12px 30px rgba(0, 86, 179, 0.12), 0 4px 10px rgba(0, 0, 0, 0.06);
-    transform: perspective(900px) translateY(-10px) rotateX(6deg) rotateZ(-2deg) scale(1.03);
-    filter: brightness(1.04) saturate(1.08);
-    background-size: 200% 200%;
-    text-shadow: 0 2px 8px rgba(0, 86, 179, 0.06);
+    background: #e7f3ff;
+    border-left-color: #06357b;
+    color: #212529;
 }
 
 .event-info-card.highlight {
-    background: #e7f3ff;
-    border-left-color: #28a745;
+    background: #d1e7dd;
+    border-left-color: #157347;
+    color: #0f5132;
 }
 
 .event-info-label {
-    font-size: 12px;
-    color: #666;
+    font-size: 13px;
+    color: #495057; /* Cinza escuro */
     text-transform: uppercase;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 8px;
     display: flex;
     align-items: center;
@@ -1241,8 +1232,8 @@ s.profile-edit-container textarea,
 
 .event-info-value {
     font-size: 16px;
-    color: #333;
-    font-weight: 500;
+    color: #212529; /* Preto */
+    font-weight: 600;
     word-wrap: break-word;
     overflow-wrap: break-word;
     white-space: normal;
@@ -1252,7 +1243,7 @@ s.profile-edit-container textarea,
 .event-type-badge {
     display: inline-block;
     padding: 8px 16px;
-    background: #007bff;
+    background: #0a58ca;
     color: #fff;
     border-radius: 20px;
     font-size: 14px;
@@ -1260,15 +1251,8 @@ s.profile-edit-container textarea,
 }
 
 .event-type-badge:hover {
-    background: linear-gradient(135deg, #ff7a18 0%, #ffc107 30%, #28a745 60%, #00d4ff 100%);
-    background-size: 300% 300%;
-    background-position: right center;
-    transform: rotate(-6deg) scale(1.08);
-    color: #fff;
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12), 0 0 18px rgba(255, 193, 7, 0.18);
-    filter: saturate(1.15) brightness(1.03);
-    transition: all 400ms ease;
+    background: #06357b;
+    transform: rotate(-2deg) scale(1.05);
 }
 
 .event-creator-info {
@@ -1280,19 +1264,16 @@ s.profile-edit-container textarea,
     display: flex;
     align-items: center;
     gap: 10px;
+    color: #664d03;
 }
 
 .event-creator-info strong {
-    color: #856404;
+    color: #664d03;
 }
 
 .event-creator-info:hover {
-    background: #ffca2c;
-    border-left-color: #ffca2c;
-    color: #333;
-    transition: transform 320ms cubic-bezier(.2, .8, .2, 1), box-shadow 320ms cubic-bezier(.2, .8, .2, 1), background-color 220ms ease, border-color 220ms ease;
-    transform: translateY(-6px) scale(1.02);
-    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.12), 0 4px 10px rgba(0, 0, 0, 0.06);
+    background: #ffe69c;
+    border-left-color: #e0a800;
 }
 
 /* ========================================
@@ -1307,7 +1288,7 @@ s.profile-edit-container textarea,
 }
 
 .delete-alert h4 {
-    color: #856404;
+    color: #664d03;
     font-size: 24px;
     margin-bottom: 15px;
     display: flex;
@@ -1322,14 +1303,15 @@ s.profile-edit-container textarea,
 }
 
 .delete-alert p {
-    color: #856404;
+    color: #664d03;
     margin-bottom: 20px;
     font-size: 15px;
+    font-weight: 500;
 }
 
 .delete-alert hr {
     border: none;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid #e0a800;
     margin: 25px 0;
 }
 
@@ -1339,11 +1321,11 @@ s.profile-edit-container textarea,
     border-radius: 6px;
     margin: 20px 0;
     text-align: left;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #ced4da;
 }
 
 .event-details-box strong {
-    color: #333;
+    color: #212529;
     display: inline-block;
     min-width: 80px;
 }
@@ -1362,20 +1344,19 @@ s.profile-edit-container textarea,
 .profile-container {
     max-width: 900px;
     margin: 40px auto;
-    /* Mantém centralizado o título H2, mas o resto controlaremos abaixo */
 }
 
 /* Wrapper que segura Imagem (esq) e Detalhes (dir) */
 .profile-content-wrapper {
     display: flex;
-    gap: 40px; /* Espaço entre a foto e o texto */
-    align-items: flex-start; /* Alinha ao topo */
+    gap: 40px; 
+    align-items: flex-start;
     margin-top: 30px;
 }
 
 /* --- Coluna da Imagem --- */
 .profile-sidebar {
-    flex: 0 0 250px; /* Largura fixa para a coluna da imagem */
+    flex: 0 0 250px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1387,7 +1368,7 @@ s.profile-edit-container textarea,
     border-radius: 50%;
     object-fit: cover;
     border: 5px solid #fff;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Sombra elegante na foto */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     transition: transform 0.3s ease;
 }
 
@@ -1397,42 +1378,41 @@ s.profile-edit-container textarea,
 
 /* --- Coluna de Detalhes (A Caixa) --- */
 .profile-details {
-    flex: 1; /* Ocupa todo o espaço restante */
+    flex: 1;
     background: #ffffff;
     padding: 30px;
     border-radius: 12px;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05); /* Sombra suave */
-    border: 1px solid #e9ecef;
-    border-left: 5px solid #007bff; /* Detalhe azul na lateral esquerda */
-    text-align: left; /* Garante que o texto fique alinhado à esquerda */
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid #dee2e6;
+    border-left: 5px solid #0a58ca;
+    text-align: left;
 }
 
 /* Linhas de informação (Label + Valor) */
 .detail-row {
     display: grid;
-    /* Alterado de 120px para 160px para caber "INSTITUIÇÃO" */
     grid-template-columns: 160px 1fr; 
     padding: 12px 0;
     border-bottom: 1px solid #f1f3f5;
     align-items: center;
-    column-gap: 15px; /* Adiciona um espaço de segurança entre o rótulo e o valor */
+    column-gap: 15px;
 }
 
 .detail-row:last-of-type {
-    border-bottom: none; /* Remove linha do último item */
+    border-bottom: none;
 }
 
 .detail-label {
-    font-weight: 600;
-    color: #6c757d; /* Cinza para o rótulo */
+    font-weight: 700;
+    color: #495057; /* Cinza escuro */
     font-size: 0.95rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
 .detail-value {
-    font-weight: 500;
-    color: #333;
+    font-weight: 600;
+    color: #000000; /* Preto total */
     font-size: 1.05rem;
 }
 
@@ -1440,12 +1420,12 @@ s.profile-edit-container textarea,
 .profile-actions {
     margin-top: 25px;
     display: flex;
-    justify-content: flex-end; /* Joga o botão para a direita */
+    justify-content: flex-end;
 }
 
 .btn-edit-profile {
     min-width: 150px;
-    box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+    box-shadow: 0 4px 6px rgba(10, 88, 202, 0.2);
 }
 
 /* ========================================
@@ -1453,7 +1433,7 @@ s.profile-edit-container textarea,
    ======================================== */
 @media (max-width: 768px) {
     .profile-content-wrapper {
-        flex-direction: column; /* Empilha um em cima do outro */
+        flex-direction: column;
         align-items: center;
         gap: 20px;
     }
@@ -1466,19 +1446,20 @@ s.profile-edit-container textarea,
 
     .profile-details {
         width: 100%;
-        border-left: 1px solid #e9ecef; /* Remove a borda lateral grossa no mobile */
-        border-top: 5px solid #007bff; /* Coloca a borda no topo */
+        border-left: 1px solid #dee2e6;
+        border-top: 5px solid #0a58ca;
     }
 
     .detail-row {
-        grid-template-columns: 1fr; /* Label em cima, valor embaixo */
+        grid-template-columns: 1fr;
         gap: 5px;
     }
     
     .profile-actions {
-        justify-content: center; /* Centraliza botão no mobile */
+        justify-content: center;
     }
 }
+
 /* ========================================
    CERTIFICADOS
    ======================================== */
@@ -1489,7 +1470,7 @@ s.profile-edit-container textarea,
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    border: 8px solid #007bff;
+    border: 8px solid #0a58ca;
     position: relative;
 }
 
@@ -1500,7 +1481,7 @@ s.profile-edit-container textarea,
     left: 20px;
     right: 20px;
     bottom: 20px;
-    border: 2px solid #ddd;
+    border: 2px solid #dee2e6;
     border-radius: 4px;
     pointer-events: none;
 }
@@ -1512,7 +1493,7 @@ s.profile-edit-container textarea,
 
 .certificate-header h1 {
     font-size: 42px;
-    color: #007bff;
+    color: #0a58ca;
     font-weight: 700;
     margin-bottom: 10px;
     text-transform: uppercase;
@@ -1527,34 +1508,35 @@ s.profile-edit-container textarea,
 
 .certificate-body .lead {
     font-size: 20px;
-    color: #666;
+    color: #212529;
     margin-bottom: 20px;
 }
 
 .certificate-body p {
     font-size: 18px;
-    color: #666;
+    color: #212529;
     margin: 15px 0;
 }
 
 .participant-name {
     font-size: 36px;
-    color: #333;
+    color: #000;
     font-weight: 700;
     margin: 25px 0;
     padding: 15px 30px;
-    border-bottom: 3px solid #007bff;
+    border-bottom: 3px solid #0a58ca;
     display: inline-block;
 }
 
 .event-duration {
     font-size: 16px;
-    color: #555;
+    color: #495057;
     margin-top: 20px;
     padding: 10px 20px;
     background: #f8f9fa;
     border-radius: 6px;
     display: inline-block;
+    border: 1px solid #dee2e6;
 }
 
 .certificate-footer {
@@ -1563,7 +1545,7 @@ s.profile-edit-container textarea,
     gap: 40px;
     margin-top: 50px;
     padding-top: 30px;
-    border-top: 2px solid #e0e0e0;
+    border-top: 2px solid #dee2e6;
 }
 
 .certificate-info {
@@ -1572,16 +1554,16 @@ s.profile-edit-container textarea,
 
 .certificate-info-label {
     font-size: 14px;
-    color: #666;
-    font-weight: 600;
+    color: #495057;
+    font-weight: 700;
     text-transform: uppercase;
     margin-bottom: 8px;
 }
 
 .certificate-info-value {
     font-size: 18px;
-    color: #333;
-    font-weight: 500;
+    color: #212529;
+    font-weight: 600;
 }
 
 .certificate-actions {
@@ -1593,7 +1575,7 @@ s.profile-edit-container textarea,
     position: absolute;
     font-size: 80px;
     opacity: 0.1;
-    color: #007bff;
+    color: #0a58ca;
 }
 
 .decoration-top-left {
@@ -1618,11 +1600,11 @@ s.profile-edit-container textarea,
 
 /* Lista de certificados */
 .certificates-intro {
-    color: #666;
+    color: #495057;
     font-size: 16px;
     margin-bottom: 30px;
     padding-bottom: 20px;
-    border-bottom: 2px solid #e0e0e0;
+    border-bottom: 2px solid #dee2e6;
 }
 
 .certificates-list {
@@ -1635,11 +1617,13 @@ s.profile-edit-container textarea,
     background: #f8f9fa;
     padding: 25px;
     border-radius: 8px;
-    border-left: 5px solid #007bff;
+    border-left: 5px solid #0a58ca;
     display: flex;
     justify-content: space-between;
     align-items: center;
     transition: all 0.3s ease;
+    border: 1px solid #dee2e6;
+    border-left-width: 5px;
 }
 
 .certificate-card:hover {
@@ -1648,19 +1632,19 @@ s.profile-edit-container textarea,
 }
 
 .certificate-card.issued {
-    border-left-color: #28a745;
+    border-left-color: #157347;
     background: #f0f9f4;
 }
 
 .certificate-info h5 {
-    color: #333;
+    color: #212529;
     font-size: 20px;
     font-weight: 600;
     margin-bottom: 10px;
 }
 
 .certificate-meta {
-    color: #666;
+    color: #495057;
     font-size: 14px;
     display: flex;
     align-items: center;
@@ -1684,11 +1668,11 @@ s.profile-edit-container textarea,
 .certificate-badge {
     display: inline-block;
     padding: 4px 10px;
-    background: #28a745;
+    background: #157347;
     color: #fff;
     border-radius: 12px;
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
     margin-left: 10px;
 }
@@ -1697,20 +1681,21 @@ s.profile-edit-container textarea,
    LINKS
    ======================================== */
 .register-link {
-    color: #007bff;
+    color: #0a58ca;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .register-link:hover {
-    color: #0056b3;
+    color: #06357b;
+    text-decoration: underline;
 }
 
 /* ========================================
-   RESPONSIVIDADE
+   RESPONSIVIDADE GERAL
    ======================================== */
 
-   @media (max-width: 768px) {
+@media (max-width: 768px) {
     .header nav {
         flex-direction: column;
         gap: 12px;
@@ -1992,6 +1977,7 @@ s.profile-edit-container textarea,
 @media print {
     body {
         background: white;
+        color: #000;
     }
     
     .header,
@@ -2008,6 +1994,7 @@ s.profile-edit-container textarea,
         padding: 40px;
         box-shadow: none;
         page-break-inside: avoid;
+        border: 4px solid #0a58ca;
     }
     
     main {
@@ -2015,7 +2002,7 @@ s.profile-edit-container textarea,
     }
 }
 
-/* --- Estrutura Geral do Card --- */
+/* --- Estrutura Geral do Card (Tabelas) --- */
 .container {
     max-width: 1100px;
     margin: 40px auto;
@@ -2025,26 +2012,26 @@ s.profile-edit-container textarea,
 
 .card {
     background-color: #ffffff;
-    border-radius: 12px; /* Bordas arredondadas no container */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Sombra suave para destacar do fundo */
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
     padding: 30px;
-    border: 1px solid #eaeaea;
+    border: 1px solid #dee2e6;
 }
 
 .card h2 {
-    color: #2c3e50;
+    color: #212529;
     font-weight: 600;
     margin-bottom: 25px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     font-size: 1.5rem;
-    border-left: 5px solid #007bff; /* Detalhe visual colorido ao lado do título */
+    border-left: 5px solid #0a58ca; /* Azul acessível */
     padding-left: 15px;
 }
 
 /* --- A Tabela --- */
 .table-responsive {
-    overflow-x: auto; /* Garante scroll lateral em telas pequenas */
+    overflow-x: auto;
 }
 
 .table {
@@ -2055,36 +2042,35 @@ s.profile-edit-container textarea,
 
 /* Cabeçalho Escuro */
 .thead-dark th {
-    background-color: #343a40;
+    background-color: #212529; /* Cinza quase preto */
     color: #ffffff;
     padding: 15px;
-    font-weight: 500;
+    font-weight: 600;
     text-align: left;
     font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
-/* Arredondar os cantos superiores do cabeçalho */
 .thead-dark th:first-child { border-top-left-radius: 8px; }
 .thead-dark th:last-child { border-top-right-radius: 8px; }
 
 /* Células do corpo */
 .table tbody td {
     padding: 14px 15px;
-    border-bottom: 1px solid #f0f0f0;
-    color: #555;
-    vertical-align: middle; /* Centraliza o texto verticalmente */
+    border-bottom: 1px solid #dee2e6;
+    color: #212529;
+    vertical-align: middle;
     font-size: 0.95rem;
 }
 
 /* Efeito Hover nas linhas */
 .table-hover tbody tr:hover {
-    background-color: #f8f9fa;
+    background-color: #f1f3f5;
     transition: background-color 0.2s ease-in-out;
 }
 
-/* --- Badges (As etiquetas coloridas de Ação) --- */
+/* --- Badges (Cores Acessíveis) --- */
 .badge {
     display: inline-block;
     padding: 6px 12px;
@@ -2094,19 +2080,19 @@ s.profile-edit-container textarea,
     text-align: center;
     white-space: nowrap;
     vertical-align: baseline;
-    border-radius: 50px; /* Formato de pílula */
-    color: #fff; /* Texto branco para contraste */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra leve na badge */
+    border-radius: 50px;
+    color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* Cores Específicas para cada ação (baseado nas suas classes do HTML) */
-.bg-info { background-color: #17a2b8; }    /* Azul ciano para Emissão */
-.bg-success { background-color: #28a745; } /* Verde para Adicionar */
-.bg-primary { background-color: #007bff; } /* Azul forte para Registro */
-.bg-danger { background-color: #dc3545; }  /* Vermelho para Remoção */
-.bg-warning { background-color: #ffc107; color: #212529; } /* Amarelo para Edição */
+/* Cores Específicas Ajustadas */
+.bg-info { background-color: #0dcaf0; color: #000; } /* Ciano precisa de texto preto para contraste */
+.bg-success { background-color: #157347; } /* Verde escuro */
+.bg-primary { background-color: #0a58ca; } /* Azul escuro */
+.bg-danger { background-color: #bb2d3b; }  /* Vermelho escuro */
+.bg-warning { background-color: #ffc107; color: #000; } /* Amarelo com texto preto */
 
-/* --- Alerta (caso não tenha registros) --- */
+/* --- Alerta --- */
 .alert {
     padding: 15px;
     margin-bottom: 20px;
@@ -2114,7 +2100,7 @@ s.profile-edit-container textarea,
     border-radius: 8px;
 }
 .alert-info {
-    color: #0c5460;
-    background-color: #d1ecf1;
-    border-color: #bee5eb;
+    color: #055160;
+    background-color: #cff4fc;
+    border-color: #b6effb;
 }
