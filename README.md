@@ -11,7 +11,8 @@ O **Event Management** é um sistema de gerenciamento de eventos desenvolvido em
 ## Preview do site
 um preview da página inicial do projeto
 
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/03c602b5-0a30-4d28-a963-589c93b0f4da" />
+<img width="1920" height="945" alt="preview_site" src="https://github.com/user-attachments/assets/057afd99-cb26-45b5-8ff6-81ff66443059" />
+
 " />
 
 ## ✨ Funcionalidades
