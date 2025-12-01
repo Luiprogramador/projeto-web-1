@@ -1,37 +1,74 @@
 {% extends 'base.html' %}
 {% block title %}Meu Perfil{% endblock %}
 {% load static %}
+
 {% block content %}
 <div class="profile-container">
     <h2>Meu Perfil</h2>
 
     {% if profile %}
-        {% if profile.image %}
-            <div class="profile-image">
-                <img src="{{ profile.image.url }}" alt="Imagem de perfil" style="max-width:200px;">
+        <div class="profile-content-wrapper">
+            
+            <div class="profile-sidebar">
+                {% if profile.image %}
+                    <div class="profile-image-box">
+                        <img src="{{ profile.image.url }}" alt="Imagem de perfil">
+                    </div>
+                {% else %}
+                    <div class="profile-image-box">
+                        <img src="{% static 'img/default-avatar.jpg' %}" alt="Avatar padrão">
+                    </div>
+                {% endif %}
             </div>
-        {% else %}
-            <img class="user-avatar-perfil" src="{% static 'img/default-avatar.jpg' %}" alt="Avatar padrão">
-        {% endif %}
-        <p><strong>Nome:</strong>
-            {% if profile.name %}
-                {{ profile.name }}
-            {% elif profile.get_full_name %}
-                {{ profile.get_full_name }}
-            {% else %}
-                {{ profile.username }}
-            {% endif %}
-        </p>
 
-        <p><strong>Usuário:</strong> {{ profile.username }}</p>
-        <p><strong>E-mail:</strong> {{ profile.email }}</p>
-        <p><strong>Telefone:</strong> {{ profile.phone|default:"Não informado" }}</p>
-        <p><strong>Instituição:</strong> {{ profile.institution|default:"Não informada" }}</p>
-        <p><strong>Tipo:</strong> {{ profile.user_type|default:"Não informado" }}</p>
+            <div class="profile-details">
+                <div class="detail-row">
+                    <span class="detail-label">Nome:</span>
+                    <span class="detail-value">
+                        {% if profile.name %}
+                            {{ profile.name }}
+                        {% elif profile.get_full_name %}
+                            {{ profile.get_full_name }}
+                        {% else %}
+                            {{ profile.username }}
+                        {% endif %}
+                    </span>
+                </div>
 
-        {% if user.is_authenticated and user.pk == profile.pk %}
-            <a class="btn btn-primary" href="{% url 'profile_edit' %}">Editar perfil</a>
-        {% endif %}
+                <div class="detail-row">
+                    <span class="detail-label">Usuário:</span>
+                    <span class="detail-value">{{ profile.username }}</span>
+                </div>
+
+                <div class="detail-row">
+                    <span class="detail-label">E-mail:</span>
+                    <span class="detail-value">{{ profile.email }}</span>
+                </div>
+
+                <div class="detail-row">
+                    <span class="detail-label">Telefone:</span>
+                    <span class="detail-value">{{ profile.phone|default:"Não informado" }}</span>
+                </div>
+
+                <div class="detail-row">
+                    <span class="detail-label">Instituição:</span>
+                    <span class="detail-value">{{ profile.institution|default:"Não informada" }}</span>
+                </div>
+
+                <div class="detail-row">
+                    <span class="detail-label">Tipo:</span>
+                    <span class="detail-value">{{ profile.user_type|default:"Não informado" }}</span>
+                </div>
+
+                {% if user.is_authenticated and user.pk == profile.pk %}
+                    <div class="profile-actions">
+                        <a class="btn btn-primary btn-edit-profile" href="{% url 'profile_edit' %}">
+                            Editar perfil
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
     {% else %}
         <p>Perfil não encontrado.</p>
     {% endif %}

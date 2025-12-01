@@ -1355,121 +1355,130 @@ s.profile-edit-container textarea,
 }
 
 /* ========================================
-   PERFIL DO USUÁRIO
+   NOVO LAYOUT DE PERFIL (Lado a Lado)
    ======================================== */
-.profile-container p {
-    font-size: 1rem;
-    color: black;
-    line-height: 1.6;
-    margin-bottom: 12px;
+
+/* Container geral do perfil */
+.profile-container {
+    max-width: 900px;
+    margin: 40px auto;
+    /* Mantém centralizado o título H2, mas o resto controlaremos abaixo */
 }
 
-.profile-grid {
+/* Wrapper que segura Imagem (esq) e Detalhes (dir) */
+.profile-content-wrapper {
+    display: flex;
+    gap: 40px; /* Espaço entre a foto e o texto */
+    align-items: flex-start; /* Alinha ao topo */
+    margin-top: 30px;
+}
+
+/* --- Coluna da Imagem --- */
+.profile-sidebar {
+    flex: 0 0 250px; /* Largura fixa para a coluna da imagem */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-image-box img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #fff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Sombra elegante na foto */
+    transition: transform 0.3s ease;
+}
+
+.profile-image-box img:hover {
+    transform: scale(1.02);
+}
+
+/* --- Coluna de Detalhes (A Caixa) --- */
+.profile-details {
+    flex: 1; /* Ocupa todo o espaço restante */
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05); /* Sombra suave */
+    border: 1px solid #e9ecef;
+    border-left: 5px solid #007bff; /* Detalhe azul na lateral esquerda */
+    text-align: left; /* Garante que o texto fique alinhado à esquerda */
+}
+
+/* Linhas de informação (Label + Valor) */
+.detail-row {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 18px;
-}
-
-/* Container da imagem de perfil - centralizado */
-.profile-container .profile-image,
-.profile-image {
-    width: 130px;
-    height: 130px;
-    margin: 0 auto 12px;
-    border-radius: 50%;
-    overflow: hidden;
-    display: flex;
+    /* Alterado de 120px para 160px para caber "INSTITUIÇÃO" */
+    grid-template-columns: 160px 1fr; 
+    padding: 12px 0;
+    border-bottom: 1px solid #f1f3f5;
     align-items: center;
-    justify-content: center;
+    column-gap: 15px; /* Adiciona um espaço de segurança entre o rótulo e o valor */
 }
 
-/* Imagem dentro do profile-container */
-.profile-container .profile-image img,
-.profile-container img,
-.profile-image img {
-    width: 130px;
-    height: 130px;
-    min-width: 130px;
-    min-height: 130px;
-    border-radius: 50%;
-    object-fit: cover;
-    object-position: center;
-    border: 3px solid #e9edf5;
-    display: block;
+.detail-row:last-of-type {
+    border-bottom: none; /* Remove linha do último item */
 }
 
-.profile-container .profile-image img:hover,
-.profile-image img:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transform: scale(1.05);
-    transition: transform 200ms ease, box-shadow 200ms ease;
+.detail-label {
+    font-weight: 600;
+    color: #6c757d; /* Cinza para o rótulo */
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-/* User avatar alternativo */
-.user-avatar {
-    width: 130px;
-    height: 130px;
-    margin: 2px auto;
-    border-radius: 50%;
-    overflow: hidden;
+.detail-value {
+    font-weight: 500;
+    color: #333;
+    font-size: 1.05rem;
+}
+
+/* Botão de Editar */
+.profile-actions {
+    margin-top: 25px;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    justify-content: flex-end; /* Joga o botão para a direita */
 }
 
-.user-avatar img {
-    width: 130px;
-    height: 130px;
-    min-width: 130px;
-    min-height: 130px;
-    border-radius: 50%;
-    object-fit: cover;
-    object-position: center;
-    border: 3px solid #d1d5db;
-    display: block;
-}
-
-.user-avatar:hover {
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-    transform: scale(1.05);
-    transition: transform 200ms ease, box-shadow 200ms ease;
-}
-
-/* Avatar específico para página de perfil */
-.user-avatar-perfil {
-    width: 150px;
-    height: 150px;
-    margin: 0 auto 20px;
-    border-radius: 50%;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.user-avatar-perfil img {
-    width: 150px;
-    height: 150px;
+.btn-edit-profile {
     min-width: 150px;
-    min-height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    object-position: center;
-    border: 4px solid #2563eb;
-    display: block;
+    box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
 }
 
-.user-avatar-perfil:hover {
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    transform: scale(1.08);
-    transition: transform 250ms ease, box-shadow 250ms ease;
-}
+/* ========================================
+   RESPONSIVIDADE (MOBILE)
+   ======================================== */
+@media (max-width: 768px) {
+    .profile-content-wrapper {
+        flex-direction: column; /* Empilha um em cima do outro */
+        align-items: center;
+        gap: 20px;
+    }
 
-.user-avatar-perfil img:hover {
-    border-color: #1e55d1;
-}
+    .profile-sidebar {
+        flex: auto;
+        width: 100%;
+        margin-bottom: 10px;
+    }
 
+    .profile-details {
+        width: 100%;
+        border-left: 1px solid #e9ecef; /* Remove a borda lateral grossa no mobile */
+        border-top: 5px solid #007bff; /* Coloca a borda no topo */
+    }
+
+    .detail-row {
+        grid-template-columns: 1fr; /* Label em cima, valor embaixo */
+        gap: 5px;
+    }
+    
+    .profile-actions {
+        justify-content: center; /* Centraliza botão no mobile */
+    }
+}
 /* ========================================
    CERTIFICADOS
    ======================================== */
