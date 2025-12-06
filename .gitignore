@@ -2,5 +2,4 @@ venv/
 .git
 *.pyc
 .vscode/
-event_management/event_management/__pycache__/
-event_management/app/__pycache__/
+__pycache__/
