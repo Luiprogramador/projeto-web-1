@@ -50,9 +50,9 @@ git clone https://github.com/Luiprogramador/projeto-web-1
 cd projeto-web-1
 ```
 
-2. **Instale as dependências do Django**
+2. **Instale as dependências do requeriments.txt**
 ```bash
-pip install Django
+pip install -r requirements.txt
 ```
 
 3. **Execute as migrações**
