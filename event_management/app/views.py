@@ -102,7 +102,7 @@ def profile_edit(request):
         if form.is_valid():
             form.save() # Salva as alterações no perfil do usuário.
             messages.success(request, "Perfil atualizado com sucesso.")
-            return redirect('profile.html')
+            return redirect('profile')
         else:
             messages.error(request, "Corrija os erros no formulário.")
     else:
@@ -190,6 +190,42 @@ def event_edit(request, pk):
         form = EventForm(instance=event) # Preenche o formulário com os dados atuais do evento (para GET).
 
     return render(request, 'event/event_add.html', {'form': form, 'is_edit': True, 'event': event})
+
+
+def event_final(request, pk):
+    event = get_object_or_404(Event, pk=pk)
+
+    if request.method == 'GET':
+        # Lógica para finalizar o evento
+        event.event_finalized = True
+        event.save()
+        messages.success(request, f'O evento "{event.title}" foi finalizado com sucesso.')
+        Auditoria.objects.create(
+                user=request.user,
+                action='Finalizar Evento',
+                timestamp=datetime.now(),
+            )
+        for participant in event.participants.all():
+            try:
+                # Cria um novo certificado ou recupera o existente
+                Certificate.objects.get(event=event, participant=participant) # Tenta recuperar o certificado existente.
+                messages.info(request, 'Certificado já registrado. Visualizando registro...')
+                Auditoria.objects.create(
+                        user=request.user,
+                        action='Emitir Certificado',
+                        timestamp=datetime.now(),
+                    )
+            
+            # Caso o certificado não exista, cria um novo
+            except Certificate.DoesNotExist:
+                Certificate.objects.create(event=event, participant=participant) # Cria um novo registro de certificado.
+                messages.success(request, 'Registro do certificado criado com sucesso. Preparando visualização...')
+                Auditoria.objects.create(
+                        user=request.user,
+                        action='Emitir Certificado',
+                        timestamp=datetime.now(),
+                    )
+    return redirect('event_detail', pk=event.pk)
 
 # ------------- EVENT SUBSCRIBE -------------
 @login_required
@@ -305,6 +341,8 @@ def issue_certificate(request, event_id):
         else:
             messages.error(request, f'Erro inesperado ao acessar/criar o registro do certificado. Detalhe: {e}')
             return redirect('event_detail', pk=event_id)
+        
+    
     
     context = {
         'certificate': certificate,

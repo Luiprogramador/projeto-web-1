@@ -1,37 +1,37 @@
 -- POPULAÇÃO DA TABELA event (agora com coluna `image` e `professor_id`)
-INSERT INTO event (title, description, location, max_capacity, creator_id, event_type, final_date, initial_date, event_end, event_start, image, professor_id) VALUES
+INSERT INTO event (title, description, location, max_capacity, creator_id, event_type, final_date, initial_date, event_end, event_start, image, professor_id, event_finalized) VALUES
 
 -- Palestras
-('Palestra: Avanços em Inteligência Artificial', 'Exploração das últimas tendências e pesquisas em IA', 'Auditório Principal - Bloco A', 150, 1, 'Palestra', '2024-02-15', '2024-02-15', '18:00:00', '14:00:00', 'eventos/palestra_ia.jpg', 4),
-('Palestra: Sustentabilidade e Tecnologia', 'Como a tecnologia pode contribuir para um futuro sustentável', 'Sala de Conferências - Campus Central', 100, 2, 'Palestra', '2024-03-10', '2024-03-10', '17:30:00', '15:00:00', 'eventos/palestra_sustentabilidade.jpg', 3),
+('Palestra: Avanços em Inteligência Artificial', 'Exploração das últimas tendências e pesquisas em IA', 'Auditório Principal - Bloco A', 150, 1, 'Palestra', '2024-02-15', '2024-02-15', '18:00:00', '14:00:00', 'eventos/palestra_ia.jpg', 4, False),
+('Palestra: Sustentabilidade e Tecnologia', 'Como a tecnologia pode contribuir para um futuro sustentável', 'Sala de Conferências - Campus Central', 100, 2, 'Palestra', '2024-03-10', '2024-03-10', '17:30:00', '15:00:00', 'eventos/palestra_sustentabilidade.jpg', 3, False),
 
 -- Workshops
-('Workshop de Python para Iniciantes', 'Aprenda os fundamentos da programação em Python com projetos práticos', 'Laboratório de Informática - Bloco B', 30, 1, 'Workshop', '2024-02-20', '2024-02-15', '17:00:00', '09:00:00', 'eventos/workshop_python.jpg', 3),
-('Workshop de Desenvolvimento Web Moderno', 'Técnicas avançadas para desenvolvimento web responsivo', 'Laboratório de Tecnologia - Sala 305', 25, 3, 'Workshop', '2024-04-05', '2024-04-01', '16:00:00', '14:00:00', 'eventos/workshop_web.jpg', 4),
+('Workshop de Python para Iniciantes', 'Aprenda os fundamentos da programação em Python com projetos práticos', 'Laboratório de Informática - Bloco B', 30, 1, 'Workshop', '2024-02-20', '2024-02-15', '17:00:00', '09:00:00', 'eventos/workshop_python.jpg', 3, False),
+('Workshop de Desenvolvimento Web Moderno', 'Técnicas avançadas para desenvolvimento web responsivo', 'Laboratório de Tecnologia - Sala 305', 25, 3, 'Workshop', '2024-04-05', '2024-04-01', '16:00:00', '14:00:00', 'eventos/workshop_web.jpg', 4, False),
 
 -- Seminários
-('Seminário de Pesquisa em Computação', 'Apresentação de trabalhos científicos na área de computação', 'Auditório de Pós-Graduação', 80, 2, 'Seminário', '2024-03-25', '2024-03-25', '20:00:00', '08:30:00', 'eventos/seminario_pesquisa.jpg', 3), 
-('Seminário de Inovação Tecnológica', 'Discussão sobre tendências e inovações no mercado tech', 'Centro de Inovação', 120, 3, 'Seminário', '2024-05-15', '2024-05-15', '18:30:00', '09:00:00', 'eventos/seminario_inovacao.jpg', 4),
+('Seminário de Pesquisa em Computação', 'Apresentação de trabalhos científicos na área de computação', 'Auditório de Pós-Graduação', 80, 2, 'Seminário', '2024-03-25', '2024-03-25', '20:00:00', '08:30:00', 'eventos/seminario_pesquisa.jpg', 3, False), 
+('Seminário de Inovação Tecnológica', 'Discussão sobre tendências e inovações no mercado tech', 'Centro de Inovação', 120, 3, 'Seminário', '2024-05-15', '2024-05-15', '18:30:00', '09:00:00', 'eventos/seminario_inovacao.jpg', 4, False),
 
 -- Cursos
-('Curso de Data Science Básico', 'Introdução à ciência de dados com Python e pandas', 'Laboratório de Dados - Bloco C', 20, 1, 'Curso', '2024-04-30', '2024-04-10', '12:00:00', '14:00:00', 'eventos/curso_datascience.jpg', 3),
-('Curso de Gestão de Projetos Ágeis', 'Metodologias ágeis para gestão de projetos de TI', 'Sala de Treinamentos - Andar 4', 35, 2, 'Curso', '2024-06-20', '2024-06-05', '13:00:00', '10:00:00', 'eventos/curso_gestao_agil.jpg', 4),
+('Curso de Data Science Básico', 'Introdução à ciência de dados com Python e pandas', 'Laboratório de Dados - Bloco C', 20, 1, 'Curso', '2024-04-30', '2024-04-10', '12:00:00', '14:00:00', 'eventos/curso_datascience.jpg', 3, False),
+('Curso de Gestão de Projetos Ágeis', 'Metodologias ágeis para gestão de projetos de TI', 'Sala de Treinamentos - Andar 4', 35, 2, 'Curso', '2024-06-20', '2024-06-05', '13:00:00', '10:00:00', 'eventos/curso_gestao_agil.jpg', 4, False),
 
 -- Congressos
-('Congresso Nacional de Tecnologia', 'O maior evento de tecnologia do país com palestrantes internacionais', 'Centro de Convenções Municipal', 500, 1, 'Congresso', '2024-07-25', '2024-07-22', '18:00:00', '08:00:00', 'eventos/congresso_tech.jpg', 4), 
-('Congresso de Educação Digital', 'Discussões sobre transformação digital na educação', 'Universidade Federal', 300, 3, 'Congresso', '2024-08-30', '2024-08-28', '17:00:00', '09:00:00', 'eventos/congresso_educacao_digital.jpg', 3),
+('Congresso Nacional de Tecnologia', 'O maior evento de tecnologia do país com palestrantes internacionais', 'Centro de Convenções Municipal', 500, 1, 'Congresso', '2024-07-25', '2024-07-22', '18:00:00', '08:00:00', 'eventos/congresso_tech.jpg', 4, False), 
+('Congresso de Educação Digital', 'Discussões sobre transformação digital na educação', 'Universidade Federal', 300, 3, 'Congresso', '2024-08-30', '2024-08-28', '17:00:00', '09:00:00', 'eventos/congresso_educacao_digital.jpg', 3, False),
 
 -- Simpósios
-('Simpósio de Machine Learning', 'Apresentações sobre avanços em aprendizado de máquina', 'Instituto de Computação', 60, 2, 'Simpósio', '2024-09-10', '2024-09-10', '16:00:00', '08:30:00', 'eventos/simposio_ml.jpg', 4),
-('Simpósio de Segurança da Informação', 'Debates sobre cibersegurança e proteção de dados', 'Auditório de Segurança', 75, 1, 'Simpósio', '2024-10-05', '2024-10-05', '17:30:00', '09:00:00', 'eventos/simposio_seguranca.jpg', 3),
+('Simpósio de Machine Learning', 'Apresentações sobre avanços em aprendizado de máquina', 'Instituto de Computação', 60, 2, 'Simpósio', '2024-09-10', '2024-09-10', '16:00:00', '08:30:00', 'eventos/simposio_ml.jpg', 4, False),
+('Simpósio de Segurança da Informação', 'Debates sobre cibersegurança e proteção de dados', 'Auditório de Segurança', 75, 1, 'Simpósio', '2024-10-05', '2024-10-05', '17:30:00', '09:00:00', 'eventos/simposio_seguranca.jpg', 3, False),
 
 -- Fóruns
-('Fórum de Startups Universitárias', 'Espaço para discussão e networking entre empreendedores', 'Espaço Empreendedor - Campus', 90, 3, 'Fórum', '2024-11-15', '2024-11-15', '19:00:00', '13:00:00', 'eventos/forum_startups.jpg', 4),
-('Fórum de Carreiras em TI', 'Oportunidades e tendências no mercado de tecnologia', 'Hall de Eventos - Prédio Principal', 200, 2, 'Fórum', '2024-12-10', '2024-12-10', '16:30:00', '10:00:00', 'eventos/forum_carreiras.jpg', 3),
+('Fórum de Startups Universitárias', 'Espaço para discussão e networking entre empreendedores', 'Espaço Empreendedor - Campus', 90, 3, 'Fórum', '2024-11-15', '2024-11-15', '19:00:00', '13:00:00', 'eventos/forum_startups.jpg', 4, False),
+('Fórum de Carreiras em TI', 'Oportunidades e tendências no mercado de tecnologia', 'Hall de Eventos - Prédio Principal', 200, 2, 'Fórum', '2024-12-10', '2024-12-10', '16:30:00', '10:00:00', 'eventos/forum_carreiras.jpg', 3, False),
 
 -- Mesas Redondas
-('Mesa Redonda: Ética na Inteligência Artificial', 'Discussão sobre aspectos éticos no desenvolvimento de IA', 'Sala de Debates - Bloco D', 40, 1, 'Mesa Redonda', '2024-03-08', '2024-03-08', '15:30:00', '13:00:00', 'eventos/mesa_redonda_etica_ia.jpg', 4),
-('Mesa Redonda: Futuro da Educação com Tecnologia', 'Painel sobre transformação digital nas instituições de ensino', 'Auditório da Reitoria', 100, 3, 'Mesa Redonda', '2024-04-12', '2024-04-12', '16:00:00', '14:00:00', 'eventos/mesa_redonda_educacao.jpg', 3);
+('Mesa Redonda: Ética na Inteligência Artificial', 'Discussão sobre aspectos éticos no desenvolvimento de IA', 'Sala de Debates - Bloco D', 40, 1, 'Mesa Redonda', '2024-03-08', '2024-03-08', '15:30:00', '13:00:00', 'eventos/mesa_redonda_etica_ia.jpg', 4, False),
+('Mesa Redonda: Futuro da Educação com Tecnologia', 'Painel sobre transformação digital nas instituições de ensino', 'Auditório da Reitoria', 100, 3, 'Mesa Redonda', '2024-04-12', '2024-04-12', '16:00:00', '14:00:00', 'eventos/mesa_redonda_educacao.jpg', 3, False);
 
 -- POPULAÇÃO DA TABELA app_eventparticipant
 INSERT INTO app_eventparticipant (event_id, user_id) VALUES

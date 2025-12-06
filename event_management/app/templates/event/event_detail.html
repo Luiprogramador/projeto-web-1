@@ -108,5 +108,8 @@
             Editar
         </a>
         {% endif %}
+    {% if request.user == event.creator and not event.is_finalized %}   
+        <a href="{% url 'event_final' pk=event.pk %}" class="btn-final">Finalizar Evento</a>
+        {% endif %}
 </div>
 {% endblock %}

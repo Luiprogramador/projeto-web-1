@@ -17,6 +17,7 @@ path('event/<int:pk>/toggle_registration/', views.event_subscribe, name='toggle_
 path('meus-event_subscribed/subscribed/', views.event_subscribed_list, name='event_subscribed'),
 path('event/<int:pk>/', views.event_detail, name='event_detail'), 
 path('event/edit/<int:pk>/', views.event_edit, name='event_edit'),
+path('event/final/<int:pk>/', views.event_final, name='event_final'),
 
 # certificates urls
 path('certificates/', views.certificate_list, name='certificate_list'),

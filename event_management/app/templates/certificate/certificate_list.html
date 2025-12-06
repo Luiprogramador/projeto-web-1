@@ -10,36 +10,36 @@
         <div class="certificates-list">
             {% if events_with_certificates %}
                 {% for event in events_with_certificates %}
-                    <div class="certificate-card {% if event.certificate_issued %}issued{% endif %}">
-                        <div class="certificate-info">
-                            <h5>
-                                {{ event.title }}
-                                {% if event.certificate_issued %}
-                                    <span class="certificate-badge">✓ Emitido</span>
-                                {% endif %}
-                            </h5>
-                            <div class="certificate-meta">
-                                <span>📅 {{ event.initial_date|date:"d/m/Y" }}</span>
-                                {% if event.event_duration %} 
-                                    <span>⏱️ {{ event.formatted_duration }}</span> 
-                                {% endif %}
-                                <span>📍 {{ event.location|default:"Local não informado" }}</span>
-                            </div>
-                       
-                        <div class="certificate-actions">
-                            {% if event.certificate_issued %}
-                                <a href="{% url 'issue_certificate' event.id %}" class="btn-certificate btn-download">
-                                    📥 Visualizar/Baixar
-                                </a>
-                            {% else %}
-                                <a href="{% url 'issue_certificate' event.id %}" class="btn-certificate btn-issue">
-                                    📜 Emitir Certificado
-                                </a>
-                            {% endif %}
-                        </div>
-                    </div>
-                {% endfor %}
+    <div class="certificate-card {% if event.certificate_issued %}issued{% endif %}">
+        
+        <div class="certificate-info">
+            <h5>
+                {{ event.title }}
+                {% if event.certificate_issued %}
+                    <span class="certificate-badge">✓ Emitido</span>
+                {% endif %}
+            </h5>
+            <div class="certificate-meta">
+                <span>📅 {{ event.initial_date|date:"d/m/Y" }}</span>
+                {% if event.event_duration %} 
+                    <span>⏱️ {{ event.formatted_duration }}</span> 
+                {% endif %}
+                <span>📍 {{ event.location|default:"Local não informado" }}</span>
+            </div>
+        </div> <div class="certificate-actions">
+            {% if event.certificate_issued %}
+                <a href="{% url 'issue_certificate' event.id %}" class="btn-certificate btn-download">
+                    📥 Visualizar/Baixar
+                </a>
+            {% else %}
+                <a href="{% url 'issue_certificate' event.id %}" class="btn-certificate btn-issue">
+                    📜 Emitir Certificado
+                </a>
             {% endif %}
+        </div>
+    </div> 
+        {% endfor %}
+        {% endif %}
         </div>
     </div>
 {% endblock %}

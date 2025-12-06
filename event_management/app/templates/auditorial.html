@@ -39,6 +39,10 @@
                                 <span class="badge bg-danger">REMOÇÃO</span>
                             {% elif "Editar" in log.action %}
                                 <span class="badge bg-warning">EDIÇÃO</span>
+                            {% elif "Inscrição" in log.action %}
+                                <span class="badge bg-success">INSCRIÇÃO</span>
+                            {%elif "Finalizar" in log.action %}
+                                <span class="badge bg-primary">FINALIZAÇÃO</span>
                             {% else %}
                                 <span class="badge bg-primary">{{ log.action }}</span>
                             {% endif %}

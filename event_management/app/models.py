@@ -57,6 +57,7 @@ class Event(models.Model):
         blank=True,
         verbose_name="Participantes"
     )
+    event_finalized = models.BooleanField(default=False, verbose_name="Evento Finalizado")
     
     class Meta:
         db_table = 'event'
@@ -162,11 +163,11 @@ class Certificate(models.Model):
         verbose_name="Data de Emissão" 
     )
     
-    verification_code = models.UUIDField(
-        default=uuid.uuid4, # Gera um UUID (código único e universal) por padrão.
-        unique=True, 
-        editable=False, # Impede que o código seja alterado no admin.
-        verbose_name="Código de Verificação" 
+    verification_code = models.CharField(
+        max_length=36, 
+        default=uuid.uuid4, # Gera um UUID único para cada certificado.
+        unique=True,
+        verbose_name="Código de Verificação"
     )
 
     class Meta:
