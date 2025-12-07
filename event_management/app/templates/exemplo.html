@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    Exemplo - Event Management
+{% endblock %}
+
+{% block content %}
+<style>
+    /* ========================================
+   PÁGINA DE EXEMPLO (EMAILS)
+   ======================================== */
+
+/* Container Principal - Segue o padrão dos outros containers */
+.exemplo-container {
+    background: #fff;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Títulos da página de exemplo */
+.exemplo-container h2 {
+    color: #212529;
+    font-size: 24px;
+    margin-top: 30px; /* Espaço extra antes do título */
+    margin-bottom: 15px;
+    padding-left: 15px;
+    border-left: 5px solid #0a58ca; /* O azul padrão do sistema */
+}
+
+/* Remove margem do primeiro título para alinhar com o topo */
+.exemplo-container h2:first-of-type {
+    margin-top: 0;
+}
+
+/* Texto explicativo */
+.exemplo-container p {
+    color: #495057;
+    font-size: 16px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+/* Área da imagem (o "fundo" do print) */
+.email-example {
+    background: #f8f9fa; /* Cinza bem claro para destacar a imagem */
+    padding: 30px;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    text-align: center; /* Centraliza a imagem */
+    margin-bottom: 40px; /* Espaço entre os exemplos */
+    transition: all 0.3s ease;
+}
+
+.email-example:hover {
+    background: #e9ecef;
+    border-color: #ced4da;
+}
+
+/* A imagem em si */
+.certificate-image {
+    max-width: 100%; /* Garante que não estoure a tela no mobile */
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Sombra elegante */
+    border: 1px solid #dee2e6;
+    transition: transform 0.3s ease;
+}
+
+/* Efeito de zoom suave ao passar o mouse na imagem */
+.email-example:hover .certificate-image {
+    transform: scale(1.02);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsividade para celular */
+@media (max-width: 768px) {
+    .exemplo-container {
+        padding: 20px;
+        margin: 20px 15px;
+    }
+    
+    .email-example {
+        padding: 15px;
+    }
+}
+</style>
+<div class="exemplo-container">
+    <h2>Exemplo do Gmail de envio automatizado de certificado</h2>
+    <p>Este é um exemplo de como o email de envio de certificado será exibido para os participantes do evento.</p>
+    <div class="email-example">
+        <img src="{% static 'img/certificado_final_evento.png' %}" alt="imagem do certificado" class="certificate-image">
+    </div>
+
+    <h2>Exemplo de Gmail do Registro</h2>
+    <p>Este é um exemplo de como o email de envio de saudação aos novos usuários fica</p>
+    <div class="email-example">
+        <img src="{% static 'img/email_register.png' %}" alt="imagem do email de registro" class="certificate-image">
+    </div>
+</div>
+{% endblock %}

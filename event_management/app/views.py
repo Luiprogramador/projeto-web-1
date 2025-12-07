@@ -8,6 +8,8 @@ from django.http import HttpResponse
 from django.contrib import messages
 from datetime import datetime
 from django.http import HttpResponseForbidden
+from django.core.mail import send_mail
+from django.urls import reverse
 
 
 def home(request):
@@ -427,10 +429,6 @@ def enviar_email(user):
 
     return HttpResponse("E-mail enviado com sucesso!")
 
-from django.core.mail import send_mail
-from django.urls import reverse
-from django.conf import settings # Para usar o EMAIL_HOST_USER se quiser
-
 def enviar_email_certificado(user, event):
     # Cria o link para o certificado
     relative_link = reverse('issue_certificate', args=[event.pk])
@@ -479,3 +477,6 @@ def event_participants(request, pk):
         'participants': participants
     }
     return render(request, 'event/event_participants.html', context)
+
+def exemplo(request):
+    return render(request, 'exemplo.html')

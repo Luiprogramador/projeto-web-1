@@ -27,14 +27,16 @@
                 <span>📍 {{ event.location|default:"Local não informado" }}</span>
             </div>
         </div> <div class="certificate-actions">
-            {% if event.certificate_issued %}
+            {% if event.certificate_issued and event.event_finalized %}
                 <a href="{% url 'issue_certificate' event.id %}" class="btn-certificate btn-download">
                     📥 Visualizar/Baixar
                 </a>
-            {% else %}
+            {% elif event.event_finalized %}
                 <a href="{% url 'issue_certificate' event.id %}" class="btn-certificate btn-issue">
                     📜 Emitir Certificado
                 </a>
+            {% else %}
+                <a href="{% url 'event_detail' pk=event.pk %}" class="btn-certificate btn-issue">Certificado ao finalizar o evento</a>
             {% endif %}
         </div>
     </div> 

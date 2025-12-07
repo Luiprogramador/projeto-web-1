@@ -112,6 +112,10 @@ class Event(models.Model):
     def is_full(self):
         return self.current_participants_count >= self.max_capacity # Verifica se a capacidade máxima foi atingida.
 
+    @property
+    def is_over(self):
+        """Retorna True se a data atual for maior ou igual à data final"""
+        return date.today() >= self.final_date
 
 class EventParticipant(models.Model):
     event = models.ForeignKey('Event', on_delete=models.CASCADE)

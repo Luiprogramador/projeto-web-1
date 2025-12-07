@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
-{% load static %} {% block content %}
+{% load static %} 
+
+{% block content %}
 <div class="participants-container">
+    
+    <div class="participants-header">
+        <h2>Participantes: {{ event.title }}</h2>
+    </div>
+
     <ul class="participants-list">
         {% for participant in participants %}
             <li class="participant-item">
@@ -8,22 +15,30 @@
                 <div class="participant-avatar">
                     {% if participant.image %}
                         <img src="{{ participant.image.url }}" alt="Avatar de {{ participant.username }}">
-                    
                     {% else %}
                         <img src="{% static 'img/default-avatar.jpg' %}" alt="Avatar padrão">
-                        
                     {% endif %}
                 </div>
                 
                 <div class="participant-info">
                     <span class="participant-name">
-                        {{ participant.username }}
-                    </span>
+                        {{ participant.name }} </span>
                     <span class="participant-email">{{ participant.email }}</span>
+                    <span style="font-size: 0.8em; color: #666;">{{ participant.institution }}</span>
                 </div>
+            </li>
+        {% empty %}
+            <li class="participant-item">
+                <p>Nenhum participante inscrito ainda.</p>
             </li>
         {% endfor %}
     </ul>
 
+    <div class="btn-back-container">
+        <a href="{% url 'event_detail' pk=event.pk %}" class="back-link">
+            ← Voltar para o Evento
+        </a>
     </div>
+
+</div>
 {% endblock %}

@@ -43,6 +43,12 @@
                         <a href="{% url 'auditorial' %}">Auditoria</a>
                     </li>
                 {% endif %}
+
+                {% if user.user_type == 'Organizador' %}
+                    <li>
+                        <a href="{% url 'exemplo' %}">Exemplo Email</a>
+                    </li>
+                {% endif %}
             </ul>
             
             <!-- Área do Usuário -->
