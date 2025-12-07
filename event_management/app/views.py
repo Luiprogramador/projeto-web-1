@@ -465,12 +465,11 @@ def enviar_email_certificado(user, event):
 @login_required
 def event_participants(request, pk):
     event = get_object_or_404(Event, pk=pk)
+    participants = event.participants.all()
     
     # Verificação de segurança: Só o criador pode ver a lista
-    if request.user != event.creator:
+    if request.user != event.creator and request.user not in participants:
         return HttpResponseForbidden("Você não tem permissão para ver esta lista.")
-    
-    participants = event.participants.all()
     
     context = {
         'event': event,

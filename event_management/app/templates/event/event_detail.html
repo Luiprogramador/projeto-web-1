@@ -78,7 +78,7 @@
     <div class="event-capacity {% if event.is_full %}full{% endif %}">
         <span>👥 Participantes:</span>
         
-        {% if request.user == event.creator %}
+        {% if request.user == event.creator or request.user in event.participants.all %}
             <a href="{% url 'event_participants' pk=event.pk %}" 
                style="text-decoration: underline; color: inherit; font-weight: bold;"
                title="Clique para ver a lista de nomes">
