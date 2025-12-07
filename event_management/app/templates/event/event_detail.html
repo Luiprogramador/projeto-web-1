@@ -113,11 +113,11 @@
     <a href="{% url 'event_list' %}" class="back-link">← Voltar à Lista</a>
     
     {% if request.user == event.creator %}
-        <a href="{% url 'event_edit' pk=event.pk %}" class="btn-edit {% if not event.event_finalized %}animacao-suave{% else %}animacao-destaque-edit{% endif %}">
+        <a href="{% url 'event_edit' pk=event.pk %}" class="btn-edit {% if not event.event_finalized and event.is_over %}animacao-suave{% else %}animacao-destaque-edit{% endif %}">
         Editar Evento
         </a>
         {% endif %}
-    {% if request.user == event.creator and not event.event_finalized %}
+    {% if request.user == event.creator and not event.event_finalized and event.is_over %}
     
         <form method="post" action="{% url 'event_final' pk=event.pk %}" class="finalize-form" id="form-finalizar">
             

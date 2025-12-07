@@ -131,9 +131,6 @@ def event_detail(request, pk):
         'is_registered': request.user.is_authenticated and event.participants.filter(pk=request.user.pk).exists() # Verifica se o usuário logado está inscrito no evento.
     }
     
-    if event.is_over and not event.event_finalized:
-        return event_final(request, pk=event.pk)
-    
     return render(request, 'event/event_detail.html', context)
 
 @login_required
