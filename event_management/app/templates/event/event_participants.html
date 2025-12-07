@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %} {% block content %}
+<div class="participants-container">
+    <ul class="participants-list">
+        {% for participant in participants %}
+            <li class="participant-item">
+                
+                <div class="participant-avatar">
+                    {% if participant.image %}
+                        <img src="{{ participant.image.url }}" alt="Avatar de {{ participant.username }}">
+                    
+                    {% else %}
+                        <img src="{% static 'img/default-avatar.jpg' %}" alt="Avatar padrão">
+                        
+                    {% endif %}
+                </div>
+                
+                <div class="participant-info">
+                    <span class="participant-name">
+                        {{ participant.username }}
+                    </span>
+                    <span class="participant-email">{{ participant.email }}</span>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+
+    </div>
+{% endblock %}

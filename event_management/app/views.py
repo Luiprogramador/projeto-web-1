@@ -7,6 +7,7 @@ from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.contrib import messages
 from datetime import datetime
+from django.http import HttpResponseForbidden
 
 
 def home(request):
@@ -57,7 +58,7 @@ def user_register_view(request):
 
             Auditoria.objects.create(
                 user=user,
-                action='Registro',
+                action=f'Registro do {user.username}',
                 timestamp=datetime.now(),
             )
             return redirect('home') 
@@ -102,6 +103,11 @@ def profile_edit(request):
         if form.is_valid():
             form.save() # Salva as alterações no perfil do usuário.
             messages.success(request, "Perfil atualizado com sucesso.")
+            Auditoria.objects.create(
+                user=request.user,
+                action=f'Editar Perfil {user.username}',
+                timestamp=datetime.now(),
+            )
             return redirect('profile')
         else:
             messages.error(request, "Corrija os erros no formulário.")
@@ -135,7 +141,7 @@ def event_add(request):
             event.save() # Salva o evento após adicionar o criador.
             Auditoria.objects.create(
                 user=request.user,
-                action='Adicionar Evento',
+                action=f'Adicionar Evento {event.title}',
                 timestamp=datetime.now(),
             )
             return redirect('event_list')
@@ -156,7 +162,7 @@ def remove_event(request, pk):
         messages.success(request, f'O evento "{evento.title}" foi removido com sucesso.')
         Auditoria.objects.create(
                 user=request.user,
-                action='Remover Evento',
+                action=f'Remover Evento {evento.title}',
                 timestamp=datetime.now(),
             )
         return redirect('event_list')
@@ -180,7 +186,7 @@ def event_edit(request, pk):
             messages.success(request, 'Evento atualizado com sucesso!')
             Auditoria.objects.create(
                 user=request.user,
-                action='Editar Evento',
+                action=f'Editar Evento {evento.title}',
                 timestamp=datetime.now(),
             )
             return redirect('event_detail', pk=evento.pk)
@@ -191,40 +197,62 @@ def event_edit(request, pk):
 
     return render(request, 'event/event_add.html', {'form': form, 'is_edit': True, 'event': event})
 
-
+@login_required
 def event_final(request, pk):
     event = get_object_or_404(Event, pk=pk)
 
-    if request.method == 'GET':
-        # Lógica para finalizar o evento
-        event.event_finalized = True
-        event.save()
-        messages.success(request, f'O evento "{event.title}" foi finalizado com sucesso.')
-        Auditoria.objects.create(
+    # Verifica permissão
+    if request.user != event.creator:
+        messages.error(request, 'Você não tem permissão.')
+        return redirect('event_detail', pk=pk)
+
+    if request.method == 'POST': 
+        
+        # Verifica se já não estava finalizado
+        if not event.event_finalized: 
+            event.event_finalized = True 
+            event.save()
+            
+            # Auditoria
+            Auditoria.objects.create(
                 user=request.user,
-                action='Finalizar Evento',
+                action=f'Finalizar Evento {event.title}',
                 timestamp=datetime.now(),
             )
-        for participant in event.participants.all():
-            try:
-                # Cria um novo certificado ou recupera o existente
-                Certificate.objects.get(event=event, participant=participant) # Tenta recuperar o certificado existente.
-                messages.info(request, 'Certificado já registrado. Visualizando registro...')
-                Auditoria.objects.create(
-                        user=request.user,
-                        action='Emitir Certificado',
-                        timestamp=datetime.now(),
-                    )
+
+            count_emails = 0
             
-            # Caso o certificado não exista, cria um novo
-            except Certificate.DoesNotExist:
-                Certificate.objects.create(event=event, participant=participant) # Cria um novo registro de certificado.
-                messages.success(request, 'Registro do certificado criado com sucesso. Preparando visualização...')
+            # Loop pelos participantes
+            for participant in event.participants.all():
+                
+                # --- AQUI ESTÁ A CORREÇÃO DA DATA ---
+                certificate, created = Certificate.objects.get_or_create(
+                    event=event, 
+                    participant=participant,
+                    defaults={
+                        # Aqui definimos que a data do certificado será a data final do evento
+                        'issue_date': event.final_date 
+                    }
+                )
+                
+                # Opcional: Se o certificado já existia mas estava sem data (antigo), atualiza:
+                if not created and not certificate.issue_date:
+                    certificate.issue_date = event.final_date
+                    certificate.save()
+
+                # Envia o e-mail
+                enviar_email_certificado(participant, event)
                 Auditoria.objects.create(
-                        user=request.user,
-                        action='Emitir Certificado',
-                        timestamp=datetime.now(),
-                    )
+                    user=request.user,
+                    action=f'Emitir certificado {participant.username}',
+                    timestamp=datetime.now(),
+                )
+                count_emails += 1
+            
+            messages.success(request, f'Evento finalizado! {count_emails} certificados gerados e enviados.')
+        else:
+            messages.warning(request, 'Este evento já estava finalizado.')
+
     return redirect('event_detail', pk=event.pk)
 
 # ------------- EVENT SUBSCRIBE -------------
@@ -253,7 +281,7 @@ def event_subscribe(request, pk):
             messages.success(request, f'Inscrição confirmada no evento "{event.title}"!')
             Auditoria.objects.create(
                 user=request.user,
-                action='Inscrição no Evento',
+                action=f'Inscrição no Evento {event.title} pelo {user.username}',
                 timestamp=datetime.now(),
             )
 
@@ -315,7 +343,7 @@ def issue_certificate(request, event_id):
         messages.info(request, 'Certificado já registrado. Visualizando registro...')
         Auditoria.objects.create(
                 user=request.user,
-                action='Emitir Certificado',
+                action=f'Emitir certificado {participant.username}',
                 timestamp=datetime.now(),
             )
         
@@ -325,7 +353,7 @@ def issue_certificate(request, event_id):
         messages.success(request, 'Registro do certificado criado com sucesso. Preparando visualização...')
         Auditoria.objects.create(
                 user=request.user,
-                action='Emitir Certificado',
+                action=f'Emitir certificado {participant.username}',
                 timestamp=datetime.now(),
             )
     
@@ -398,3 +426,56 @@ def enviar_email(user):
     )
 
     return HttpResponse("E-mail enviado com sucesso!")
+
+from django.core.mail import send_mail
+from django.urls import reverse
+from django.conf import settings # Para usar o EMAIL_HOST_USER se quiser
+
+def enviar_email_certificado(user, event):
+    # Cria o link para o certificado
+    relative_link = reverse('issue_certificate', args=[event.pk])
+    full_link = f"http://127.0.0.1:8000{relative_link}" # Mude o domínio em produção
+
+    subject = f"Certificado Disponível: {event.title}"
+    message = f"Olá {user.username}, seu certificado do evento {event.title} está pronto. Acesse: {full_link}"
+    
+    html_content = f"""
+    <html>
+        <body>
+            <h2>Olá, {user.username}!</h2>
+            <p>O evento <strong>"{event.title}"</strong> foi finalizado com sucesso.</p>
+            <p>Seu certificado já está disponível para download.</p>
+            <br>
+            <a href="{full_link}" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+                Baixar Certificado
+            </a>
+            <p>Ou acesse: {full_link}</p>
+        </body>
+    </html>
+    """
+
+    send_mail(
+        subject=subject,
+        message=message,
+        from_email=None, # Usa o padrão do settings
+        recipient_list=[user.email],
+        fail_silently=True, # Se falhar um, não trava o site
+        html_message=html_content
+    )
+
+
+@login_required
+def event_participants(request, pk):
+    event = get_object_or_404(Event, pk=pk)
+    
+    # Verificação de segurança: Só o criador pode ver a lista
+    if request.user != event.creator:
+        return HttpResponseForbidden("Você não tem permissão para ver esta lista.")
+    
+    participants = event.participants.all()
+    
+    context = {
+        'event': event,
+        'participants': participants
+    }
+    return render(request, 'event/event_participants.html', context)

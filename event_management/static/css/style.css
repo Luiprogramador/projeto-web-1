@@ -635,11 +635,42 @@ main {
     border: none;
 }
 
-.btn-edit:hover {
-    background: #06357b;
+.animacao-suave:hover, .btn-edit:hover {
+    background: #0847a5;
+    transform: perspective(800px) scale(1.05);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.animacao-destaque:hover, .btn-finalize:hover {
+    background: #842029;
     transform: perspective(800px) translateY(6px) rotateX(-8deg) scale(1.05);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
+
+.animacao-destaque-edit:hover {
+    background: #06357b;
+    transform: perspective(800px) translateY(6px) rotateX(-8deg) scale(1.05);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+}
+
+.btn-finalize {
+    display: block;
+    width: calc(100% - 40px);
+    max-width: 420px;
+    margin: 20px auto 0;
+    text-align: center;
+    padding: 12px 24px;
+    background: #bb2d3b; /* Vermelho acessível */
+    color: #fff;
+    text-decoration: none;
+    font-family: inherit;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+
 
 .back-link,
 .btn-cancel {
@@ -1149,6 +1180,125 @@ main {
     border: 1px solid #ced4da;
     border-radius: 4px;
     background: #fff;
+}
+
+/* Container principal centralizado e com sombra suave */
+.participants-container {
+    max-width: 800px;
+    margin: 40px auto;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    padding: 30px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Cabeçalho da página */
+.participants-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.participants-header h2 {
+    margin: 0;
+    color: #333;
+    font-size: 1.5rem;
+}
+
+/* Badge de contagem (estilo pílula) */
+.count-badge {
+    background-color: #e3f2fd;
+    color: #1976d2;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+/* Lista de participantes */
+.participants-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.participant-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s ease;
+}
+
+.participant-item:last-child {
+    border-bottom: none;
+}
+
+.participant-item:hover {
+    background-color: #fafafa;
+}
+
+/* Container do Avatar (Círculo) */
+.participant-avatar {
+    width: 50px;       /* Tamanho do círculo */
+    height: 50px;
+    border-radius: 50%; /* Torna redondo */
+    overflow: hidden;   /* Corta o que passar do círculo */
+    margin-right: 15px;
+    border: 2px solid #e0e0e0; /* Opcional: bordinha cinza */
+    flex-shrink: 0;     /* Garante que não amasse no mobile */
+    background-color: #f5f5f5; /* Cor de fundo caso a imagem demore a carregar */
+}
+
+/* A imagem propriamente dita */
+.participant-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* MÁGICA: Corta a imagem para preencher sem distorcer */
+    display: block;    /* Remove espaços extras indesejados */
+}
+
+.participant-info {
+    flex-grow: 1;
+}
+
+.participant-name {
+    display: block;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 4px;
+}
+
+.participant-email {
+    display: block;
+    font-size: 0.85rem;
+    color: #7f8c8d;
+}
+
+/* Botão de voltar */
+.btn-back-container {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.btn-back {
+    display: inline-block;
+    text-decoration: none;
+    color: #666;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 6px;
+    background-color: #f5f5f5;
+    transition: all 0.2s;
+}
+
+.btn-back:hover {
+    background-color: #e0e0e0;
+    color: #333;
 }
 
 .event-capacity {
@@ -2103,4 +2253,96 @@ main {
     color: #055160;
     background-color: #cff4fc;
     border-color: #b6effb;
+}
+
+/* Container que segura tudo */
+.tooltip-container {
+    position: relative; /* Importante: prende a caixa a este elemento */
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* A caixa de texto (inicialmente escondida) */
+.tooltip-text {
+    visibility: hidden;
+    width: 120px;       /* Largura da caixa */
+    background-color: #333; /* Cor de fundo escura */
+    color: #fff;        /* Cor do texto */
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    font-size: 14px;
+    /* Posicionamento: ACIMA do elemento */
+    position: absolute;
+    z-index: 1;
+    bottom: 99%;       /* Empurra para cima (100% + margem) */
+    left: 50%;
+    margin-left: -60px; /* Centraliza (metade da largura) */
+    
+    /* Efeito suave */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/* Setinha apontando para baixo (opcional, mas fica bonito) */
+.tooltip-text::after {
+    content: "";
+    position: absolute;
+    top: 100%; /* Na parte de baixo da caixa */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+}
+
+/* Quando passar o mouse no container, mostra o texto */
+.tooltip-container:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* ========================================
+   LOADING / SPINNER (Carregamento)
+   ======================================== */
+#loading-overlay {
+    display: none; /* Começa escondido */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8); /* Fundo escuro levemente transparente */
+    z-index: 9999; /* Garante que fique acima do Header (que é z-index 1000) */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #fff;
+    backdrop-filter: blur(4px); /* Um efeito de desfoque suave no fundo */
+}
+
+#loading-overlay h3 {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+#loading-overlay p {
+    margin-top: 10px;
+    color: #e9ecef;
+}
+
+/* Animação de girar (Spinner) */
+.spinner {
+    border: 5px solid #f3f3f3; /* Cor do fundo do anel (cinza claro) */
+    border-top: 5px solid #0a58ca; /* Cor principal (Azul do seu tema) */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

@@ -5,7 +5,7 @@
 
 {% block content %}
 <div class="register-container">
-<form method="POST" action="{% url 'register' %}">
+<form method="POST" action="{% url 'register' %}" id="register-form">
 
     <h2>Registro</h2>
     {% csrf_token %}
@@ -84,11 +84,44 @@
             <span class="field-error">{{ error }}</span>
         {% endfor %}
     </p>
-
+    {% csrf_token %}
     <button type="submit" class="btn-register">Registrar</button>
 </form>
+        <div id="loading-overlay">
+        <div class="spinner"></div>
+            <h3>Criando o usuário, verifique o Gmail para ver a mensagem de saudação.</h3>
+            <p>Por favor, aguarde. Isso pode levar alguns segundos.</p>
+        </div>
+
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 1. Pegamos o formulário pelo ID novo que criamos
+        const registerForm = document.getElementById('register-form');
+        const loadingOverlay = document.getElementById('loading-overlay');
+
+        if (registerForm) {
+            registerForm.addEventListener('submit', function(e) {
+                // Verifica se o formulário é válido antes de mostrar o loading
+                // (Isso evita que o loading apareça se o navegador bloquear por campo obrigatório vazio)
+                if (!registerForm.checkValidity()) {
+                    return; 
+                }
+
+                // 2. Mostra a tela de carregamento
+                loadingOverlay.style.display = 'flex';
+                
+                // 3. Desabilita o botão e muda o texto
+                const btn = registerForm.querySelector('button[type="submit"]');
+                if (btn) {
+                    btn.disabled = true;
+                    btn.innerText = "Registrando...";
+                }
+            });
+        }
+    });
+</script>
 {% endblock %}

@@ -2,6 +2,8 @@ import os
 from pathlib import Path
 from django.conf import settings
 from typing import Optional
+from django.urls import reverse
+from django.core.mail import send_mail
 
 def get_relative_path(full_path: Path | str, base_path: Path | str) -> Optional[Path]:
     """

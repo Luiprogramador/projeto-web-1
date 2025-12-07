@@ -29,20 +29,29 @@
                         <td>{{ log.timestamp|date:"d/m/Y H:i:s" }}</td>
                         <td>{{ log.user.get_full_name }}</td>
                         <td>
-                            {% if "Emitir " in log.action %}
+                            <div class="tooltip-container">
+                            {% if "Emitir" in log.action%}
                                 <span class="badge bg-info">EMISSÃO</span>
+                                <span class="tooltip-text">{{ log.action }}</span>
                             {% elif "Adicionar" in log.action %}
                                 <span class="badge bg-success">ADICIONAR</span>
+                                <span class="tooltip-text">{{ log.action }}</span>
                             {% elif "Registro" in log.action %} 
-                                <span class="badge bg-primary">REGISTRO</span>
+                            <span class="badge bg-primary">REGISTRO</span>
+                            <span class="tooltip-text">{{ log.action }}</span>
                             {% elif "Remover" in log.action %}
                                 <span class="badge bg-danger">REMOÇÃO</span>
+                                <span class="tooltip-text">{{ log.action }}</span>
                             {% elif "Editar" in log.action %}
                                 <span class="badge bg-warning">EDIÇÃO</span>
+                                <span class="tooltip-text">{{ log.action }}</span>
                             {% elif "Inscrição" in log.action %}
                                 <span class="badge bg-success">INSCRIÇÃO</span>
+                                <span class="tooltip-text">{{ log.action }}</span>
                             {%elif "Finalizar" in log.action %}
                                 <span class="badge bg-primary">FINALIZAÇÃO</span>
+                                <span class="tooltip-text">{{ log.action }}</span> 
+                            </div>
                             {% else %}
                                 <span class="badge bg-primary">{{ log.action }}</span>
                             {% endif %}

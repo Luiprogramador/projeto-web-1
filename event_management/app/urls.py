@@ -18,6 +18,7 @@ path('meus-event_subscribed/subscribed/', views.event_subscribed_list, name='eve
 path('event/<int:pk>/', views.event_detail, name='event_detail'), 
 path('event/edit/<int:pk>/', views.event_edit, name='event_edit'),
 path('event/final/<int:pk>/', views.event_final, name='event_final'),
+path('evento/<int:pk>/participantes/', views.event_participants, name='event_participants'),
 
 # certificates urls
 path('certificates/', views.certificate_list, name='certificate_list'),

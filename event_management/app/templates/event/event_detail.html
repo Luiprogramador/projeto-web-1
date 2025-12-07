@@ -77,7 +77,16 @@
     
     <div class="event-capacity {% if event.is_full %}full{% endif %}">
         <span>👥 Participantes:</span>
-        <span>{{ event.participants.count }} / {{ event.max_capacity }}</span>
+        
+        {% if request.user == event.creator %}
+            <a href="{% url 'event_participants' pk=event.pk %}" 
+               style="text-decoration: underline; color: inherit; font-weight: bold;"
+               title="Clique para ver a lista de nomes">
+                {{ event.participants.count }} / {{ event.max_capacity }}
+            </a>
+        {% else %}
+            <span>{{ event.participants.count }} / {{ event.max_capacity }}</span>
+        {% endif %}
     </div>
         
     <form method="post" action="{% url 'toggle_registration' pk=event.pk %}" class="registration-form">
@@ -104,12 +113,45 @@
     <a href="{% url 'event_list' %}" class="back-link">← Voltar à Lista</a>
     
     {% if request.user == event.creator %}
-        <a href="{% url 'event_edit' pk=event.pk %}" class="btn-edit">
-            Editar
+        <a href="{% url 'event_edit' pk=event.pk %}" class="btn-edit {% if not event.event_finalized %}animacao-suave{% else %}animacao-destaque-edit{% endif %}">
+        Editar Evento
         </a>
         {% endif %}
-    {% if request.user == event.creator and not event.is_finalized %}   
-        <a href="{% url 'event_final' pk=event.pk %}" class="btn-final">Finalizar Evento</a>
+    {% if request.user == event.creator and not event.event_finalized %}
+    
+        <form method="post" action="{% url 'event_final' pk=event.pk %}" class="finalize-form" id="form-finalizar">
+            
+            {% csrf_token %}
+            <button type="submit" class="btn-finalize animacao-destaque">Finalizar Evento</button>
+        </form>
+
         {% endif %}
-</div>
+
+        <div id="loading-overlay">
+        <div class="spinner"></div>
+            <h3>Finalizando evento e enviando certificados...</h3>
+            <p>Por favor, aguarde. Isso pode levar alguns segundos.</p>
+        </div>
+
+</div> <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const formFinalizar = document.getElementById('form-finalizar');
+        const loadingOverlay = document.getElementById('loading-overlay');
+
+        if (formFinalizar) {
+            formFinalizar.addEventListener('submit', function(e) {
+                // Não impede o envio (não usa e.preventDefault), 
+                // apenas mostra o loading antes do navegador carregar a próxima página.
+                
+                // 1. Mostra a tela de carregamento
+                loadingOverlay.style.display = 'flex';
+                
+                // 2. Opcional: Desabilita o botão para evitar clique duplo
+                const btn = formFinalizar.querySelector('button');
+                btn.disabled = true;
+                btn.innerText = "Processando...";
+            });
+        }
+    });
+</script>
 {% endblock %}
