@@ -117,7 +117,7 @@
         Editar Evento
         </a>
         {% endif %}
-    {% if request.user == event.creator and not event.event_finalized%}
+    {% if request.user == event.creator and not event.event_finalized %}
     
         <form method="post" action="{% url 'event_final' pk=event.pk %}" class="finalize-form" id="form-finalizar">
             
