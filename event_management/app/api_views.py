@@ -1,7 +1,7 @@
 from .serializers import EventSerializer, EventParticipantSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.throttling import UserRateThrottle
-from .models import Event, EventParticipant
+from .models import Event, EventParticipant, UserRegister
 from rest_framework import generics
 
 # View para listar todos os eventos (herda de ListAPIView do DRF)
@@ -32,7 +32,7 @@ class EventSubscriptionCreateAPIView(generics.CreateAPIView):
     serializer_class = EventParticipantSerializer
     
     # Define que apenas usuários autenticados podem criar inscrições
-    permission_classes = [IsAuthenticated] 
+    permission_classes = [IsAuthenticated and UserRegister.user_type != "Organizador"] 
     throttle_classes = [UserRateThrottle]
     
     # Define o escopo de limitação de taxa para inscrições

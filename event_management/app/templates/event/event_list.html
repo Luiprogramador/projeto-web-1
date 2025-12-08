@@ -9,7 +9,7 @@
     <h2>Lista de Eventos</h2>
     <hr>
     
-    {% if user.is_authenticated %}
+    {% if user.is_authenticated and user.user_type == "Organizador" %}
     <a href="{% url 'add_event' %}" class="add-event-btn">
         + Adicionar Novo Evento
     </a>

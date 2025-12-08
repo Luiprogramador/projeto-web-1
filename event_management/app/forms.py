@@ -104,7 +104,10 @@ class EventForm(forms.ModelForm):
         cleaned = super().clean()
         inicial = cleaned.get('initial_date')
         final = cleaned.get('final_date')
+        initial_hour = cleaned.get('event_start')
+        final_hour = cleaned.get('event_final')
         hoje = datetime.date.today()
+        hora_atual = datetime.datetime.now().time() 
 
         # Valida se a data inicial não é anterior à data de hoje
         if inicial and inicial < hoje:
@@ -113,6 +116,12 @@ class EventForm(forms.ModelForm):
         # Valida se a data final não é anterior à data inicial
         if inicial and final and final < inicial:
             raise forms.ValidationError("A data final não pode ser anterior à data inicial.")
+        
+        if initial_hour and initial_hour < hora_atual and inicial == hoje:
+            raise forms.ValidationError("O horário de início não pode ser anterior ao horário atual.")
+        
+        if initial_hour and final_hour and final_hour < initial_hour:
+            raise forms.ValidationError("O horário de término não pode ser anterior ao horário de início.")
 
         return cleaned
 
