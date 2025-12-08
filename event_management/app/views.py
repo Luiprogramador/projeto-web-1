@@ -9,7 +9,7 @@ from django.contrib import messages
 from datetime import datetime
 from django.http import HttpResponseForbidden
 from django.core.mail import send_mail
-from django.urls import reverse
+from django.urls import reverse        
 
 def home(request):
     eventos = Event.objects.all() # Busca todos os eventos cadastrados.
@@ -403,16 +403,45 @@ def issue_certificate(request, event_id):
     }
     return render(request, 'certificate/certificate_detail.html', context)
 
-# ------------- AUDITORIAL -------------
+# ------------- AUDITORIAL -------------        # Importe o seu model de Auditoria
+
 def auditorial(request):
-    if not request.user.is_authenticated or request.user.user_type != 'Organizador': # Restringe o acesso apenas para usuários autenticados com user_type 'Organizador'.
+    if not request.user.is_authenticated or getattr(request.user, 'user_type', '') != 'Organizador':
         messages.error(request, 'Você não tem permissão para acessar o auditorial.')
         return redirect('home')
 
-    logs = Auditoria.objects.all().order_by('-timestamp') # Busca todos os logs de auditoria e ordena por data/hora decrescente.
+    logs = Auditoria.objects.all().order_by('-timestamp')
+
+    # --- Lógica do Filtro ---
+    user_id = request.GET.get('user')
+    action_query = request.GET.get('action')
+
+    if user_id:
+        logs = logs.filter(user__id=user_id)
+
+    if action_query:
+        # icontains continua sendo necessário pois a ação no banco pode ser uma frase longa
+        # Ex: Se selecionar "Editar", ele acha "Editar perfil de fulano"
+        logs = logs.filter(action__icontains=action_query)
+
+    # --- Dados para os Menus ---
+    users = UserRegister.objects.all().order_by('username')
+    
+    # Lista exata das palavras-chave que você usa nos "if/elif" do seu HTML
+    action_options = [
+        'Adicionar', 
+        'Editar', 
+        'Remover', 
+        'Emitir', 
+        'Registro', 
+        'Inscrição', 
+        'Finalizar'
+    ]
 
     context = {
-        'logs': logs
+        'logs': logs,
+        'users': users,
+        'action_options': action_options  # Enviamos a lista para o template
     }
 
     return render(request, 'auditorial.html', context)
