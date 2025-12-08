@@ -278,6 +278,30 @@ class UserRegisterForm(forms.ModelForm):
 
         return cleaned_data
 
+class OrganizerUserCreationForm(forms.ModelForm):
+    password = forms.CharField(label='Senha Inicial', widget=forms.PasswordInput)
+    
+    class Meta:
+        model = UserRegister
+        fields = ['name', 'username', 'email', 'password', 'phone', 'institution', 'user_type']
+        labels = {
+            'name': 'Nome Completo',
+            'username': 'Usuário (Login)',
+            'institution': 'Instituição',
+            'user_type': 'Tipo de Usuário',
+            'phone': 'Telefone'
+        }
+        widgets = {
+            'phone': forms.TextInput(attrs={'data-mask': '(00) 00000-0000', 'placeholder': '(99) 99999-9999'}),
+        }
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data["password"])
+        if commit:
+            user.save()
+        return user
+
 # Formulário para edição do perfil do usuário
 class ProfileForm(forms.ModelForm):
     class Meta:
@@ -293,7 +317,7 @@ class ProfileForm(forms.ModelForm):
         widgets = { # Configuração de widgets de formulário com classes CSS
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '(00) 00000-0000'}),
+            'phone': forms.TextInput(attrs={'placeholder': '(99) 99999-9999', 'data-mask': '(00) 00000-0000'}),
             'institution': forms.TextInput(attrs={'class': 'form-control'}),
             'user_type': forms.Select(attrs={'class': 'form-control'}),
             'image': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),

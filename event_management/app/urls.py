@@ -31,6 +31,7 @@ path('logout/', views.logout_view, name='logout'),
 path('register/', views.user_register_view, name='register'),
 path('profile/', views.profile, name='profile'),
 path('profile/edit/', views.profile_edit, name='profile_edit'),
+path('organizer/add-user/', views.organizer_add_user, name='organizer_add_user'),
 
 # auditorial urls
 path('auditorial/', views.auditorial, name='auditorial'),

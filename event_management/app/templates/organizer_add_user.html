@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Cadastrar Novo Usuário{% endblock %}
+
+{% block content %}
+<div class="register-container">
+    <h2>👤 Cadastro Administrativo</h2>
+    <p>
+        Adicione novos alunos, professores ou organizadores ao sistema.
+    </p>
+    <hr>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        {% for field in form %}
+            <div style="margin-bottom: 15px;">
+                <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                {{ field }}
+                {% if field.errors %}
+                    <span class="field-error">{{ field.errors.0 }}</span>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn-register">Cadastrar Usuário</button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>  
+{% endblock %}

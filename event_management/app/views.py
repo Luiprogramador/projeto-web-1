@@ -1,5 +1,5 @@
+from .forms import UserRegisterForm, LoginForm, EventForm, ProfileForm,OrganizerUserCreationForm
 from .models import Event, Certificate, EventParticipant, UserRegister, Auditoria
-from .forms import UserRegisterForm, LoginForm, EventForm, ProfileForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout
@@ -10,7 +10,6 @@ from datetime import datetime
 from django.http import HttpResponseForbidden
 from django.core.mail import send_mail
 from django.urls import reverse
-
 
 def home(request):
     eventos = Event.objects.all() # Busca todos os eventos cadastrados.
@@ -60,7 +59,7 @@ def user_register_view(request):
 
             Auditoria.objects.create(
                 user=user,
-                action=f'Registro do {user.username}',
+                action=f'Registro do(a) {user.username}',
                 timestamp=datetime.now(),
             )
             return redirect('home') 
@@ -70,6 +69,29 @@ def user_register_view(request):
         form = UserRegisterForm()
         
     return render(request, 'register.html', {'form': form})
+
+@login_required
+def organizer_add_user(request):
+    # 1. Segurança: Só Organizador pode acessar
+    if request.user.user_type != 'Organizador':
+        messages.error(request, "Apenas organizadores podem cadastrar usuários manualmente.")
+        return redirect('home') # ou para onde você preferir
+
+    if request.method == 'POST':
+        form = OrganizerUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"Usuário {form.cleaned_data['username']} criado com sucesso!")
+            Auditoria.objects.create(
+                user=request.user,
+                action=f'Registro do {form.cleaned_data["username"]} pelo(a) Organizador(a) {request.user.username}',
+                timestamp=datetime.now(),
+            )
+            return redirect('organizer_add_user') # Recarrega a página limpa para adicionar outro
+    else:
+        form = OrganizerUserCreationForm()
+
+    return render(request, 'organizer_add_user.html', {'form': form})
 
 # ------------- PROFILE -------------
 @login_required # Garante que apenas usuários logados acessem esta view.
@@ -283,7 +305,7 @@ def event_subscribe(request, pk):
             messages.success(request, f'Inscrição confirmada no evento "{event.title}"!')
             Auditoria.objects.create(
                 user=request.user,
-                action=f'Inscrição no Evento {event.title} pelo {user.username}',
+                action=f'Inscrição no Evento {event.title} pelo(a) {user.username}',
                 timestamp=datetime.now(),
             )
 

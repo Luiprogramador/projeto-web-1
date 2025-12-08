@@ -30,7 +30,7 @@
             <!-- Menu Principal -->
             <ul class="nav-menu">
                 <li><a id="event_button" href="{% url 'event_list' %}">Eventos</a></li>
-                {% if user.is_authenticated %}
+                {% if user.is_authenticated and user.user_type != "Organizador" %}
                     <li>
                         <a href="{% url 'event_subscribed' %}">Meus Eventos</a>
                     </li>
@@ -38,15 +38,18 @@
                         <a href="{% url 'certificate_list' %}">Meus Certificados</a>
                     </li>
                 {% endif %}
-                {% if user.user_type == 'Organizador' %}
-                    <li>
-                        <a href="{% url 'auditorial' %}">Auditoria</a>
-                    </li>
-                {% endif %}
 
                 {% if user.user_type == 'Organizador' %}
                     <li>
                         <a href="{% url 'exemplo' %}">Exemplo Email</a>
+                    </li>
+                {% endif %}
+                {% if user.user_type == 'Organizador' %}
+                    <li>
+                        <a href="{% url 'organizer_add_user' %}">Adicionar Usuário</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'auditorial' %}">Auditoria</a>
                     </li>
                 {% endif %}
             </ul>
