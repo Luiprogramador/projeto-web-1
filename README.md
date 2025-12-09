@@ -22,19 +22,84 @@ um preview da página inicial do projeto
 - **Gestão de participantes** e inscrições
 - **Visualização** de eventos criados
 - **Controle básico** de informações do evento
+- **Certificados Automáticos:** Geração de certificados após o término do evento
 
 ### 👥 Para Participantes
 - **Visualização** de eventos disponíveis
 - **Sistema de inscrição** em eventos
 - **Área do participante** com eventos confirmados
 - **Cancelamento** de inscrição
+- **Logs de Auditoria:** Rastreamento de ações críticas
 
 ## 🛠️ Tecnologias Utilizadas
 
 - **Backend:** Django 4.2+
-- **Frontend:** HTML5, CSS3
+- **API:** Django REST Framework
+- **Frontend:** HTML5, CSS3, JQuery
 - **Banco de Dados:** SQLite
-- **Autenticação:** Sistema de autenticação do Django
+- **Autenticação:** Sistema de autenticação do Django + Token Auth (API)
+
+## 📚 API – Sistema de Gestão de Eventos Acadêmicos (SGEA)
+
+Esta API foi desenvolvida utilizando **Django REST Framework**.  
+Todas as rotas exigem **autenticação via Token**.
+
+### 🔐 Autenticação
+
+### Obter Token
+```bash
+POST /api/token-auth/
+```
+**Body:**
+
+```json
+{
+  "username": "seu_email",
+  "password": "sua_senha"
+}
+```
+**Resposta:**
+```json
+{
+  "token": "seu_token_aqui"
+}
+```
+**Header nas requisições autenticadas**
+```json
+Authorization: Token seu_token_aqui
+```
+
+## 📌 Endpoints da API
+
+### 1️⃣ Consulta de Eventos
+
+**URL**
+```bash
+GET /api/eventos/
+```
+**Descrição**
+
+- Retorna a lista de eventos.
+- Requer autenticação.
+- Rate Limit: 20 requisições por dia por usuário.
+
+### 2️⃣ Inscrição em Eventos
+
+```bash
+POST /api/inscricoes/
+```
+**Body**
+```json
+{
+  "evento_id": 1
+}
+```
+**Descrição**
+
+- Inscreve o usuário autenticado em um evento.
+- Requer autenticação.
+- Organizador não pode se cadastrar em eventos.
+- Rate Limit: 50 requisições por dia por usuário.
 
 ## 🚀 Como Executar o Projeto
 
