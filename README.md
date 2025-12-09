@@ -13,7 +13,6 @@ um preview da página inicial do projeto
 
 <img width="1920" height="945" alt="preview_site" src="https://github.com/user-attachments/assets/057afd99-cb26-45b5-8ff6-81ff66443059" />
 
-" />
 
 ## ✨ Funcionalidades
 
@@ -54,7 +53,7 @@ POST /api/token-auth/
 
 ```json
 {
-  "username": "seu_email",
+  "username": "seu_username",
   "password": "sua_senha"
 }
 ```
