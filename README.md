@@ -65,7 +65,9 @@ POST /api/token-auth/
 ```
 **Header nas requisições autenticadas**
 ```json
-Authorization: Token seu_token_aqui
+{
+"Authorization": "Token seu_token_aqui"
+}
 ```
 
 ## 📌 Endpoints da API
